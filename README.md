@@ -2,6 +2,43 @@
 
 ## things to do
 
+check some function before start coding :
+
+    - [ ] readline
+    - [ ] rl_clear_history
+    - [ ] rl_on_new_line
+    - [ ] rl_replace_line
+    - [ ] rl_redisplay
+    - [ ] add_history
+    - [ ] wait3
+    - [ ] wait4
+    - [ ] signal
+    - [ ] sigaction
+    - [ ] sigemptyset
+    - [ ] sigaddset
+    - [ ] kill
+    - [ ] getcwd
+    - [ ] chdir
+    - [ ] stat
+    - [ ] lstat
+    - [ ] fstat
+    - [ ] unlink
+    - [ ] opendir
+    - [ ] readdir
+    - [ ] closedir
+    - [ ] isatty
+    - [ ] ttyname
+    - [ ] ttyslot
+    - [ ] ioctl
+    - [ ] getenv
+    - [ ] tcsetattr
+    - [ ] tgetent
+    - [ ] tgetflag
+    - [ ] tgetnum
+    - [ ] tgetstr
+    - [ ] tgoto
+    - [ ] tputs
+
 ## mandatory things
 
     - [ ] display a prompt when waiting for a new command
