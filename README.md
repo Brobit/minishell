@@ -1,3 +1,3 @@
 # minishell
 
-pilou
+check some function
