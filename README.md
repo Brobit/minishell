@@ -1,3 +1,1 @@
 # minishell
-
-check some function
