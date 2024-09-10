@@ -2,7 +2,7 @@
 
 ## things to do
 
-check some function before start coding :
+## check some function before start coding :
 
     - [ ] readline
     - [ ] rl_clear_history
@@ -58,7 +58,9 @@ check some function before start coding :
         - [ ] > should redirect output
         - [ ] << should be given a delimiter, then read the input
             until a line containing the delimiter is seen. 
-            However, it doesn't have to update the history
+            However, it doesn't have to update the history.
+            Put the command in wait mode until encounter the delimiter,
+            then, execute the command
         - [ ] >> should redirect output in append mode
     - [ ] implement pipes ( | ) , the output of each command in the
         the pipeline is connected to the input of the next command
