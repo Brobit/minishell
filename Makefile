@@ -14,7 +14,7 @@ INCLUDES = -I ./Includes/
 
 EXEC_SOURCES = 	./Exec/
 
-LEXER_SOURCES = 	./Parsing/Lexer/
+LEXER_SOURCES = 	./Parsing/Lexer/main.c
 
 PARSER_SOURCES = 	./Parsing/Parser/
 
@@ -29,8 +29,6 @@ all : ${NAME}
 ${NAME} : ${LEXER_OBJS} ${PARSER_OBJS} ${EXEC_OBJS} ${LIBFT_LIB}
 	${CC} ${FLAGS} \
 		${LEXER_OBJS} \
-		${PARSER_OBJS} \
-		#${EXEC_OBJS} \
 		-L${LIBFT_DIR} -o $@ ${LIBFT_FLAG}
 
 ${LIBFT_LIB} :
