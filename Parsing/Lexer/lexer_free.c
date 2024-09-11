@@ -1,22 +1,23 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   lexer_free.c                                       :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/10 16:29:34 by almarico          #+#    #+#             */
-/*   Updated: 2024/09/11 14:51:30 by almarico         ###   ########.fr       */
+/*   Created: 2024/09/11 14:57:13 by almarico          #+#    #+#             */
+/*   Updated: 2024/09/11 14:58:56 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/minishell.h"
 
-int	main(int argc, char **argv, char **env)
+void	free_env(t_global *global_struct)
 {
-	(void)argv;
-	if (argc > 1)
-		return (perror(ERR_ARGC), FAIL);
-	lexer_entry(env);
-	return (SUCCESS);
+	int	i;
+
+	i = 0;
+	while (global_struct->env[i])
+		free(global_struct->env[i++]);
+	free(global_struct->env);
 }

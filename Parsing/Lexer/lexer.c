@@ -1,22 +1,27 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/10 16:29:34 by almarico          #+#    #+#             */
-/*   Updated: 2024/09/11 14:51:30 by almarico         ###   ########.fr       */
+/*   Created: 2024/09/11 14:38:17 by almarico          #+#    #+#             */
+/*   Updated: 2024/09/11 14:55:25 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/minishell.h"
 
-int	main(int argc, char **argv, char **env)
+static int	env_copy(t_global *global_struct, char **env)
 {
-	(void)argv;
-	if (argc > 1)
-		return (perror(ERR_ARGC), FAIL);
-	lexer_entry(env);
+	return (SUCCESS);
+}
+
+int	lexer_entry(char **env)
+{
+	t_global	global_struct;
+
+	if (env_copy(&global_struct, env) == FAIL)
+		return (free_env(&global_struct), FAIL);
 	return (SUCCESS);
 }
