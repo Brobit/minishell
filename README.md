@@ -4,11 +4,8 @@
 
 ## mandatory things
 
-    - [ ] display a prompt when waiting for a new command
-    - [ ] have a working history
     - [ ] search and launch the right executable (base on the 
         PATH variable or using relative or an absolute path)
-    - [ ] use only one global variable to indicate a received signal
     - [ ] not interpret unclosed quotes or special characters 
         which are not required by the subject such as \ or ;
     - [ ] handle '' (single quotes) which should prevent the 
@@ -32,11 +29,6 @@
         which should expand to heir values
     - [ ] handle $? which should expandto the exit status of the most
         recently executed foregound pipeline
-    - [ ] handle crtl-C , ctrl-D , and ctrl-\ which shold behave like in bash
-    - [ ] in interactive mode :
-        - [ ] ctrl-C displays a new prompt on a new line
-        - [ ] ctrl-D exit the shell
-        - [ ] ctrl-\ does nothing
 
 ## builtins to implement :
 

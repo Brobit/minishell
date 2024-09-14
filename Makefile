@@ -14,7 +14,10 @@ INCLUDES = -I ./Includes/
 
 EXEC_SOURCES = 	./Exec/
 
-LEXER_SOURCES = 	./Parsing/Lexer/main.c
+LEXER_SOURCES = 	./Parsing/Lexer/main.c\
+					./Parsing/Lexer/lexer.c\
+					./Parsing/Lexer/lexer_free.c\
+					./Parsing/Lexer/lexer_utils.c
 
 PARSER_SOURCES = 	./Parsing/Parser/
 
