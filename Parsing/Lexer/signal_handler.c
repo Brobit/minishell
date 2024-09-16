@@ -1,30 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_free.c                                       :+:      :+:    :+:   */
+/*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/11 14:57:13 by almarico          #+#    #+#             */
-/*   Updated: 2024/09/16 10:17:44 by almarico         ###   ########.fr       */
+/*   Created: 2024/09/14 18:42:51 by almarico          #+#    #+#             */
+/*   Updated: 2024/09/16 14:55:30 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/minishell.h"
 
-void	free_env(t_env *copy)
+void	signal_handler(int signum)
 {
-	int	i;
-
-	i = 0;
-	while (copy->env[i])
-		free(copy->env[i++]);
-	free(copy->env);
+	if (signum == SIGINT)
+	{
+		ft_printf("\n");
+		rl_on_new_line();
+		rl_replace_line("", 0);
+		rl_redisplay();
+	}
+	else if (signum == 3)
+		rl_redisplay();
 }
 
-void	free_readline(void)
+int	init_signal(struct sigaction *signal, int sigerr)
 {
-	rl_clear_history();
-	rl_free_line_state();
-	rl_deprep_terminal();
+	signal->sa_handler = signal_handler;
+	signal->sa_flags = SA_RESTART;
+	sigemptyset(&signal->sa_mask);
+	if (sigaction(sigerr, signal, NULL))
+		return (FAIL);
+	return (SUCCESS);
 }

@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:31:26 by almarico          #+#    #+#             */
-/*   Updated: 2024/09/14 12:04:13 by almarico         ###   ########.fr       */
+/*   Updated: 2024/09/16 14:46:41 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -51,9 +51,18 @@ int							lexer_entry(char **env);
 /* lexer_free.c */
 
 void						free_env(t_env *copy);
+void						free_readline(void);
 
 /* lexer_utils.c */
 
 void						error(char *msg);
+
+/* signal_handler.c */
+
+int							init_signal(struct sigaction *signal, int sigerror);
+
+/* stdin_listener.c */
+
+void						stdin_listener(t_env *copy);
 
 #endif // !MINISHELL_H

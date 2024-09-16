@@ -10,6 +10,8 @@ LIBFT_LIB = ${LIBFT_DIR}/libft_complete.a
 
 LIBFT_FLAG = -lft_complete
 
+OTHER_FLAG = -lreadline
+
 INCLUDES = -I ./Includes/
 
 EXEC_SOURCES = 	./Exec/
@@ -17,7 +19,9 @@ EXEC_SOURCES = 	./Exec/
 LEXER_SOURCES = 	./Parsing/Lexer/main.c\
 					./Parsing/Lexer/lexer.c\
 					./Parsing/Lexer/lexer_free.c\
-					./Parsing/Lexer/lexer_utils.c
+					./Parsing/Lexer/lexer_utils.c\
+					./Parsing/Lexer/signal_handler.c\
+					./Parsing/Lexer/stdin_listener.c
 
 PARSER_SOURCES = 	./Parsing/Parser/
 
@@ -32,7 +36,7 @@ all : ${NAME}
 ${NAME} : ${LEXER_OBJS} ${PARSER_OBJS} ${EXEC_OBJS} ${LIBFT_LIB}
 	${CC} ${FLAGS} \
 		${LEXER_OBJS} \
-		-L${LIBFT_DIR} -o $@ ${LIBFT_FLAG}
+		-L${LIBFT_DIR} -o $@ ${LIBFT_FLAG} ${OTHER_FLAG}
 
 ${LIBFT_LIB} :
 	${MAKE} -C ${LIBFT_DIR}

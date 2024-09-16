@@ -1,30 +1,36 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_free.c                                       :+:      :+:    :+:   */
+/*   stdin_listener.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/11 14:57:13 by almarico          #+#    #+#             */
-/*   Updated: 2024/09/16 10:17:44 by almarico         ###   ########.fr       */
+/*   Created: 2024/09/15 21:29:54 by almarico          #+#    #+#             */
+/*   Updated: 2024/09/16 15:57:15 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/minishell.h"
 
-void	free_env(t_env *copy)
+void	stdin_listener(t_env *copy)
 {
-	int	i;
+	char	*input;
 
-	i = 0;
-	while (copy->env[i])
-		free(copy->env[i++]);
-	free(copy->env);
-}
-
-void	free_readline(void)
-{
-	rl_clear_history();
-	rl_free_line_state();
-	rl_deprep_terminal();
+	input = NULL;
+	rl_catch_signals = 0;
+	while (1)
+	{
+		input = readline("Minishell : ");
+		if (!input)
+		{
+			free_env(copy);
+			free_readline();
+			exit (1);
+		}
+		else if (input && input[0] != '\0')
+		{
+			add_history(input);
+		}
+		free(input);
+	}
 }
