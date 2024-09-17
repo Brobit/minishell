@@ -23,7 +23,7 @@ LEXER_SOURCES = 	./Parsing/Lexer/main.c\
 					./Parsing/Lexer/signal_handler.c\
 					./Parsing/Lexer/stdin_listener.c
 
-PARSER_SOURCES = 	./Parsing/Parser/
+PARSER_SOURCES = 	./Parsing/Parser/parser_entry.c
 
 EXEC_OBJS = ${EXEC_SOURCES:.c=.o}
 
@@ -36,6 +36,7 @@ all : ${NAME}
 ${NAME} : ${LEXER_OBJS} ${PARSER_OBJS} ${EXEC_OBJS} ${LIBFT_LIB}
 	${CC} ${FLAGS} \
 		${LEXER_OBJS} \
+		${PARSER_OBJS} \
 		-L${LIBFT_DIR} -o $@ ${LIBFT_FLAG} ${OTHER_FLAG}
 
 ${LIBFT_LIB} :

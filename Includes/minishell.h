@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:31:26 by almarico          #+#    #+#             */
-/*   Updated: 2024/09/16 14:46:41 by almarico         ###   ########.fr       */
+/*   Updated: 2024/09/17 15:05:34 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -44,6 +44,30 @@ typedef struct s_env
 	char	**env;
 }				t_env;
 
+typedef enum e_redirection_type
+{
+	NONE,
+	INPUT,
+	OUTPUT,
+	HERE_DOC,
+	APPEND,
+}			t_redirection_type;
+
+typedef struct s_redirection
+{
+	t_redirection_type			type;
+	const char					*payload;
+	struct s_redirection		*next;
+}				t_redirection;
+
+typedef struct s_exec
+{
+	t_redirection				*redirection_list;
+	char						*cmd;
+	char						**option;
+	struct s_exec				*next;
+}				t_exec;
+
 /* lexer.c */
 
 int							lexer_entry(char **env);
@@ -64,5 +88,9 @@ int							init_signal(struct sigaction *signal, int sigerror);
 /* stdin_listener.c */
 
 void						stdin_listener(t_env *copy);
+
+/* parser_entry.c */
+
+int							parser_entry(char *input);
 
 #endif // !MINISHELL_H
