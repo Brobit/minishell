@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
+/*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:31:26 by almarico          #+#    #+#             */
-/*   Updated: 2024/09/14 12:04:13 by almarico         ###   ########.fr       */
+/*   Updated: 2024/09/18 00:13:50 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -56,4 +56,22 @@ void						free_env(t_env *copy);
 
 void						error(char *msg);
 
+/* exec */
+void						echo_msg(char **msg);
+void						ft_cd(char *path);
+void						ft_pwd(void);
+void						ft_export(char **env);
+void						ft_env(char **env);
+void						ft_unset(char	**env, char *my_var);
+
+/* exec_utils.c */
+
+char						*ft_get_path(char	*cmd, char	**envp);
+char						**copy_tab(char	**env, int *size);
+void            remove_element(char **tab, int index);
+
+
+/*exec test
+void						ft_cd(char *path, char *cmd, char **envp);
+*/
 #endif // !MINISHELL_H

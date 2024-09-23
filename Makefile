@@ -12,7 +12,11 @@ LIBFT_FLAG = -lft_complete
 
 INCLUDES = -I ./Includes/
 
-EXEC_SOURCES = 	./Exec/
+EXEC_SOURCES = 	./Exec/ft_cd.c\
+				./Exec/ft_echo.c\
+				./Exec/exec_utils.c\
+				./Exec/ft_export.c\
+				./Exec/ft_unset.c\
 
 LEXER_SOURCES = 	./Parsing/Lexer/main.c\
 					./Parsing/Lexer/lexer.c\
@@ -32,6 +36,7 @@ all : ${NAME}
 ${NAME} : ${LEXER_OBJS} ${PARSER_OBJS} ${EXEC_OBJS} ${LIBFT_LIB}
 	${CC} ${FLAGS} \
 		${LEXER_OBJS} \
+		${EXEC_OBJS}\
 		-L${LIBFT_DIR} -o $@ ${LIBFT_FLAG}
 
 ${LIBFT_LIB} :
