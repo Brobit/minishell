@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 21:29:54 by almarico          #+#    #+#             */
-/*   Updated: 2024/09/16 16:33:02 by almarico         ###   ########.fr       */
+/*   Updated: 2024/09/23 16:43:45 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,7 +27,11 @@ void	stdin_listener(t_env *copy)
 		{
 			add_history(input);
 			if (parser_entry(input) == FAIL)
-				exit (1);
+			{
+				ft_printf("syntax error\n");
+				rl_replace_line("", 1);
+				rl_redisplay();
+			}
 		}
 		free(input);
 	}

@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:31:26 by almarico          #+#    #+#             */
-/*   Updated: 2024/09/17 15:05:34 by almarico         ###   ########.fr       */
+/*   Updated: 2024/09/23 11:25:24 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -92,5 +92,28 @@ void						stdin_listener(t_env *copy);
 /* parser_entry.c */
 
 int							parser_entry(char *input);
+
+/* exec_list.c */
+
+t_exec						*list_new_node(void);
+t_exec						*list_last(t_exec *lst);
+void						list_add_back(t_exec **exec, t_exec *neww);
+
+/* parser_functions.c */
+
+t_redirection				*get_redirections(char *instruction_line);
+void						trim_redirections(char *instruction_line);
+char						*get_command(char *instruction_line);
+char						**get_option(char *instruction_line);
+
+/* redirection_lis.c */
+
+t_redirection				*redirection_list_new_node(void);
+t_redirection				*redirection_list_last(t_redirection *lst);
+void						redirection_list_add_back(t_redirection **exec, t_redirection *neww);
+
+/* check_syntax.c */
+
+int							check_syntax_error(char *input);
 
 #endif // !MINISHELL_H

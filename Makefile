@@ -23,7 +23,11 @@ LEXER_SOURCES = 	./Parsing/Lexer/main.c\
 					./Parsing/Lexer/signal_handler.c\
 					./Parsing/Lexer/stdin_listener.c
 
-PARSER_SOURCES = 	./Parsing/Parser/parser_entry.c
+PARSER_SOURCES = 	./Parsing/Parser/parser_entry.c\
+					./Parsing/Parser/exec_list.c\
+					./Parsing/Parser/parser_functions.c\
+					./Parsing/Parser/redirection_list.c\
+					./Parsing/Parser/chech_syntax.c
 
 EXEC_OBJS = ${EXEC_SOURCES:.c=.o}
 
