@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 16:29:14 by almarico          #+#    #+#             */
-/*   Updated: 2024/09/26 11:12:00 by almarico         ###   ########.fr       */
+/*   Updated: 2024/09/26 17:22:39 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,25 +42,44 @@ void	print_chained_list(t_exec *exec)
 	}
 }
 
+static t_exec	*create_and_assign_node(t_exec **tmp, char *instruction)
+{
+	t_exec	*new_node;
+
+	new_node = list_new_node();
+	if (*tmp)
+	{
+		(*tmp)->next = new_node;
+		*tmp = (*tmp)->next;
+	}
+	else
+		*tmp = new_node;
+	(*tmp)->redirection_list = get_redirections(instruction);
+	trim_redirections(&instruction);
+	(*tmp)->cmd = get_command(instruction);
+	(*tmp)->option = get_option(instruction);
+	return (new_node);
+}
+
 int	parser_entry(char *input)
 {
 	t_exec	*exec;
+	t_exec	*tmp;
 	char	**instructions;
 	int		i;
 
-	if (check_syntax_error(input) == FAIL)
-		return (FAIL);
 	exec = NULL;
+	tmp = NULL;
 	instructions = ft_split(input, '|');
 	i = 0;
+	if (check_syntax_error(input) == FAIL)
+		return (FAIL);
 	while (instructions[i])
 	{
-		list_add_back(&exec, list_new_node());
-		exec->redirection_list = get_redirections(instructions[i]);
-		trim_redirections(&instructions[i]);
-		// ft_printf("%s\n", instructions[i]);
-		exec->cmd = get_command(instructions[i]);
-		exec->option = get_option(instructions[i]);
+		if (!exec)
+			exec = create_and_assign_node(&tmp, instructions[i]);
+		else
+			create_and_assign_node(&tmp, instructions[i]);
 		i++;
 	}
 	print_chained_list(exec);
