@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:31:26 by almarico          #+#    #+#             */
-/*   Updated: 2024/09/23 11:25:24 by almarico         ###   ########.fr       */
+/*   Updated: 2024/09/26 11:11:52 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,7 @@ void						list_add_back(t_exec **exec, t_exec *neww);
 /* parser_functions.c */
 
 t_redirection				*get_redirections(char *instruction_line);
-void						trim_redirections(char *instruction_line);
+void						trim_redirections(char **instruction_line);
 char						*get_command(char *instruction_line);
 char						**get_option(char *instruction_line);
 
@@ -115,5 +115,13 @@ void						redirection_list_add_back(t_redirection **exec, t_redirection *neww);
 /* check_syntax.c */
 
 int							check_syntax_error(char *input);
+
+/* redirection_utils.c */
+
+int							fill_redirection(t_redirection *redirection_list, char *instruction_line);
+
+/* parser_free.c */
+
+void						free_instructions(char **instructions);
 
 #endif // !MINISHELL_H

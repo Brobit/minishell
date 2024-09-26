@@ -1,0 +1,177 @@
+brobit@pop-os:~/programmation/minishell$ << $USER
+> dfjdsf
+> dfds
+> fdsf
+> dsf
+> dsf
+> $PATH
+> $USER
+----------------
+brobit@pop-os:~/programmation/minishell$ export CACA="vim"
+----------------
+brobit@pop-os:~/programmation/minishell$ $ACA
+----------------
+brobit@pop-os:~/programmation/minishell$ $CACA
+Command 'vim' not found, but can be installed with:
+sudo apt install vim         # version 2:8.2.3995-1ubuntu2.18, or
+sudo apt install vim-tiny    # version 2:8.2.3995-1ubuntu2.18
+sudo apt install vim-athena  # version 2:8.2.3995-1ubuntu2.18 (You will have to enable component called 'universe')
+sudo apt install vim-gtk3    # version 2:8.2.3995-1ubuntu2.18 (You will have to enable component called 'universe')
+sudo apt install vim-nox     # version 2:8.2.3995-1ubuntu2.18 (You will have to enable component called 'universe')
+sudo apt install neovim      # version 0.6.1-3 (You will have to enable component called 'universe')
+----------------
+brobit@pop-os:~/programmation/minishell$ export CACA="echo        fadfsafdsf    fsdfdsfdsfds              caca"
+----------------
+brobit@pop-os:~/programmation/minishell$ $CACA
+fadfsafdsf fsdfdsfdsfds caca
+----------------
+brobit@pop-os:~/programmation/minishell$ echo $CACA
+echo fadfsafdsf fsdfdsfdsfds caca
+----------------
+brobit@pop-os:~/programmation/minishell$ echo "$CACA"
+echo        fadfsafdsf    fsdfdsfdsfds              caca
+----------------
+brobit@pop-os:~/programmation/minishell$ echo $CACA
+echo fadfsafdsf fsdfdsfdsfds caca
+----------------
+brobit@pop-os:~/programmation/minishell$ "$PATH:/usr/bin"
+bash: /home/brobit/.local/bin:/usr/local/sbin:/usr/local/bin:/usr/sbin:/usr/bin:/sbin:/bin:/usr/games:/usr/local/games:/snap/bin:/usr/bin: No such file or directory
+----------------
+brobit@pop-os:~/programmation/minishell$ export cacaca="echo petit caca    "
+----------------
+brobit@pop-os:~/programmation/minishell$ $cacaca
+petit caca
+----------------
+brobit@pop-os:~/programmation/minishell$ $cacaca.
+petit caca .
+----------------
+brobit@pop-os:~/programmation/minishell$ $cacaca4.
+bash: .: filename argument required
+.: usage: . filename [arguments]
+----------------
+brobit@pop-os:~/programmation/minishell$ $cacaca.4
+petit caca .4
+----------------
+brobit@pop-os:~/programmation/minishell$ $cacaca_
+----------------
+brobit@pop-os:~/programmation/minishell$ $cacaca
+petit caca
+----------------
+brobit@pop-os:~/programmation/minishell$ $cacaca:
+petit caca :
+----------------
+brobit@pop-os:~/programmation/minishell$ $cacaca.
+petit caca .
+----------------
+brobit@pop-os:~/programmation/minishell$ $cacaca-
+petit caca -
+----------------
+brobit@pop-os:~/programmation/minishell$ '$cacaca'
+$cacaca: command not found
+----------------
+brobit@pop-os:~/programmation/minishell$ "'$USER'"
+'brobit': command not found
+----------------
+brobit@pop-os:~/programmation/minishell$ echo "'$USER'"
+'brobit'
+----------------
+brobit@pop-os:~/programmation/minishell$ echo '"'$USER'"'
+"brobit"
+----------------
+brobit@pop-os:~/programmation/minishell$ echo '"$USER"'
+"$USER"
+----------------
+brobit@pop-os:~/programmation/minishell$ echo "caca"'bite'"zizi"
+cacabitezizi
+----------------
+brobit@pop-os:~/programmation/minishell$ echo "caca"'bite'"zizi"fdsfds
+cacabitezizifdsfds
+----------------
+brobit@pop-os:~/programmation/minishell$ echo "caca"'bite'"zi zi"fdsfds
+cacabitezi zifdsfds
+----------------
+brobit@pop-os:~/programmation/minishell$ echo "caca"'bite'"zi    zi"fdsfds
+cacabitezi    zifdsfds
+----------------
+brobit@pop-os:~/programmation/minishell$ echo "caca"'bite'"zi    zi"fdsfds fd
+cacabitezi    zifdsfds fd
+----------------
+brobit@pop-os:~/programmation/minishell$ export CACA="echo bite"
+----------------
+brobit@pop-os:~/programmation/minishell$ $CACA.bite
+bite.bite
+----------------
+brobit@pop-os:~/programmation/minishell$ export CACA="echo bite "
+----------------
+brobit@pop-os:~/programmation/minishell$ $CACA.bite
+bite .bite
+----------------
+brobit@pop-os:~/programmation/minishell$ vim test.c
+----------------
+brobit@pop-os:~/programmation/minishell$ gcc test
+test    test.c  
+----------------
+brobit@pop-os:~/programmation/minishell$ gcc test.c
+test.c: In function ‘main’:
+test.c:4:17: warning: implicit declaration of function ‘printf’ [-Wimplicit-function-declaration]
+    4 |                 printf("argv %i : %s\n", i, argv[i]);
+      |                 ^~~~~~
+test.c:1:1: note: include ‘<stdio.h>’ or provide a declaration of ‘printf’
+  +++ |+#include <stdio.h>
+    1 | int main(int argc, char **argv)
+test.c:4:17: warning: incompatible implicit declaration of built-in function ‘printf’ [-Wbuiltin-declaration-mismatch]
+    4 |                 printf("argv %i : %s\n", i, argv[i]);
+      |                 ^~~~~~
+test.c:4:17: note: include ‘<stdio.h>’ or provide a declaration of ‘printf’
+----------------
+brobit@pop-os:~/programmation/minishell$ ./
+a.out           Exec/           .git/           Includes/       libft-complete/ minishell       Parsing/        
+----------------
+brobit@pop-os:~/programmation/minishell$ ./a.out 
+argv 0 : ./a.out
+----------------
+brobit@pop-os:~/programmation/minishell$ ./a.out  fdsfds
+argv 0 : ./a.out
+argv 1 : fdsfds
+----------------
+brobit@pop-os:~/programmation/minishell$ ./a.out $CACA.bite
+argv 0 : ./a.out
+argv 1 : echo
+argv 2 : bite
+argv 3 : .bite
+----------------
+brobit@pop-os:~/programmation/minishell$ export CACA="echo bite"
+----------------
+brobit@pop-os:~/programmation/minishell$ ./a.out $CACA.bite
+argv 0 : ./a.out
+argv 1 : echo
+argv 2 : bite.bite
+----------------
+brobit@pop-os:~/programmation/minishell$ ./a.out $CACA.bite"fdsfsd"
+argv 0 : ./a.out
+argv 1 : echo
+argv 2 : bite.bitefdsfsd
+----------------
+brobit@pop-os:~/programmation/minishell$ ./a.out $CACA.bite"fdsfsd    fdsfdsfsfds"
+argv 0 : ./a.out
+argv 1 : echo
+argv 2 : bite.bitefdsfsd    fdsfdsfsfds
+----------------
+brobit@pop-os:~/programmation/minishell$ ./a.out $CACA.bite"fdsfsd  $CACA  fdsfdsfsfds"
+argv 0 : ./a.out
+argv 1 : echo
+argv 2 : bite.bitefdsfsd  echo bite  fdsfdsfsfds
+----------------
+brobit@pop-os:~/programmation/minishell$ ./a.out $CACA.bite"fdsfsd  $CACA  fdsfdsfsfds" f
+argv 0 : ./a.out
+argv 1 : echo
+argv 2 : bite.bitefdsfsd  echo bite  fdsfdsfsfds
+argv 3 : f
+----------------
+brobit@pop-os:~/programmation/minishell$ ./a.out $CACA.bite"fdsfsd  $CACA  fdsfdsfsfds" 
+argv 0 : ./a.out
+argv 1 : echo
+argv 2 : bite.bitefdsfsd  echo bite  fdsfdsfsfds
+----------------
+brobit@pop-os:~/programmation/minishell$ 
+

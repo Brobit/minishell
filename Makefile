@@ -27,7 +27,9 @@ PARSER_SOURCES = 	./Parsing/Parser/parser_entry.c\
 					./Parsing/Parser/exec_list.c\
 					./Parsing/Parser/parser_functions.c\
 					./Parsing/Parser/redirection_list.c\
-					./Parsing/Parser/chech_syntax.c
+					./Parsing/Parser/chech_syntax.c\
+					./Parsing/Parser/redirection_utils.c\
+					./Parsing/Parser/parser_free.c
 
 EXEC_OBJS = ${EXEC_SOURCES:.c=.o}
 
