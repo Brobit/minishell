@@ -6,12 +6,11 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 16:29:14 by almarico          #+#    #+#             */
-/*   Updated: 2024/09/26 17:22:39 by almarico         ###   ########.fr       */
+/*   Updated: 2024/09/27 10:52:17 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/minishell.h"
-#include <stdio.h>
 
 void	print_chained_list(t_exec *exec)
 {
@@ -61,7 +60,7 @@ static t_exec	*create_and_assign_node(t_exec **tmp, char *instruction)
 	return (new_node);
 }
 
-int	parser_entry(char *input)
+int	parser_entry(char *input, t_env *copy)
 {
 	t_exec	*exec;
 	t_exec	*tmp;
@@ -70,6 +69,7 @@ int	parser_entry(char *input)
 
 	exec = NULL;
 	tmp = NULL;
+	check_env_variable_and_quotes(&input, copy);
 	instructions = ft_split(input, '|');
 	i = 0;
 	if (check_syntax_error(input) == FAIL)

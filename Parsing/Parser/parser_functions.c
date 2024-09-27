@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:19:31 by almarico          #+#    #+#             */
-/*   Updated: 2024/09/26 11:16:34 by almarico         ###   ########.fr       */
+/*   Updated: 2024/09/27 10:32:22 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -32,7 +32,7 @@ t_redirection	*get_redirections(char *instruction_line)
 	return (redirection_list);
 }
 
-void	trim_redirections(char **instruction_line)
+void	trim_redirections(char **line)
 {
 	char	*res;
 	int		i;
@@ -41,27 +41,27 @@ void	trim_redirections(char **instruction_line)
 	i = 0;
 	j = 0;
 	res = NULL;
-	while ((*instruction_line)[i])
+	while ((*line)[i])
 	{
 		j = i;
-		while ((*instruction_line)[i] && (*instruction_line)[i] != '<' && (*instruction_line)[i] != '>')
+		while ((*line)[i] && (*line)[i] != '<' && (*line)[i] != '>')
 			i++;
-		res = ft_strjoin(res, ft_substr((*instruction_line), j, (i - j)));
-		while ((*instruction_line)[i] && ((*instruction_line)[i] == '<' || (*instruction_line)[i] == '>'))
+		res = ft_strjoin(res, ft_substr((*line), j, (i - j)));
+		while ((*line)[i] && ((*line)[i] == '<' || (*line)[i] == '>'))
 			i++;
-		while ((*instruction_line)[i] && ft_isspace((*instruction_line)[i]) == 0)
+		while ((*line)[i] && ft_isspace((*line)[i]) == 0)
 			i++;
-		while ((*instruction_line)[i] && ft_isspace((*instruction_line)[i]) != 0)
+		while ((*line)[i] && ft_isspace((*line)[i]) != 0)
 			i++;
-		if ((*instruction_line)[i] != '\0')
+		if ((*line)[i] != '\0')
 			i++;
 	}
-	free((*instruction_line));
+	free((*line));
 	if (res)
-		(*instruction_line) = ft_strdup(res);
+		(*line) = ft_strdup(res);
 }
 
-char	*get_command(char *instruction_line)
+char	*get_command(char *line)
 {
 	char	*cmd;
 	int		i;
@@ -69,27 +69,27 @@ char	*get_command(char *instruction_line)
 
 	cmd = NULL;
 	i = 0;
-	while (instruction_line[i] && ft_isspace(instruction_line[i]) == 0)
+	while (line[i] && ft_isspace(line[i]) == 0)
 		i++;
 	j = i;
-	while (instruction_line[j] && ft_isspace(instruction_line[j]) != 0)
+	while (line[j] && ft_isspace(line[j]) != 0)
 		j++;
-	cmd = ft_substr(instruction_line, i, j);
+	cmd = ft_substr(line, i, j);
 	return (cmd);
 }
 
-char	**get_option(char *instruction_line)
+char	**get_option(char *line)
 {
 	char	**option;
 	int		i;
 
 	option = NULL;
 	i = 0;
-	while (instruction_line[i] && ft_isspace(instruction_line[i]) == 0)
+	while (line[i] && ft_isspace(line[i]) == 0)
 		i++;
-	while (instruction_line[i] && ft_isspace(instruction_line[i]) != 0)
+	while (line[i] && ft_isspace(line[i]) != 0)
 		i++;
-	if (instruction_line[i] != '\0')
-		option = ft_split(&instruction_line[i], ' ');
+	if (line[i] != '\0')
+		option = ft_split(&line[i], ' ');
 	return (option);
 }
