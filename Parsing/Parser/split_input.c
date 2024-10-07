@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/07 11:38:48 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/07 18:48:00 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/07 18:58:41 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,6 @@ static int	ft_count_malloc(char const *mem_str, char c)
 			i++;
 		count++;
 	}
-	ft_printf("count : %d\n", count);
 	return (count);
 }
 
