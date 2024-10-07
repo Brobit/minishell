@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:19:31 by almarico          #+#    #+#             */
-/*   Updated: 2024/09/27 10:32:22 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/07 11:29:00 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,13 @@ t_redirection	*get_redirections(char *instruction_line)
 	{
 		if (instruction_line[i] == '<' || instruction_line[i] == '>')
 		{
-			redirection_list_add_back(&redirection_list, \
-						redirection_list_new_node());
-			i += fill_redirection(redirection_list, &instruction_line[i]);
+			if (is_in_quotes(instruction_line, i) == FALSE
+				&& is_in_double_quotes(instruction_line, i) == FALSE)
+			{
+				redirection_list_add_back(&redirection_list, \
+							redirection_list_new_node());
+				i += fill_redirection(redirection_list, &instruction_line[i]);
+			}
 		}
 		i++;
 	}
@@ -44,21 +48,13 @@ void	trim_redirections(char **line)
 	while ((*line)[i])
 	{
 		j = i;
-		while ((*line)[i] && (*line)[i] != '<' && (*line)[i] != '>')
-			i++;
-		res = ft_strjoin(res, ft_substr((*line), j, (i - j)));
-		while ((*line)[i] && ((*line)[i] == '<' || (*line)[i] == '>'))
-			i++;
-		while ((*line)[i] && ft_isspace((*line)[i]) == 0)
-			i++;
-		while ((*line)[i] && ft_isspace((*line)[i]) != 0)
-			i++;
-		if ((*line)[i] != '\0')
-			i++;
+		exec_trim(line, &res, &i, j);
 	}
-	free((*line));
 	if (res)
+	{
+		free((*line));
 		(*line) = ft_strdup(res);
+	}
 }
 
 char	*get_command(char *line)

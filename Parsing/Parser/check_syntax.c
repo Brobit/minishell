@@ -1,12 +1,12 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   chech_syntax.c                                     :+:      :+:    :+:   */
+/*   check_syntax.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 11:25:44 by almarico          #+#    #+#             */
-/*   Updated: 2024/09/23 16:59:14 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/04 11:50:49 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,16 +19,20 @@ int	check_pipes_and_ampersand(char *input)
 	i = 0;
 	while (input[i] && ft_isspace(input[i]) == 0)
 		i++;
-	if (input[i] && input[i] == '|')
+	if (input[i] && input[i] == '|' && is_in_quotes(input, i) == FALSE
+		&& is_in_double_quotes(input, i) == FALSE)
 		return (FAIL);
 	i = ft_strlen(input) - 1;
 	while (input[i] && ft_isspace(input[i]) == 0)
 		i--;
-	if (input[i] && input[i] == '|')
+	if (input[i] && input[i] == '|' && is_in_quotes(input, i) == FALSE
+		&& is_in_double_quotes(input, i) == FALSE)
 		return (FAIL);
 	i = -1;
 	while (input[++i])
-		if ((input[i] == '|' && input[i + 1] == '|') || (input[i] == '&'))
+		if (is_in_quotes(input, i) == FALSE
+			&& is_in_double_quotes(input, i) == FALSE
+			&& (input[i] == '&'))
 			return (FAIL);
 	return (SUCCESS);
 }
@@ -41,7 +45,8 @@ int	check_space_between_pipes(char *input)
 	i = 0;
 	while (input[i])
 	{
-		if (input[i] == '|')
+		if (input[i] == '|' && is_in_quotes(input, i) == FALSE
+			&& is_in_double_quotes(input, i) == FALSE)
 		{
 			j = i + 1;
 			while (input[i] && ft_isspace(input[j]) == 0)
@@ -61,17 +66,16 @@ int	check_redirection_error(char *input)
 	i = 0;
 	while (input[i])
 	{
-		if (input[i + 1] != '\0'
-			&& ((input[i] == '<' && input[i + 1] == '>')
-				|| (input[i] == '>' && input[i + 1] == '<')))
-			return (FAIL);
-		if (input[i + 1] != '\0' && input[i + 2] != '\0')
+		if ((input[i] == '<' || input[i] == '>')
+			&& is_in_quotes(input, i) == FALSE
+			&& is_in_double_quotes(input, i) == FALSE)
 		{
-			if (input[i] == '<' && input[i + 1] == '<'
-				&& (input[i + 2] == '<' || input[i + 2] == '>'))
-				return (FAIL);
-			if (input[i] == '>' && input[i + 1] == '>'
-				&& (input[i + 2] == '<' || input[i + 2] == '>'))
+			if ((input[i] == '<' && input[i + 1] == '>')
+				|| (input[i] == '>' && input[i + 1] == '<')
+				|| (input[i] == '<' && input[i + 1] == '<'
+					&& (input[i + 2] == '<' || input[i + 2] == '>'))
+				|| (input[i] == '>' && input[i + 1] == '>'
+					&& (input[i + 2] == '<' || input[i + 2] == '>')))
 				return (FAIL);
 		}
 		i++;

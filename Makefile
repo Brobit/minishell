@@ -27,10 +27,12 @@ PARSER_SOURCES = 	./Parsing/Parser/parser_entry.c\
 					./Parsing/Parser/exec_list.c\
 					./Parsing/Parser/parser_functions.c\
 					./Parsing/Parser/redirection_list.c\
-					./Parsing/Parser/chech_syntax.c\
+					./Parsing/Parser/check_syntax.c\
 					./Parsing/Parser/redirection_utils.c\
 					./Parsing/Parser/parser_free.c\
-					./Parsing/Parser/env_variable_and_quotes.c
+					./Parsing/Parser/env_variable.c\
+					./Parsing/Parser/quotes.c\
+					./Parsing/Parser/double_quotes.c
 
 EXEC_OBJS = ${EXEC_SOURCES:.c=.o}
 

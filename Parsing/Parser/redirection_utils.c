@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 14:30:09 by almarico          #+#    #+#             */
-/*   Updated: 2024/09/25 10:50:56 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/07 11:28:16 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,4 +49,21 @@ int	fill_redirection(t_redirection *redirection_list, char *instruction_line)
 		tmp->type = OUTPUT;
 	i += fill_payload(tmp, instruction_line);
 	return (i);
+}
+
+void	exec_trim(char **line, char **res, int *i, int j)
+{
+	while ((*line)[*i] && (*line)[*i] != '<' && (*line)[*i] != '>')
+		*i += 1;
+	if ((*line)[*i] && is_in_quotes((*line), *i) == FALSE
+		&& is_in_double_quotes((*line), *i) == FALSE)
+		*res = ft_strjoin(*res, ft_substr((*line), j, (*i - j)));
+	while ((*line)[*i] && ((*line)[*i] == '<' || (*line)[*i] == '>'))
+		*i += 1;
+	while ((*line)[*i] && ft_isspace((*line)[*i]) == 0)
+		*i += 1;
+	while ((*line)[*i] && ft_isspace((*line)[*i]) != 0)
+		*i += 1;
+	if ((*line)[*i] != '\0')
+		*i += 1;
 }

@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:31:26 by almarico          #+#    #+#             */
-/*   Updated: 2024/09/27 10:52:47 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/07 11:27:51 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@
 
 # define SUCCESS			0
 # define FAIL				1
+# define TRUE				1
+# define FALSE				0
 
 /* error define */
 
@@ -121,13 +123,24 @@ int							check_syntax_error(char *input);
 
 int							fill_redirection(t_redirection *redirection_list, \
 							char *instruction_line);
+void						exec_trim(char **line, char **res, int *i, int j);
 
 /* parser_free.c */
 
 void						free_instructions(char **instructions);
 
-/* env_variable_and_quotes */
+/* env_variable */
 
-void						check_env_variable_and_quotes(char **input, t_env *copy);
+void						check_env_variable_and_quotes(char **input, \
+							t_env *copy);
+
+/* quotes.c */
+
+int							is_in_quotes(char *str, int i);
+int							is_interpreted(char *str, int i);
+
+/*double_quotes.c */
+
+int							is_in_double_quotes(char *str, int i);
 
 #endif // !MINISHELL_H

@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 16:29:14 by almarico          #+#    #+#             */
-/*   Updated: 2024/09/27 10:52:17 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/03 11:31:23 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,25 +17,25 @@ void	print_chained_list(t_exec *exec)
 	int	i;
 
 	if (exec == NULL)
-		printf("error\n");
+		ft_printf("error\n");
 	while (exec != NULL)
 	{
 		if (exec->redirection_list == NULL)
-			printf("no redirection list\n");
+			ft_printf("no redirection list\n");
 		while (exec->redirection_list != NULL)
 		{
-			printf("redirection type : %d\tpayload : %s\n", exec->redirection_list->type, exec->redirection_list->payload);
+			ft_printf("redirection type : %d\tpayload : %s\n", exec->redirection_list->type, exec->redirection_list->payload);
 			exec->redirection_list = exec->redirection_list->next;
 		}
 		if (exec->cmd)
-			printf("cmd : %s\n", exec->cmd);
+			ft_printf("cmd : %s\n", exec->cmd);
 		if (exec->option == NULL)
-			printf("there is no option\n");
+			ft_printf("there is no option\n");
 		else
 		{
 			i = 0;
 			while (exec->option[i] != NULL)
-				printf("option : %s\n", exec->option[i++]);
+				ft_printf("option : %s\n", exec->option[i++]);
 		}
 		exec = exec->next;
 	}
@@ -69,11 +69,11 @@ int	parser_entry(char *input, t_env *copy)
 
 	exec = NULL;
 	tmp = NULL;
-	check_env_variable_and_quotes(&input, copy);
-	instructions = ft_split(input, '|');
 	i = 0;
 	if (check_syntax_error(input) == FAIL)
 		return (FAIL);
+	check_env_variable_and_quotes(&input, copy);
+	instructions = ft_split(input, '|');
 	while (instructions[i])
 	{
 		if (!exec)
