@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:31:26 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/07 11:27:51 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/07 11:41:24 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -139,8 +139,12 @@ void						check_env_variable_and_quotes(char **input, \
 int							is_in_quotes(char *str, int i);
 int							is_interpreted(char *str, int i);
 
-/*double_quotes.c */
+/* double_quotes.c */
 
 int							is_in_double_quotes(char *str, int i);
+
+/* split_input.c */
+
+char						**split_input(char const *s, char c);
 
 #endif // !MINISHELL_H

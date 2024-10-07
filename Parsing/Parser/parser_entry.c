@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 16:29:14 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/03 11:31:23 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/07 11:41:40 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,7 +73,7 @@ int	parser_entry(char *input, t_env *copy)
 	if (check_syntax_error(input) == FAIL)
 		return (FAIL);
 	check_env_variable_and_quotes(&input, copy);
-	instructions = ft_split(input, '|');
+	instructions = split_input(input, '|');
 	while (instructions[i])
 	{
 		if (!exec)

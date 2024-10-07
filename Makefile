@@ -32,7 +32,8 @@ PARSER_SOURCES = 	./Parsing/Parser/parser_entry.c\
 					./Parsing/Parser/parser_free.c\
 					./Parsing/Parser/env_variable.c\
 					./Parsing/Parser/quotes.c\
-					./Parsing/Parser/double_quotes.c
+					./Parsing/Parser/double_quotes.c\
+					./Parsing/Parser/split_input.c
 
 EXEC_OBJS = ${EXEC_SOURCES:.c=.o}
 
