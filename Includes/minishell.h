@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:31:26 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/07 11:41:24 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/08 14:14:25 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,6 +38,10 @@
 # define ERR_ARGC			"too much argument to launch minishell ! "
 # define ERR_ENV_COPY		"an error occur while malloc for env copy "
 # define ERR_ENV_DUP		"an error occur while copying the environment "
+
+/* gobale variable */
+
+extern volatile int			g_exit_status;
 
 /* structures */
 
