@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 10:43:44 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/02 11:41:06 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/08 10:16:46 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,14 +23,14 @@ static char	*search_in_env(char *input, t_env *copy, int *i)
 	start = *i;
 	while (ft_isalnum(input[*i]) != 0 || input[*i] == '_')
 		*i += 1;
-	string = ft_substr(input, start, (*i - start));
+	string = ft_strjoin(ft_substr(input, start, (*i - start)), "=");
 	length = ft_strlen(string);
 	j = 0;
 	while (copy->env[j] && ft_strncmp(string, copy->env[j], length) != 0)
 		j++;
 	if (copy->env[j])
 	{
-		start = length + 1;
+		start = length;
 		length = ft_strlen(copy->env[j]) - start;
 		string = ft_substr(copy->env[j], start, length);
 	}

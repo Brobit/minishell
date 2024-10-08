@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:19:31 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/07 11:29:00 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/07 20:15:01 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -86,6 +86,6 @@ char	**get_option(char *line)
 	while (line[i] && ft_isspace(line[i]) != 0)
 		i++;
 	if (line[i] != '\0')
-		option = ft_split(&line[i], ' ');
+		option = split_input(&line[i], ' ');
 	return (option);
 }
