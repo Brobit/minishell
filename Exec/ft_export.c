@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 23:46:53 by hehuang           #+#    #+#             */
-/*   Updated: 2024/09/17 23:48:54 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/08 15:22:41 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ static void	swap_tab_var(char **tab, int i, int j)
 	tab[i] = tab[j];
 	tab[j] = tmp;
 }
+
 //selection sort
 static void	sort_tab(char **tab, int size)
 {

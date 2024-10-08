@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 23:46:49 by hehuang           #+#    #+#             */
-/*   Updated: 2024/09/18 00:17:18 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/08 15:21:24 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,25 +27,23 @@ int	find_var(char	**env, char *my_var)
 	while (++i < size)
 	{
 		if (!ft_strncmp(tmp_var, tmp_env[i], len))
-    {
-      free(tmp_env);
-      free(tmp_var);
+		{
+			free(tmp_env);
+			free(tmp_var);
 			return (i);
-    }
-    printf("%s\n", tmp_env[i]);
+		}
+		printf("%s\n", tmp_env[i]);
 	}
-  free(tmp_var);
-  free(tmp_env);
+	free(tmp_var);
+	free(tmp_env);
 	return (-1);
 }
 
 void	ft_unset(char	**env, char *my_var)
 {
-  int index;
+	int	index;
 
-  index = find_var(env, my_var);
-  if (index >= 0)
-  {
-    remove_element(env, index);
-  }
+	index = find_var(env, my_var);
+	if (index >= 0)
+		remove_element(env, index);
 }
