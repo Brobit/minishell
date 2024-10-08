@@ -1,26 +1,19 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_strncmp.c                                       :+:      :+:    :+:   */
+/*   lexer_utils.c                                      :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2023/10/18 22:35:29 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/08 09:32:47 by almarico         ###   ########.fr       */
+/*   Created: 2024/09/11 17:23:40 by almarico          #+#    #+#             */
+/*   Updated: 2024/09/11 17:24:49 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "libft.h"
+#include "../../Includes/minishell.h"
 
-int	ft_strncmp(const char *s1, const char *s2, unsigned int n)
+void	error(char *msg)
 {
-	if (!n)
-		return (0);
-	while (n - 1 > 0 && *s1 == *s2 && (*s1 != '\0' || *s2 != '\0'))
-	{
-		s1++;
-		s2++;
-		n--;
-	}
-	return (*(unsigned char *)s1 - *(unsigned char *)s2);
+	perror(msg);
+	exit(FAIL);
 }
