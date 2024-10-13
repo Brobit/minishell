@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   parser_entry.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
+/*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 16:29:14 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/07 11:41:40 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/13 21:40:12 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -83,5 +83,6 @@ int	parser_entry(char *input, t_env *copy)
 		i++;
 	}
 	print_chained_list(exec);
+	ft_exec(exec, copy);
 	return (SUCCESS);
 }

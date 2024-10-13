@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   stdin_listener.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
+/*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 21:29:54 by almarico          #+#    #+#             */
-/*   Updated: 2024/09/27 10:51:27 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/13 21:30:24 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,7 +20,7 @@ void	stdin_listener(t_env *copy)
 	rl_catch_signals = 0;
 	while (1)
 	{
-		input = readline("Minishell : ");
+		input = readline("\033[32mMinishell : \033[0m");
 		if (!input)
 			return (free_env(copy), free_readline(), exit(1));
 		else if (input && input[0] != '\0')

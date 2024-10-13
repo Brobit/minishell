@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:31:26 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/13 21:27:10 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/13 21:39:40 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -33,6 +33,7 @@
 # define TRUE				1
 # define FALSE				0
 
+# define TLL_MAX			9223372036854775807ULL
 /* error define */
 
 # define ERR_ARGC			"too much argument to launch minishell ! "
@@ -45,9 +46,18 @@ extern volatile int			g_exit_status;
 
 /* structures */
 
+typedef struct s_env_list
+{
+	struct s_env_list	*next;
+	struct s_env_list	*prev;
+	char				*name;
+	char				*val;
+}				t_env_list;
+
 typedef struct s_env
 {
-	char	**env;
+	char					**env;
+	struct s_env_list		*head;
 }				t_env;
 
 typedef enum e_redirection_type
@@ -86,20 +96,6 @@ void						free_readline(void);
 /* lexer_utils.c */
 
 void						error(char *msg);
-
-/* exec */
-void						echo_msg(char **msg);
-void						ft_cd(char *path);
-void						ft_pwd(void);
-void						ft_export(char **env);
-void						ft_env(char **env);
-void						ft_unset(char	**env, char *my_var);
-
-/* exec_utils.c */
-
-char						*ft_get_path(char	*cmd, char	**envp);
-char						**copy_tab(char	**env, int *size);
-void						remove_element(char **tab, int index);
 
 /* signal_handler.c */
 
@@ -164,5 +160,35 @@ int							is_in_double_quotes(char *str, int i);
 /* split_input.c */
 
 char						**split_input(char const *s, char c);
+
+/* exec */
+void						ft_echo(char **msg);
+void						ft_cd(char **path, t_env_list **env);
+void						ft_pwd(void);
+void						ft_export(t_env_list **env, char **args);
+void						ft_env(t_env_list *env);
+void						ft_unset(t_env_list	**env, char **my_var);
+void						ft_exec(t_exec *exec, t_env *env);
+void						ft_exit(char **exit_code);
+
+/* exec_utils.c */
+
+char						*ft_get_path(char	*cmd, char	**envp);
+char						**copy_tab(char	**env, int *size);
+int							ft_strchr_pos(const char *s, int c);
+int							count_params(char	**params);
+
+/* linkedlist_utils 1 & 2*/
+
+t_env_list					*new_env(char *name, char *value, t_env_list *prev);
+void						add_end(t_env_list **env, t_env_list *new_elmt);
+void						rm_elmt(t_env_list **env, t_env_list *elmt);
+t_env_list					**find_elmt(t_env_list **env, char	*elmt);
+t_env_list					*create_list_from_tab(char **env);
+int							list_size(t_env_list *mylist);
+void						free_list(t_env_list **list);
+void						free_elmt(t_env_list **elmt);
+t_env_list					*copy_list(t_env_list *env);
+int							set_value(t_env_list **env, char *str, char *val);
 
 #endif // !MINISHELL_H
