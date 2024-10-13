@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 22:57:58 by hehuang           #+#    #+#             */
-/*   Updated: 2024/09/16 23:36:56 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/13 21:16:24 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -76,6 +76,8 @@ void	ft_cd(char *path)
 		return ;
 	}
 }
+
+
 
 void	ft_pwd(void)
 {
