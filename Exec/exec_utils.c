@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 23:48:01 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/08 15:23:33 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/13 19:34:55 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,15 +74,26 @@ char	**copy_tab(char	**env, int *size)
 	return (copy);
 }
 
-void	remove_element(char **tab, int index)
+int	ft_strchr_pos(const char *s, int c)
+{
+	int		i;
+
+	i = 0;
+	while (s[i] != (char)c && s[i] != '\0')
+		i++;
+	if (s[i] == (char)c)
+		return (i + 1);
+	return (-1);
+}
+
+int	count_params(char	**params)
 {
 	int	i;
 
-	i = index;
-	while (tab[i + 1] != NULL)
-	{
-		tab[i] = tab[i + 1];
+	i = 0;
+	if (!params)
+		return (i);
+	while (params[i])
 		i++;
-	}
-	tab[i] = NULL;
+	return (i);
 }

@@ -6,11 +6,11 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 22:20:56 by hehuang           #+#    #+#             */
-/*   Updated: 2024/09/16 22:41:47 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/08 17:49:08 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Includes/minishell.h"
+#include "../../Includes/minishell.h"
 
 int	check_option_n(char *str)
 {
@@ -28,7 +28,7 @@ int	check_option_n(char *str)
 	return (0);
 }
 
-void	echo_msg(char **msg)
+void	ft_echo(char **msg)
 {
 	int	i;
 	int	n;

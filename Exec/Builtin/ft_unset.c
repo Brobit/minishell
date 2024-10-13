@@ -6,44 +6,37 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 23:46:49 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/08 15:21:24 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/11 19:28:57 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
-#include "../Includes/minishell.h"
+#include "../../Includes/minishell.h"
+#include <stdio.h>
 
-int	find_var(char	**env, char *my_var)
+int	find_and_rm(t_env_list	**env, char *my_var)
 {
-	int		i;
-	int		size;
-	int		len;
-	char	**tmp_env;
-	char	*tmp_var;
+	t_env_list	*current;
 
-	i = -1;
-	tmp_env = copy_tab(env, &size);
-	tmp_var = ft_strjoin(my_var, "=");
-	len = ft_strlen(tmp_var);
-	while (++i < size)
+	current = *env;
+	while (current != NULL)
 	{
-		if (!ft_strncmp(tmp_var, tmp_env[i], len))
+		if (!ft_strcmp(current->name, my_var))
 		{
-			free(tmp_env);
-			free(tmp_var);
-			return (i);
+			rm_elmt(env, current);
+			return (SUCCESS);
 		}
-		printf("%s\n", tmp_env[i]);
+		current = current->next;
 	}
-	free(tmp_var);
-	free(tmp_env);
-	return (-1);
+	return (FAIL);
 }
 
-void	ft_unset(char	**env, char *my_var)
+void	ft_unset(t_env_list	**env, char **params)
 {
-	int	index;
+	int	i;
 
-	index = find_var(env, my_var);
-	if (index >= 0)
-		remove_element(env, index);
+	i = -1;
+	while (params[++i])
+	{
+		find_and_rm(env, params[i]);
+	}
 }
