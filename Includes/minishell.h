@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:31:26 by almarico          #+#    #+#             */
-/*   Updated: 2024/09/18 00:13:50 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/13 21:27:10 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,12 +30,18 @@
 
 # define SUCCESS			0
 # define FAIL				1
+# define TRUE				1
+# define FALSE				0
 
 /* error define */
 
 # define ERR_ARGC			"too much argument to launch minishell ! "
 # define ERR_ENV_COPY		"an error occur while malloc for env copy "
 # define ERR_ENV_DUP		"an error occur while copying the environment "
+
+/* gobale variable */
+
+extern volatile int			g_exit_status;
 
 /* structures */
 
@@ -44,6 +50,30 @@ typedef struct s_env
 	char	**env;
 }				t_env;
 
+typedef enum e_redirection_type
+{
+	NONE,
+	INPUT,
+	OUTPUT,
+	HERE_DOC,
+	APPEND,
+}			t_redirection_type;
+
+typedef struct s_redirection
+{
+	t_redirection_type			type;
+	const char					*payload;
+	struct s_redirection		*next;
+}				t_redirection;
+
+typedef struct s_exec
+{
+	t_redirection				*redirection_list;
+	char						*cmd;
+	char						**option;
+	struct s_exec				*next;
+}				t_exec;
+
 /* lexer.c */
 
 int							lexer_entry(char **env);
@@ -51,6 +81,7 @@ int							lexer_entry(char **env);
 /* lexer_free.c */
 
 void						free_env(t_env *copy);
+void						free_readline(void);
 
 /* lexer_utils.c */
 
@@ -68,10 +99,70 @@ void						ft_unset(char	**env, char *my_var);
 
 char						*ft_get_path(char	*cmd, char	**envp);
 char						**copy_tab(char	**env, int *size);
-void            remove_element(char **tab, int index);
+void						remove_element(char **tab, int index);
 
+/* signal_handler.c */
 
-/*exec test
-void						ft_cd(char *path, char *cmd, char **envp);
-*/
+int							init_signal(struct sigaction *signal, int sigerror);
+
+/* stdin_listener.c */
+
+void						stdin_listener(t_env *copy);
+
+/* parser_entry.c */
+
+int							parser_entry(char *input, t_env *copy);
+
+/* exec_list.c */
+
+t_exec						*list_new_node(void);
+t_exec						*list_last(t_exec *lst);
+void						list_add_back(t_exec **exec, t_exec *neww);
+
+/* parser_functions.c */
+
+t_redirection				*get_redirections(char *instruction_line);
+void						trim_redirections(char **line);
+char						*get_command(char *instruction_line);
+char						**get_option(char *instruction_line);
+
+/* redirection_lis.c */
+
+t_redirection				*redirection_list_new_node(void);
+t_redirection				*redirection_list_last(t_redirection *lst);
+void						redirection_list_add_back(t_redirection **exec, \
+							t_redirection *neww);
+
+/* check_syntax.c */
+
+int							check_syntax_error(char *input);
+
+/* redirection_utils.c */
+
+int							fill_redirection(t_redirection *redirection_list, \
+							char *instruction_line);
+void						exec_trim(char **line, char **res, int *i, int j);
+
+/* parser_free.c */
+
+void						free_instructions(char **instructions);
+
+/* env_variable */
+
+void						check_env_variable_and_quotes(char **input, \
+							t_env *copy);
+
+/* quotes.c */
+
+int							is_in_quotes(char *str, int i);
+int							is_interpreted(char *str, int i);
+
+/* double_quotes.c */
+
+int							is_in_double_quotes(char *str, int i);
+
+/* split_input.c */
+
+char						**split_input(char const *s, char c);
+
 #endif // !MINISHELL_H

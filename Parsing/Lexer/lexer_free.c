@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:57:13 by almarico          #+#    #+#             */
-/*   Updated: 2024/09/14 12:06:07 by almarico         ###   ########.fr       */
+/*   Updated: 2024/09/16 10:17:44 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,4 +20,11 @@ void	free_env(t_env *copy)
 	while (copy->env[i])
 		free(copy->env[i++]);
 	free(copy->env);
+}
+
+void	free_readline(void)
+{
+	rl_clear_history();
+	rl_free_line_state();
+	rl_deprep_terminal();
 }

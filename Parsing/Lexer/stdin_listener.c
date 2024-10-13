@@ -1,25 +1,38 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   main.c                                             :+:      :+:    :+:   */
+/*   stdin_listener.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/10 16:29:34 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/08 14:16:06 by almarico         ###   ########.fr       */
+/*   Created: 2024/09/15 21:29:54 by almarico          #+#    #+#             */
+/*   Updated: 2024/09/27 10:51:27 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/minishell.h"
 
-volatile int	g_exit_status;
-
-int	main(int argc, char **argv, char **env)
+void	stdin_listener(t_env *copy)
 {
-	g_exit_status = 0;
-	(void)argv;
-	if (argc > 1)
-		return (perror(ERR_ARGC), FAIL);
-	lexer_entry(env);
-	return (g_exit_status);
+	char	*input;
+
+	input = NULL;
+	rl_catch_signals = 0;
+	while (1)
+	{
+		input = readline("Minishell : ");
+		if (!input)
+			return (free_env(copy), free_readline(), exit(1));
+		else if (input && input[0] != '\0')
+		{
+			add_history(input);
+			if (parser_entry(input, copy) == FAIL)
+			{
+				ft_printf("syntax error\n");
+				rl_replace_line("", 1);
+				rl_redisplay();
+			}
+		}
+		free(input);
+	}
 }
