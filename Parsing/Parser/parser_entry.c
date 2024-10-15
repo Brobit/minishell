@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 16:29:14 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/07 11:41:40 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/11 09:21:38 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,7 +41,8 @@ void	print_chained_list(t_exec *exec)
 	}
 }
 
-static t_exec	*create_and_assign_node(t_exec **tmp, char *instruction)
+static t_exec	*create_and_assign_node(t_exec **tmp, \
+				char *instruction, t_env *copy)
 {
 	t_exec	*new_node;
 
@@ -56,7 +57,7 @@ static t_exec	*create_and_assign_node(t_exec **tmp, char *instruction)
 	(*tmp)->redirection_list = get_redirections(instruction);
 	trim_redirections(&instruction);
 	(*tmp)->cmd = get_command(instruction);
-	(*tmp)->option = get_option(instruction);
+	(*tmp)->option = get_option(instruction, copy);
 	return (new_node);
 }
 
@@ -72,14 +73,13 @@ int	parser_entry(char *input, t_env *copy)
 	i = 0;
 	if (check_syntax_error(input) == FAIL)
 		return (FAIL);
-	check_env_variable_and_quotes(&input, copy);
 	instructions = split_input(input, '|');
 	while (instructions[i])
 	{
 		if (!exec)
-			exec = create_and_assign_node(&tmp, instructions[i]);
+			exec = create_and_assign_node(&tmp, instructions[i], copy);
 		else
-			create_and_assign_node(&tmp, instructions[i]);
+			create_and_assign_node(&tmp, instructions[i], copy);
 		i++;
 	}
 	print_chained_list(exec);
