@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:21:50 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/13 20:21:33 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/14 15:40:30 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -65,12 +65,12 @@ void	rm_elmt(t_env_list **env, t_env_list *elmt)
 	free_elmt(&elmt);
 }
 
-t_env_list	**find_elmt(t_env_list **env, char	*elmt)
+t_env_list	*find_elmt(t_env_list **env, char	*elmt)
 {
 	int			i;
 	t_env_list	*current;
 	char		*tmp_var;
-	t_env_list	**res;
+	t_env_list	*res;
 
 	i = ft_strchr_pos(elmt, '=');
 	if (i > 0)
@@ -83,7 +83,7 @@ t_env_list	**find_elmt(t_env_list **env, char	*elmt)
 		if (!ft_strcmp(tmp_var, current->name)
 			|| !ft_strcmp(elmt, current->name))
 		{
-			res = &current;
+			res = current;
 			free(tmp_var);
 			return (res);
 		}

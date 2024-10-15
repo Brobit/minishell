@@ -1,46 +1,28 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   ft_unset.c                                         :+:      :+:    :+:   */
+/*   ft_env.c                                           :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/17 23:46:49 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/14 15:31:11 by hehuang          ###   ########.fr       */
+/*   Created: 2024/10/14 15:34:15 by hehuang           #+#    #+#             */
+/*   Updated: 2024/10/14 15:34:49 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/minishell.h"
-#include <stdio.h>
 
-int	find_and_rm(t_env_list	**env, char *my_var)
+void	ft_env(t_env_list *env)
 {
 	t_env_list	*current;
-	int			len;
 
-	current = *env;
-	len = ft_strlen(my_var);
+	current = env;
 	while (current != NULL)
 	{
-		if (!ft_strncmp(current->name, my_var, len)
-			&& (!my_var[len]
-				|| (current->name[len] == '=' && current->name[len + 1])))
-		{
-			rm_elmt(env, current);
-			return (SUCCESS);
-		}
+		if (current->val && ft_strcmp("", current->val))
+			printf("%s%s\n", current->name, current->val);
+		else if (ft_strchr(current->name, '='))
+			printf("%s\n", current->name);
 		current = current->next;
-	}
-	return (FAIL);
-}
-
-void	ft_unset(t_env_list	**env, char **params)
-{
-	int	i;
-
-	i = -1;
-	while (params[++i])
-	{
-		find_and_rm(env, params[i]);
 	}
 }

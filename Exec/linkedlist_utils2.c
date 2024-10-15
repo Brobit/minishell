@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:25:51 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/13 20:27:58 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/14 15:45:38 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,23 +64,23 @@ t_env_list	*copy_list(t_env_list *env)
 
 int	set_value(t_env_list **env, char *str, char *new_val)
 {
-	t_env_list	**node;
+	t_env_list	*node;
 	char		*val;
 
 	node = find_elmt(env, str);
 	if (new_val)
 	{
-		(*node)->val = new_val;
+		node->val = new_val;
 		return (SUCCESS);
 	}
 	else if (ft_strchr_pos(str, '='))
 	{
 		val = ft_substr(str, ft_strchr_pos(str, '='), ft_strlen(str));
 		printf("new val = %s\n", val);
-		/*if ((*node)->val)
-			free((*node)->val);*/
-		(*node)->val = val;
-		printf("%s\n", (*node)->val);
+		if (node->val)
+			free(node->val);
+		(node)->val = val;
+		printf("%s\n", (node)->val);
 	}
 	return (FAIL);
 }

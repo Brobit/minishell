@@ -6,11 +6,12 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 16:29:14 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/13 21:40:12 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/15 11:59:32 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/minishell.h"
+#include <stdio.h>
 
 void	print_chained_list(t_exec *exec)
 {
@@ -82,7 +83,7 @@ int	parser_entry(char *input, t_env *copy)
 			create_and_assign_node(&tmp, instructions[i]);
 		i++;
 	}
-	print_chained_list(exec);
 	ft_exec(exec, copy);
+	print_chained_list(exec);
 	return (SUCCESS);
 }

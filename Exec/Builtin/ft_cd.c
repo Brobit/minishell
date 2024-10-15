@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 22:57:58 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/13 18:45:47 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/14 15:43:24 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,13 +30,13 @@ void	ft_cd(char **path, t_env_list **env)
 	}
 	else if (param_nb == 0)
 	{
-		if (chdir((*find_elmt(env, "HOME"))->val) != 0)
+		if (chdir((find_elmt(env, "HOME"))->val) != 0)
 		{
 			perror("cd");
 			return ;
 		}
 	}
-	set_value(env, "OLDPWD", (*find_elmt(env, "PWD"))->val);
+	set_value(env, "OLDPWD", (find_elmt(env, "PWD"))->val);
 	set_value(env, "PWD", getcwd(cwd, sizeof(cwd)));
 }
 

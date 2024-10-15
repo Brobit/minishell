@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 23:46:53 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/13 20:23:28 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/14 15:43:51 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,10 +54,31 @@ void	sort_list(t_env_list *head)
 	}
 }
 
+int	find_and_set(t_env_list	**env, char *my_var, char	*new_val)
+{
+	t_env_list	*current;
+	int			len;
+
+	current = *env;
+	len = ft_strlen(my_var);
+	while (current != NULL)
+	{
+		if (!ft_strncmp(current->name, my_var, len)
+			&& (!my_var[len]
+				|| (current->name[len] == '=' && current->name[len + 1])))
+		{
+			current->val = new_val;
+			return (SUCCESS);
+		}
+		current = current->next;
+	}
+	return (FAIL);
+}
+
 void	add_to_env(char **params, t_env_list **env)
 {
 	int			i;
-	t_env_list	**param;
+	t_env_list	*param;
 
 	i = -1;
 	while (params[++i])
@@ -108,19 +129,4 @@ void	ft_export(t_env_list	**env, char **args)
 	}
 	else
 		add_to_env(args, env);
-}
-
-void	ft_env(t_env_list *env)
-{
-	t_env_list	*current;
-
-	current = env;
-	while (current != NULL)
-	{
-		if (ft_strcmp("", current->val))
-			printf("%s%s\n", current->name, current->val);
-		else if (ft_strchr(current->name, '='))
-			printf("%s\n", current->name);
-		current = current->next;
-	}
 }

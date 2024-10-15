@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:31:26 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/13 21:39:40 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/15 12:53:02 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,9 @@
 # include <sys/ioctl.h>
 # include <termios.h>
 # include <curses.h>
+# include <fcntl.h>
+# include <sys/types.h>
+
 
 # define SUCCESS			0
 # define FAIL				1
@@ -83,6 +86,12 @@ typedef struct s_exec
 	char						**option;
 	struct s_exec				*next;
 }				t_exec;
+
+typedef struct s_array
+{
+	char			*str;
+	struct s_array	*next;
+}				t_array;
 
 /* lexer.c */
 
@@ -161,7 +170,7 @@ int							is_in_double_quotes(char *str, int i);
 
 char						**split_input(char const *s, char c);
 
-/* exec */
+/* builtin */
 void						ft_echo(char **msg);
 void						ft_cd(char **path, t_env_list **env);
 void						ft_pwd(void);
@@ -171,19 +180,26 @@ void						ft_unset(t_env_list	**env, char **my_var);
 void						ft_exec(t_exec *exec, t_env *env);
 void						ft_exit(char **exit_code);
 
+/* exec */
+
+/* heredoc */
+
+void						ft_here_doc(const char *delimiter);
+
 /* exec_utils.c */
 
-char						*ft_get_path(char	*cmd, char	**envp);
+char						*ft_get_path(char	*cmd, t_env_list	**envp);
 char						**copy_tab(char	**env, int *size);
 int							ft_strchr_pos(const char *s, int c);
 int							count_params(char	**params);
+char						**list_to_char(t_env_list **env);
 
 /* linkedlist_utils 1 & 2*/
 
 t_env_list					*new_env(char *name, char *value, t_env_list *prev);
 void						add_end(t_env_list **env, t_env_list *new_elmt);
 void						rm_elmt(t_env_list **env, t_env_list *elmt);
-t_env_list					**find_elmt(t_env_list **env, char	*elmt);
+t_env_list					*find_elmt(t_env_list **env, char	*elmt);
 t_env_list					*create_list_from_tab(char **env);
 int							list_size(t_env_list *mylist);
 void						free_list(t_env_list **list);

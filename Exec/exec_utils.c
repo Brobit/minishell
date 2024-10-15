@@ -6,40 +6,20 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 23:48:01 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/13 19:34:55 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/14 16:55:44 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
 
-char	*ft_get_env(char	*name, char	**envp)
-{
-	int	i;
-	int	n_len;
-	int	env_len;
-
-	i = -1;
-	n_len = ft_strlen(name);
-	while (envp[++i])
-	{
-		env_len = ft_strlen(envp[i]);
-		if (env_len > n_len && envp[i][n_len] == '='
-			&& !ft_strncmp(name, envp[i], n_len))
-		{
-			return (envp[i] + n_len + 1);
-		}
-	}
-	return (NULL);
-}
-
-char	*ft_get_path(char	*cmd, char	**envp)
+char	*ft_get_path(char	*cmd, t_env_list **env)
 {
 	char	**paths;
 	char	*exec;
 	int		i;
 
 	i = -1;
-	paths = ft_split(ft_get_env("PATH", envp), ':');
+	paths = ft_split(find_elmt(env, "PATH")->val, ':');
 	while (paths[++i])
 	{
 		paths[i] = ft_strjoin(paths[i], "/");
@@ -96,4 +76,24 @@ int	count_params(char	**params)
 	while (params[i])
 		i++;
 	return (i);
+}
+
+char	**list_to_char(t_env_list **env)
+{
+	int			len;
+	int			i;
+	char		**res;
+	t_env_list	*current;
+
+	len = list_size(*env);
+	res = malloc(sizeof(char *) * len);
+	current = *env;
+	i = -1;
+	while (++i < len)
+	{
+		res[i] = ft_strjoin(current->name, current->val);
+		current = current->next;
+	}
+	res[len - 1] = NULL;
+	return (res);
 }

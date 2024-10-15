@@ -17,12 +17,14 @@ INCLUDES = -I ./Includes/
 EXEC_SOURCES = 	./Exec/Builtin/ft_cd.c\
 				./Exec/Builtin/ft_echo.c\
 				./Exec/Builtin/ft_export.c\
+				./Exec/Builtin/ft_env.c\
 				./Exec/Builtin/ft_unset.c\
 				./Exec/Builtin/ft_exit.c\
 				./Exec/ft_exec.c\
 				./Exec/exec_utils.c\
 				./Exec/linkedlist_utils.c\
-				./Exec/linkedlist_utils2.c
+				./Exec/linkedlist_utils2.c\
+				./Exec/here_doc.c\
 
 
 LEXER_SOURCES = 	./Parsing/Lexer/main.c\
@@ -49,6 +51,8 @@ EXEC_OBJS = ${EXEC_SOURCES:.c=.o}
 LEXER_OBJS = ${LEXER_SOURCES:.c=.o}
 
 PARSER_OBJS = ${PARSER_SOURCES:.c=.o}
+
+OBJS = ${LEXER_OBJS} ${PARSER_OBJS} ${EXEC_OBJS}
 
 all : ${NAME}
 
