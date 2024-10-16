@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 14:30:09 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/16 13:39:52 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/16 19:54:40 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,7 +24,8 @@ int	fill_payload(t_redirection *tmp, char *instruction_line)
 	while (ft_isspace(instruction_line[i]) == 0)
 		i++;
 	j = i;
-	while (ft_isspace(instruction_line[j]) != 0)
+	while (ft_isspace(instruction_line[j]) != 0
+		&& (instruction_line[j] != '<' && instruction_line[j] != '>'))
 		j++;
 	tmp->payload = ft_substr(instruction_line, i, (j - i));
 	return (j);
