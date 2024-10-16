@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 16:29:14 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/16 14:53:25 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/16 19:36:09 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -63,6 +63,21 @@ static t_exec	*create_and_assign_node(t_exec **tmp, \
 	return (new_node);
 }
 
+int	check_payload(t_exec **exec)
+{
+	t_exec	*nav;
+
+	nav = *exec;
+	while (nav)
+	{
+		if (!nav->redirection_list->payload
+			|| nav->redirection_list->payload[0] == '\0')
+			return (FAIL);
+		nav = nav->next;
+	}
+	return (SUCCESS);
+}
+
 int	parser_entry(char *input, t_env *copy)
 {
 	t_exec	*exec;
@@ -84,6 +99,8 @@ int	parser_entry(char *input, t_env *copy)
 			create_and_assign_node(&tmp, instructions[i], copy);
 		i++;
 	}
+	if (check_payload(&exec) == FAIL)
+		return (FAIL);
 	// free_exec_list(tmp);
 	print_chained_list(exec);
 	return (SUCCESS);
