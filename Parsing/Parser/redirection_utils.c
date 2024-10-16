@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 14:30:09 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/07 11:28:16 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/16 13:39:52 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -55,6 +55,8 @@ void	exec_trim(char **line, char **res, int *i, int j)
 {
 	while ((*line)[*i] && (*line)[*i] != '<' && (*line)[*i] != '>')
 		*i += 1;
+	if ((*line)[*i] == '\0')
+		*res = ft_strjoin(*res, ft_substr((*line), j, (*i - j)));
 	if ((*line)[*i] && is_in_quotes((*line), *i) == FALSE
 		&& is_in_double_quotes((*line), *i) == FALSE)
 		*res = ft_strjoin(*res, ft_substr((*line), j, (*i - j)));

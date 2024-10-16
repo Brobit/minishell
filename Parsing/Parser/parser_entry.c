@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 16:29:14 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/16 10:36:27 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/16 14:53:25 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,7 +37,7 @@ void	print_chained_list(t_exec *exec)
 		{
 			i = 0;
 			while (exec->option[i] != NULL)
-				ft_printf("option : %s\n", exec->option[i++]);
+				ft_printf("option : |%s|\n", exec->option[i++]);
 		}
 		exec = exec->next;
 	}
@@ -85,6 +85,6 @@ int	parser_entry(char *input, t_env *copy)
 		i++;
 	}
 	// free_exec_list(tmp);
-	// print_chained_list(exec);
+	print_chained_list(exec);
 	return (SUCCESS);
 }
