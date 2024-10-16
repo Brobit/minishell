@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 16:29:14 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/11 09:21:38 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/16 10:36:27 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -27,6 +27,8 @@ void	print_chained_list(t_exec *exec)
 			ft_printf("redirection type : %d\tpayload : %s\n", exec->redirection_list->type, exec->redirection_list->payload);
 			exec->redirection_list = exec->redirection_list->next;
 		}
+		if (exec->cmd == NULL)
+			ft_printf("there is no command\n");
 		if (exec->cmd)
 			ft_printf("cmd : %s\n", exec->cmd);
 		if (exec->option == NULL)
@@ -82,6 +84,7 @@ int	parser_entry(char *input, t_env *copy)
 			create_and_assign_node(&tmp, instructions[i], copy);
 		i++;
 	}
-	print_chained_list(exec);
+	// free_exec_list(tmp);
+	// print_chained_list(exec);
 	return (SUCCESS);
 }

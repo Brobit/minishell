@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:31:26 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/11 13:57:30 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:45:08 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -157,5 +157,9 @@ char						**split_input(char const *s, char c);
 /* trim_quotes.c */
 
 void						trim_quotes(char **option, t_env *copy);
+
+/* free_exec_list.c */
+
+void						free_exec_list(t_exec *exec);
 
 #endif // !MINISHELL_H
