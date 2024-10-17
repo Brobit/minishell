@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 16:29:14 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/16 19:36:09 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/17 15:40:59 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,8 @@ static t_exec	*create_and_assign_node(t_exec **tmp, \
 	trim_redirections(&instruction);
 	(*tmp)->cmd = get_command(instruction);
 	(*tmp)->option = get_option(instruction, copy);
-	return (new_node);
+	free(instruction);
+	return (*tmp);
 }
 
 int	check_payload(t_exec **exec)
@@ -70,8 +71,8 @@ int	check_payload(t_exec **exec)
 	nav = *exec;
 	while (nav)
 	{
-		if (!nav->redirection_list->payload
-			|| nav->redirection_list->payload[0] == '\0')
+		if (nav->redirection_list && (!nav->redirection_list->payload
+				|| nav->redirection_list->payload[0] == '\0'))
 			return (FAIL);
 		nav = nav->next;
 	}
@@ -99,9 +100,9 @@ int	parser_entry(char *input, t_env *copy)
 			create_and_assign_node(&tmp, instructions[i], copy);
 		i++;
 	}
+	free(instructions);
 	if (check_payload(&exec) == FAIL)
 		return (FAIL);
-	// free_exec_list(tmp);
-	print_chained_list(exec);
+	free_exec_list(exec);
 	return (SUCCESS);
 }

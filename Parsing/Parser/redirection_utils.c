@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 14:30:09 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/17 10:09:15 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/17 14:38:38 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,13 +54,17 @@ int	fill_redirection(t_redirection *redirection_list, char *instruction_line)
 
 void	exec_trim(char **line, char **res, int *i, int j)
 {
+	char	*sub_str;
+
 	while ((*line)[*i] && (*line)[*i] != '<' && (*line)[*i] != '>')
 		*i += 1;
+	sub_str = ft_substr((*line), j, (*i - j));
 	if ((*line)[*i] == '\0')
-		*res = ft_strjoin(*res, ft_substr((*line), j, (*i - j)));
-	if ((*line)[*i] && is_in_quotes((*line), *i) == FALSE
+		*res = ft_strjoin(*res, sub_str);
+	else if ((*line)[*i] && is_in_quotes((*line), *i) == FALSE
 		&& is_in_double_quotes((*line), *i) == FALSE)
-		*res = ft_strjoin(*res, ft_substr((*line), j, (*i - j)));
+		*res = ft_strjoin(*res, sub_str);
+	free(sub_str);
 	while ((*line)[*i] && ((*line)[*i] == '<' || (*line)[*i] == '>'))
 		*i += 1;
 	while ((*line)[*i] && ft_isspace((*line)[*i]) == 0)

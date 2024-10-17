@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 16:44:50 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/16 10:33:29 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/17 10:44:21 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -42,4 +42,5 @@ void	free_exec_list(t_exec *exec)
 			free(exec->option[i++]);
 	free(exec->option);
 	exec->option = NULL;
+	free(exec);
 }

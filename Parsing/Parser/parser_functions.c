@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:19:31 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/16 19:59:08 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/17 15:35:27 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,9 +15,11 @@
 t_redirection	*get_redirections(char *instruction_line)
 {
 	t_redirection	*redirection_list;
+	t_redirection	*new_node;
 	int				i;
 
 	redirection_list = NULL;
+	new_node = NULL;
 	i = 0;
 	while (instruction_line[i])
 	{
@@ -26,12 +28,13 @@ t_redirection	*get_redirections(char *instruction_line)
 			if (is_in_quotes(instruction_line, i) == FALSE
 				&& is_in_double_quotes(instruction_line, i) == FALSE)
 			{
-				redirection_list_add_back(&redirection_list, \
-							redirection_list_new_node());
+				new_node = redirection_list_new_node();
+				redirection_list_add_back(&redirection_list, new_node);
 				i += fill_redirection(redirection_list, &instruction_line[i]);
 			}
 		}
-		if (instruction_line[i] != '<' && instruction_line[i] != '>')
+		if (instruction_line[i] && instruction_line[i] != '<'
+			&& instruction_line[i] != '>')
 			i++;
 	}
 	return (redirection_list);
