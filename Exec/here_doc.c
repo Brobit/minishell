@@ -6,12 +6,11 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:09:15 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/15 12:22:41 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/17 19:37:04 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
-#include <stdio.h>
 
 void	ft_here_doc(const char *delimiter)
 {
@@ -35,9 +34,9 @@ void	ft_here_doc(const char *delimiter)
 			free(line);
 			break ;
 		}
-		printf("%s\n", line);
+		write(fd, line, strlen(line));
+		write(fd, "\n", 1);
 		free(line);
 	}
 	close(fd);
-	unlink(filename);
 }

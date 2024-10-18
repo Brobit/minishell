@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:31:26 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/18 15:48:22 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/18 15:53:36 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,8 +81,14 @@ typedef struct s_redirection
 typedef struct s_exec
 {
 	t_redirection				*redirection_list;
+	t_redirection				*input;
+	t_redirection				*output;
 	char						*cmd;
 	char						**option;
+	int							fd_input;
+	int							fd_output;
+	int							input_exist;
+	int							output_exist;
 	struct s_exec				*next;
 }				t_exec;
 
@@ -196,6 +202,11 @@ int							ft_strchr_pos(const char *s, int c);
 int							count_params(char	**params);
 char						**list_to_char(t_env_list **env);
 
+int							check_redirection(t_exec **exec);
+void						check_pipe(t_exec **exec, int in_parent, \
+											int fd_last_pipe, int *pipe_fd);
+char						**get_args(t_exec *exec);
+
 /* linkedlist_utils 1 & 2*/
 
 t_env_list					*new_env(char *name, char *value, t_env_list *prev);
@@ -216,5 +227,8 @@ void						trim_quotes(char **option, t_env *copy);
 /* free_exec_list.c */
 
 void						free_exec_list(t_exec *exec);
+
+/* DEBUG */
+void						display_exec(t_exec *exec);
 
 #endif // !MINISHELL_H

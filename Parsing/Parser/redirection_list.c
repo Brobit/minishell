@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_list.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
+/*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:38:28 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/17 15:39:00 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/18 15:52:23 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 

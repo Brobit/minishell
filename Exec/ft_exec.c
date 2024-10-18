@@ -6,12 +6,13 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 17:42:14 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/15 12:51:08 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/18 15:37:38 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
 #include <stdio.h>
+#include <unistd.h>
 
 int	check_builtin(t_exec *exec, t_env_list **env)
 {
@@ -34,48 +35,81 @@ int	check_builtin(t_exec *exec, t_env_list **env)
 	return (SUCCESS);
 }
 
-char	**exec_cmd(t_exec *exec, char **env)
+void	exec_cmd(t_exec *exec, t_env_list *head)
 {
-	char	**res;
-	char	*tmp;
-	char	**current;
-	int		i;
+	char	**env_str;
+	char	**fuse;
 
-	current = exec->option;
-	i = -1;
+	if (exec->input_exist)
+	{
+		if (dup2 (exec->fd_input, STDIN_FILENO) == -1)
+			perror("dup2 input need to exit");
+		close(exec->fd_input);
+	}
+	if (exec->output_exist)
+	{
+		if (dup2(exec->fd_output, STDOUT_FILENO) == -1)
+			perror ("dup2 output need to exit");
+		close(exec->fd_output);
+	}
+	if (head && check_builtin(exec, &head) == SUCCESS)
+		printf("builtin : %s\n", exec->cmd);
+	else
+	{
+		env_str = list_to_char(&head);
+		fuse = get_args(exec);
+		execve(ft_get_path(exec->cmd, &head), fuse, env_str);
+		printf("fail\n");
+	}
+}
+
+void	ft_parent_process(t_exec *exec, int last_fd, int *pipe_fd, pid_t	pid)
+{
+	waitpid(pid, NULL, 0);
+	check_pipe(&exec, 1, last_fd, pipe_fd);
+	printf("parent\n");
+	if (access("heredoc.text", F_OK))
+		unlink("heredoc.txt");
+}
+
+void	ft_pipe(t_exec *exec, t_env_list *head)
+{
+	pid_t				pid;
+	int					pipe_fd[2];
+	int					last_fd;
+
+	if (pipe(pipe_fd) == -1)
+	{
+		perror("pipe");
+		exit(FAIL);
+	}
+	last_fd = -1;
+	pid = fork();
+	if (!pid)
+	{
+		check_pipe(&exec, 0, last_fd, pipe_fd);
+		if (exec->redirection_list)
+			check_redirection(&exec);
+		exec_cmd(exec, head);
+	}
+	else if (pid < 0)
+	{
+		perror("pid");
+		return ;
+	}
+	else
+		ft_parent_process(exec, last_fd, pipe_fd, pid);
 }
 
 void	ft_exec(t_exec *exec, t_env *env)
 {
 	static t_env_list	*head = NULL;
-	pid_t				pid;
-	char				**env_char;
 
 	if (!head)
 		head = create_list_from_tab(env->env);
 	while (exec != NULL)
 	{
-		if (env && check_builtin(exec, &head) == SUCCESS)
-			printf("builtin : %s\n", exec->cmd);
-		else
-		{
-			printf("not in builtin\n");
-			if (!exec->redirection_list)
-				printf("no redirection\n");
-			pid = fork();
-			if (!pid)
-			{
-				env_char = list_to_char(&head);
-				if (exec->redirection_list->type == HERE_DOC)
-					ft_here_doc(exec->redirection_list->payload);
-				//////exec->option = ft_split(exec->option, '');
-				execve(ft_get_path(exec->cmd, &head), exec->option, env_char);
-				printf("fail\n");
-				exit(EXIT_FAILURE);// MAY NEED TO FREE
-			}
-		}
+		ft_pipe(exec, head);
 		exec = exec->next;
 	}
-	waitpid(pid, NULL, 0);
-	printf("end\n");
 }

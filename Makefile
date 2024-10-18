@@ -21,11 +21,12 @@ EXEC_SOURCES = 	./Exec/Builtin/ft_cd.c\
 				./Exec/Builtin/ft_unset.c\
 				./Exec/Builtin/ft_exit.c\
 				./Exec/ft_exec.c\
-				./Exec/exec_utils.c\
-				./Exec/linkedlist_utils.c\
-				./Exec/linkedlist_utils2.c\
+				./Exec/utils/exec_utils.c\
+				./Exec/utils/exec_utils2.c\
+				./Exec/utils/linkedlist_utils.c\
+				./Exec/utils/linkedlist_utils2.c\
 				./Exec/here_doc.c\
-
+				./Exec/utils/debug.c\
 
 LEXER_SOURCES = 	./Parsing/Lexer/main.c\
 					./Parsing/Lexer/lexer.c\
