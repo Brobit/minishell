@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:31:26 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/08 14:14:25 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/15 16:45:08 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -110,7 +110,7 @@ void						list_add_back(t_exec **exec, t_exec *neww);
 t_redirection				*get_redirections(char *instruction_line);
 void						trim_redirections(char **line);
 char						*get_command(char *instruction_line);
-char						**get_option(char *instruction_line);
+char						**get_option(char *instruction_line, t_env *copy);
 
 /* redirection_lis.c */
 
@@ -137,6 +137,9 @@ void						free_instructions(char **instructions);
 
 void						check_env_variable_and_quotes(char **input, \
 							t_env *copy);
+void						search_and_replace_env_variable(char **input, \
+							t_env *copy);
+void						transform_string(char **input, t_env *copy, int *i);
 
 /* quotes.c */
 
@@ -150,5 +153,13 @@ int							is_in_double_quotes(char *str, int i);
 /* split_input.c */
 
 char						**split_input(char const *s, char c);
+
+/* trim_quotes.c */
+
+void						trim_quotes(char **option, t_env *copy);
+
+/* free_exec_list.c */
+
+void						free_exec_list(t_exec *exec);
 
 #endif // !MINISHELL_H
