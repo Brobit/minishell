@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 10:43:44 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/08 14:17:45 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/11 13:57:16 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -48,7 +48,7 @@ static char	*replace_by_last_exit_status(int *i)
 	return (value);
 }
 
-static void	transform_string(char **input, t_env *copy, int *i)
+void	transform_string(char **input, t_env *copy, int *i)
 {
 	char	*before_variable;
 	char	*variable_expension;
@@ -70,25 +70,18 @@ static void	transform_string(char **input, t_env *copy, int *i)
 	free(rest_of_string);
 }
 
-static void	search_and_replace_env_variable(char **input, t_env *copy)
+void	search_and_replace_env_variable(char **input, t_env *copy)
 {
 	int		i;
 
 	i = 0;
 	while ((*input)[i])
 	{
-		if ((*input)[i] == '$' && is_interpreted((*input), i) == TRUE)
+		if ((*input)[i] == '$')
 		{
 			transform_string(input, copy, &i);
 			i = -1;
 		}
 		i++;
 	}
-}
-
-void	check_env_variable_and_quotes(char **input, t_env *copy)
-{
-	ft_printf("input before evironment expension : %s\n", (*input));
-	search_and_replace_env_variable(input, copy);
-	ft_printf("input after evironment expension : %s\n", (*input));
 }

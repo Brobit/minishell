@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:38:28 by almarico          #+#    #+#             */
-/*   Updated: 2024/09/20 11:38:02 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/17 15:39:00 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,11 +17,11 @@ t_redirection	*redirection_list_new_node(void)
 	t_redirection	*new;
 
 	new = malloc(sizeof(t_exec));
+	if (!new)
+		return (NULL);
 	new->type = NONE;
 	new->payload = NULL;
 	new->next = NULL;
-	if (!new)
-		return (NULL);
 	return (new);
 }
 
