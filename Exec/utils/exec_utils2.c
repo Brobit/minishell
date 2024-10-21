@@ -6,93 +6,80 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 17:54:22 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/18 15:28:53 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/21 16:09:38 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/minishell.h"
 #include <stdio.h>
+#include <unistd.h>
 
-void	check_output(t_exec **exec, t_redirection *redirec)
+void	check_output(t_exec_list **exec, t_redirection	*redirect)
 {
-	if ((*exec)->fd_output)
-		close ((*exec)->fd_output);
-	if (redirec->type == OUTPUT)
-		(*exec)->fd_output = open(redirec->payload, \
-			O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	if ((*exec)->fd_out > 2)
+		close ((*exec)->fd_out);
+	if (redirect->type == OUTPUT)
+		(*exec)->fd_out = ft_open(redirect->payload, 1, 0);
 	else
-		(*exec)->fd_output = open(redirec->payload, \
-			O_WRONLY | O_CREAT | O_APPEND, 0644);
-	if ((*exec)->fd_output == -1)
+		(*exec)->fd_out = ft_open(redirect->payload, 0, 1);
+	(*exec)->outfile = redirect->payload;
+	if ((*exec)->fd_out == -1)
 	{
-		perror(redirec->payload);
+		perror((*exec)->outfile);
 	}
-	else
-		(*exec)->output_exist = 1;
 }
 
-void	check_input(t_exec **exec, t_redirection *redirec)
+void	check_input(t_exec_list **exec, t_redirection *redirect)
 {
-	if ((*exec)->fd_input || redirec->type == HERE_DOC)
-		close ((*exec)->fd_input);
-	if (redirec->type == INPUT)
-		(*exec)->fd_input = open(redirec->payload, O_RDONLY);
+	if ((*exec)->fd_in > 2)
+		close ((*exec)->fd_in);
+	if (redirect->type == INPUT)
+	{
+		(*exec)->fd_in = ft_open(redirect->payload, 0, 0);
+		(*exec)->infile = redirect->payload;
+	}
 	else
 	{
-		ft_here_doc(redirec->payload);
+		ft_here_doc(redirect->payload);
 		if (access("heredoc.txt", F_OK) == 0)
-			(*exec)->fd_input = open("heredoc.txt", O_RDONLY);
+		{
+			(*exec)->fd_in = ft_open("heredoc.txt", 0, 0);
+			(*exec)->infile = "heredoc.txt";
+		}
 		else
 			printf("cant access\n");
 	}
-	if ((*exec)->fd_input == -1)
+	if ((*exec)->fd_in == -1)
 	{
-		perror(redirec->payload);
+		perror("input opening");
 	}
-	else
-		(*exec)->input_exist = 1;
 }
 
-int	check_redirection(t_exec **exec)
+int	check_redirection(t_exec_list **exec)
 {
 	t_redirection	*current;
 
-	current = (*exec)->redirection_list;
-	while (current && (*exec)->fd_input >= 0 && (*exec)->fd_output >= 0)
+	current = (*exec)->redirec_list;
+	while (current)
 	{
-		ft_printf("redirection type : %d\tpayload : %s\n", current->type, current->payload);
+		ft_printf("type : %d\tpayload : %s\n", current->type, current->payload);
 		if (current->type == INPUT || current->type == HERE_DOC)
 			check_input(exec, current);
 		else
 			check_output(exec, current);
 		current = current->next;
 	}
-	if ((*exec)->fd_output == -1 || (*exec)->fd_input == -1)
-		return (FAIL);
+	if ((*exec)->fd_in > 2)
+	{
+		dup2((*exec)->fd_in, STDIN_FILENO);
+		ft_close((*exec)->fd_in, (*exec)->infile, -1);
+	}
+	if ((*exec)->fd_out > 0)
+	{
+		dup2((*exec)->fd_out, STDOUT_FILENO);
+		ft_close((*exec)->fd_out, (*exec)->outfile, -1);
+	}
 	return (SUCCESS);
-}
-
-void	check_pipe(t_exec **exec, int in_parent, int fd_last_pipe, int *pipe_fd)
-{
-	if (!in_parent)
-	{
-		if (fd_last_pipe != -1)
-		{
-			(*exec)->fd_input = fd_last_pipe;
-			(*exec)->input_exist = 1;
-		}
-		close(pipe_fd[0]);
-	}
-	else
-	{
-		if (fd_last_pipe != -1)
-			(*exec)->fd_input = -1;
-		if ((*exec)->next != NULL)
-		{
-			close (pipe_fd[1]);
-			fd_last_pipe = pipe_fd[0];
-		}
-	}
 }
 
 char	**get_args(t_exec *exec)

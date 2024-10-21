@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 22:20:56 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/08 17:49:08 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/19 15:10:37 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,9 +40,9 @@ void	ft_echo(char **msg)
 	while (msg[++i])
 	{
 		if (i != n)
-			ft_putchar_fd(' ', 2);
-		ft_putstr_fd(msg[i], 2);
+			ft_putchar_fd(' ', 1);
+		ft_putstr_fd(msg[i], 1);
 	}
 	if (!check_option_n(msg[0]))
-		ft_putchar_fd('\n', 2);
+		ft_putchar_fd('\n', 1);
 }

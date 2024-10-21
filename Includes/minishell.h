@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:31:26 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/21 18:50:13 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/21 18:54:30 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -81,16 +81,25 @@ typedef struct s_redirection
 typedef struct s_exec
 {
 	t_redirection				*redirection_list;
-	t_redirection				*input;
-	t_redirection				*output;
 	char						*cmd;
 	char						**option;
-	int							fd_input;
-	int							fd_output;
-	int							input_exist;
-	int							output_exist;
 	struct s_exec				*next;
 }				t_exec;
+
+typedef struct s_exec_list
+{
+	struct s_exec_list	*next;
+	struct s_exec_list	*prev;
+	int					pipe_fd[2];
+	pid_t				pid;
+	const char			*outfile;
+	const char			*infile;
+	int					fd_in;
+	int					fd_out;
+	char				*cmd;
+	char				**args;
+	t_redirection		*redirec_list;
+}				t_exec_list;
 
 typedef struct s_array
 {
@@ -202,7 +211,7 @@ int							ft_strchr_pos(const char *s, int c);
 int							count_params(char	**params);
 char						**list_to_char(t_env_list **env);
 
-int							check_redirection(t_exec **exec);
+int							check_redirection(t_exec_list **exec);
 void						check_pipe(t_exec **exec, int in_parent, \
 											int fd_last_pipe, int *pipe_fd);
 char						**get_args(t_exec *exec);
@@ -220,6 +229,10 @@ void						free_elmt(t_env_list **elmt);
 t_env_list					*copy_list(t_env_list *env);
 int							set_value(t_env_list **env, char *str, char *val);
 
+/* EXEC NODE LIST (DOUBLE LINKED LIST)*/
+
+t_exec_list					*get_exec_list(t_exec *exec);
+
 /* trim_quotes.c */
 
 void						is_a_quote(char c, int *state);
@@ -234,6 +247,9 @@ void						free_exec_list(t_exec **exec);
 int							check_quotes(char *input);
 
 /* DEBUG */
-void						display_exec(t_exec *exec);
+void						display_exec(t_exec_list *exec);
+void						ft_close(int fd, const char *filename, int pipe_entry);
+int							ft_open(const char	*name, int trunc, int append);
+//# define close(X) printf("CLOSE: %d\n", X); close(X)
 
 #endif // !MINISHELL_H

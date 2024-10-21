@@ -25,6 +25,7 @@ EXEC_SOURCES = 	./Exec/Builtin/ft_cd.c\
 				./Exec/utils/exec_utils2.c\
 				./Exec/utils/linkedlist_utils.c\
 				./Exec/utils/linkedlist_utils2.c\
+				./Exec/utils/exec_list.c\
 				./Exec/here_doc.c\
 				./Exec/utils/debug.c\
 

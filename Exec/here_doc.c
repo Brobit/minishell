@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:09:15 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/17 19:37:04 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/21 15:42:37 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -18,7 +18,8 @@ void	ft_here_doc(const char *delimiter)
 	char		*line;
 	const char	*filename = "heredoc.txt";
 
-	fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0600);
+	//fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0600);
+	fd = ft_open(filename, 1, 0);
 	if (fd == -1)
 	{
 		perror("open");

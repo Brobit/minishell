@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/18 11:23:38 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/18 14:26:13 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/20 20:15:20 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,12 +23,6 @@ t_exec	*list_new_node(void)
 	new->cmd = NULL;
 	new->option = NULL;
 	new->next = NULL;
-	new->input = NULL;
-	new->output = NULL;
-	new->fd_input = dup(STDIN_FILENO);
-	new->fd_output = dup(STDOUT_FILENO);
-	new->input_exist = 0;
-	new->output_exist = 0;
 	return (new);
 }
 
