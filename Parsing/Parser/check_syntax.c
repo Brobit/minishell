@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 11:25:44 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/07 20:10:37 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/21 16:58:35 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,28 +80,6 @@ int	check_redirection_error(char *input)
 		}
 		i++;
 	}
-	return (SUCCESS);
-}
-
-int	check_quotes(char *input)
-{
-	int	index;
-	int	simple_quote_number;
-	int	double_quote_number;
-
-	index = 0;
-	simple_quote_number = 0;
-	double_quote_number = 0;
-	while (input[index])
-	{
-		if (input[index] == '\'')
-			simple_quote_number++;
-		else if (input[index] == '\"')
-			double_quote_number++;
-		index++;
-	}
-	if (simple_quote_number % 2 != 0 || double_quote_number % 2 != 0)
-		return (FAIL);
 	return (SUCCESS);
 }
 

@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 16:29:14 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/17 15:40:59 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/21 15:02:03 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -102,7 +102,8 @@ int	parser_entry(char *input, t_env *copy)
 	}
 	free(instructions);
 	if (check_payload(&exec) == FAIL)
-		return (FAIL);
-	free_exec_list(exec);
+		return (free_exec_list(&exec), FAIL);
+	free_exec_list(&exec);
+	// print_chained_list(exec);
 	return (SUCCESS);
 }
