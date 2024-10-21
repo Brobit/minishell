@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:31:26 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/18 15:57:09 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/21 18:50:13 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -222,11 +222,16 @@ int							set_value(t_env_list **env, char *str, char *val);
 
 /* trim_quotes.c */
 
+void						is_a_quote(char c, int *state);
 void						trim_quotes(char **option, t_env *copy);
 
 /* free_exec_list.c */
 
-void						free_exec_list(t_exec *exec);
+void						free_exec_list(t_exec **exec);
+
+/* check_quotes.c */
+
+int							check_quotes(char *input);
 
 /* DEBUG */
 void						display_exec(t_exec *exec);

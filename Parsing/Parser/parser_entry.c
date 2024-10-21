@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 16:29:14 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/18 15:56:30 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/21 18:50:44 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -104,7 +104,8 @@ int	parser_entry(char *input, t_env *copy)
 	ft_exec(exec, copy);
 	free(instructions);
 	if (check_payload(&exec) == FAIL)
-		return (FAIL);
-	free_exec_list(exec);
+		return (free_exec_list(&exec), FAIL);
+	free_exec_list(&exec);
+	// print_chained_list(exec);
 	return (SUCCESS);
 }

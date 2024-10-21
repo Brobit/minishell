@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 14:30:09 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/17 14:38:38 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/21 15:01:00 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,10 +21,10 @@ int	fill_payload(t_redirection *tmp, char *instruction_line)
 	while (instruction_line[i]
 		&& (instruction_line[i] == '<' || instruction_line[i] == '>'))
 		i++;
-	while (ft_isspace(instruction_line[i]) == 0)
+	while (instruction_line[i] && ft_isspace(instruction_line[i]) == 0)
 		i++;
 	j = i;
-	while (ft_isspace(instruction_line[j]) != 0
+	while (instruction_line[i] && ft_isspace(instruction_line[j]) != 0
 		&& (instruction_line[j] != '<' && instruction_line[j] != '>'))
 		j++;
 	tmp->payload = ft_substr(instruction_line, i, (j - i));
@@ -52,19 +52,8 @@ int	fill_redirection(t_redirection *redirection_list, char *instruction_line)
 	return (i);
 }
 
-void	exec_trim(char **line, char **res, int *i, int j)
+void	pass_redirection_and_payload(char **line, int *i)
 {
-	char	*sub_str;
-
-	while ((*line)[*i] && (*line)[*i] != '<' && (*line)[*i] != '>')
-		*i += 1;
-	sub_str = ft_substr((*line), j, (*i - j));
-	if ((*line)[*i] == '\0')
-		*res = ft_strjoin(*res, sub_str);
-	else if ((*line)[*i] && is_in_quotes((*line), *i) == FALSE
-		&& is_in_double_quotes((*line), *i) == FALSE)
-		*res = ft_strjoin(*res, sub_str);
-	free(sub_str);
 	while ((*line)[*i] && ((*line)[*i] == '<' || (*line)[*i] == '>'))
 		*i += 1;
 	while ((*line)[*i] && ft_isspace((*line)[*i]) == 0)
@@ -74,4 +63,29 @@ void	exec_trim(char **line, char **res, int *i, int j)
 		*i += 1;
 	if ((*line)[*i] != '\0' && (*line)[*i] != '<' && (*line)[*i] != '>')
 		*i += 1;
+}
+
+void	exec_trim(char **line, char **res, int *i, int j)
+{
+	char	*sub_str;
+	char	*tmp;
+
+	tmp = NULL;
+	if (*res != NULL)
+	{
+		tmp = ft_strdup(*res);
+		free(*res);
+		*res = NULL;
+	}
+	while ((*line)[*i] && (*line)[*i] != '<' && (*line)[*i] != '>')
+		*i += 1;
+	sub_str = ft_substr((*line), j, (*i - j));
+	if ((*line)[*i] == '\0')
+		*res = ft_strjoin(tmp, sub_str);
+	else if ((*line)[*i] && is_in_quotes((*line), *i) == FALSE
+		&& is_in_double_quotes((*line), *i) == FALSE)
+		*res = ft_strjoin(tmp, sub_str);
+	free(tmp);
+	free(sub_str);
+	pass_redirection_and_payload(line, i);
 }

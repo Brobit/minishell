@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:38:28 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/18 15:57:46 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/21 18:51:05 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ t_redirection	*redirection_list_new_node(void)
 {
 	t_redirection	*new;
 
-	new = malloc(sizeof(t_exec));
+	new = malloc(sizeof(t_redirection));
 	if (!new)
 		return (NULL);
 	new->type = NONE;

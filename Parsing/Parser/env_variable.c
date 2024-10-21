@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 10:43:44 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/11 13:57:16 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/21 14:54:24 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,6 +53,7 @@ void	transform_string(char **input, t_env *copy, int *i)
 	char	*before_variable;
 	char	*variable_expension;
 	char	*rest_of_string;
+	char	*first_join;
 
 	before_variable = NULL;
 	variable_expension = NULL;
@@ -63,11 +64,13 @@ void	transform_string(char **input, t_env *copy, int *i)
 	else
 		variable_expension = search_in_env((*input), copy, i);
 	rest_of_string = ft_substr((*input), *i, (ft_strlen((*input)) - *i));
-	(*input) = ft_strjoin(ft_strjoin(before_variable, \
-							variable_expension), rest_of_string);
+	first_join = ft_strjoin(before_variable, variable_expension);
+	free(*input);
+	(*input) = ft_strjoin(first_join, rest_of_string);
 	free(before_variable);
 	free(variable_expension);
 	free(rest_of_string);
+	free(first_join);
 }
 
 void	search_and_replace_env_variable(char **input, t_env *copy)
