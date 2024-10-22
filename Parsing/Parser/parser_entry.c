@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 16:29:14 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/21 15:02:03 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/22 10:43:03 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,7 +30,7 @@ void	print_chained_list(t_exec *exec)
 		if (exec->cmd == NULL)
 			ft_printf("there is no command\n");
 		if (exec->cmd)
-			ft_printf("cmd : %s\n", exec->cmd);
+			ft_printf("cmd : |%s|\n", exec->cmd);
 		if (exec->option == NULL)
 			ft_printf("there is no option\n");
 		else
