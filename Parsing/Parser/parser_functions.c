@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:19:31 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/21 13:11:20 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/22 10:42:21 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,11 +15,9 @@
 t_redirection	*get_redirections(char *instruction_line)
 {
 	t_redirection	*redirection_list;
-	// t_redirection	*new_node;
 	int				i;
 
 	redirection_list = NULL;
-	// new_node = NULL;
 	i = 0;
 	while (instruction_line[i])
 	{
@@ -28,8 +26,8 @@ t_redirection	*get_redirections(char *instruction_line)
 			if (is_in_quotes(instruction_line, i) == FALSE
 				&& is_in_double_quotes(instruction_line, i) == FALSE)
 			{
-				// new_node = redirection_list_new_node();
-				redirection_list_add_back(&redirection_list, redirection_list_new_node());
+				redirection_list_add_back(&redirection_list, \
+						redirection_list_new_node());
 				i += fill_redirection(redirection_list, &instruction_line[i]);
 			}
 		}
@@ -37,7 +35,6 @@ t_redirection	*get_redirections(char *instruction_line)
 			&& instruction_line[i] != '>')
 			i++;
 	}
-	// free(new_node);
 	return (redirection_list);
 }
 
@@ -66,17 +63,21 @@ void	trim_redirections(char **line)
 char	*get_command(char *line)
 {
 	char	*cmd;
+	char	*tmp;
 	int		i;
 	int		j;
 
 	cmd = NULL;
+	tmp = NULL;
 	i = 0;
 	while (line[i] && ft_isspace(line[i]) == 0)
 		i++;
 	j = i;
 	while (line[j] && ft_isspace(line[j]) != 0)
 		j++;
-	cmd = ft_substr(line, i, j);
+	tmp = ft_substr(line, i, j);
+	cmd = ft_strtrim(tmp, " ");
+	free(tmp);
 	return (cmd);
 }
 
