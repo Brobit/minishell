@@ -6,11 +6,12 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:09:15 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/21 15:42:37 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/22 13:37:47 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
+#include <stdio.h>
 
 void	ft_here_doc(const char *delimiter)
 {
@@ -18,8 +19,8 @@ void	ft_here_doc(const char *delimiter)
 	char		*line;
 	const char	*filename = "heredoc.txt";
 
-	//fd = open(filename, O_CREAT | O_WRONLY | O_TRUNC, 0600);
 	fd = ft_open(filename, 1, 0);
+	dprintf(2, "heredoc Dlimiter = |%s|\n", delimiter);
 	if (fd == -1)
 	{
 		perror("open");
@@ -30,7 +31,7 @@ void	ft_here_doc(const char *delimiter)
 		line = readline("> ");
 		if (!line)
 			break ;
-		if (strcmp(line, delimiter) == 0)
+		if (ft_strcmp(line, (char *)delimiter) == 0)
 		{
 			free(line);
 			break ;

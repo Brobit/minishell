@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 23:48:01 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/21 18:30:30 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/22 17:39:15 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,12 +21,10 @@ char	*ft_get_path(char	*cmd, t_env_list **env)
 
 	i = -1;
 	paths = ft_split(find_elmt(env, "PATH")->val, ':');
-	dprintf(2, "LOOKING FOR %s PATH\n", cmd);
 	while (paths[++i])
 	{
 		paths[i] = ft_strjoin(paths[i], "/");
 		exec = ft_strjoin(paths[i], cmd);
-		dprintf(2, "%s\n", exec);
 		if (access(exec, F_OK | X_OK) == 0)
 		{
 			free(paths);

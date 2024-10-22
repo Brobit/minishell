@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 17:42:14 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/21 18:43:07 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/22 17:18:46 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,7 +15,7 @@
 #include <sys/types.h>
 #include <unistd.h>
 
-int	check_builtin(t_exec *exec, t_env_list **env)
+int	exec_builtin(t_exec *exec, t_env_list **env)
 {
 	if (!ft_strcmp(exec->cmd, "echo"))
 		ft_echo(exec->option);
@@ -36,72 +36,108 @@ int	check_builtin(t_exec *exec, t_env_list **env)
 	return (SUCCESS);
 }
 
-void	execute_cmd(t_exec_list	*exec, t_env *env, t_exec *exec_backup)
+int	check_builtin(t_exec *exec)
 {
-	static t_env_list	*env_list = NULL;
+	if (!ft_strcmp(exec->cmd, "echo"))
+		return (SUCCESS);
+	else if (!ft_strcmp(exec->cmd, "cd"))
+		return (SUCCESS);
+	else if (!ft_strcmp(exec->cmd, "exit"))
+		return (SUCCESS);
+	else if (!ft_strcmp(exec->cmd, "unset"))
+		return (SUCCESS);
+	else if (!ft_strcmp(exec->cmd, "export"))
+		return (SUCCESS);
+	else if (!ft_strcmp(exec->cmd, "env"))
+		return (SUCCESS);
+	else if (!ft_strcmp(exec->cmd, "pwd"))
+		return (SUCCESS);
+	else
+		return (FAIL);
+}
+
+void	execute_cmd(t_exec_list	*exec_list, t_env_list **env_list, t_exec *exec)
+{
 	char				**env_str;
 
-	if (!env_list)
-		env_list = create_list_from_tab(env->env);
-	if (env_list && check_builtin(exec_backup, &env_list) == SUCCESS)
-		exit(SUCCESS);
+	env_str = list_to_char(env_list);
+	if (env_list && check_builtin(exec) == SUCCESS)
+		exit(exec_builtin(exec, env_list));
 	else
 	{
-		display_exec(exec);
-		execve(ft_get_path(exec->cmd, &env_list), exec->args, env_str);
+		display_exec(exec_list);
+		execve(ft_get_path(exec_list->cmd, env_list), \
+			exec_list->args, env_str);
 		printf("\nfail\n");
 		exit(EXIT_FAILURE);
 	}
 }
 
+void	parent_process(t_exec_list **exec_list)
+{
+	t_exec_list	*current;
+
+	current = *exec_list;
+	while (current)
+	{
+		waitpid(current->pid, (int *)&g_exit_status, 0);
+		ft_close(current->pipe_fd[0], NULL, 0);
+		ft_close(current->pipe_fd[1], NULL, 1);
+		current = current->next;
+	}
+}
+
+void	child_process(t_exec_list **exec_list, \
+			t_env_list **env_list, t_exec *exec)
+{
+	t_exec_list	*current;
+
+	pipe((*exec_list)->pipe_fd);
+	(*exec_list)->pid = fork();
+	if ((*exec_list)->pid < -1)
+	{
+		perror("pid");
+		return ;
+	}
+	else if (!(*exec_list)->pid)
+	{
+		if ((*exec_list)->prev)
+			dup2((*exec_list)->prev->pipe_fd[0], STDIN_FILENO);
+		if ((*exec_list)->next != NULL)
+			dup2((*exec_list)->pipe_fd[1], STDOUT_FILENO);
+		current = (*exec_list);
+		while (current)
+		{
+			ft_close(current->pipe_fd[0], NULL, 0);
+			ft_close(current->pipe_fd[1], NULL, 1);
+			current = current->prev;
+		}
+		check_redirection(exec_list);
+		execute_cmd(*exec_list, env_list, exec);
+	}
+}
+
 void	ft_exec(t_exec *exec, t_env *env)
 {
-	t_exec_list	*exec_list;
-	t_exec_list	*head;
-	t_exec_list	*current;
-	int			status;
+	t_exec_list			*exec_list;
+	t_exec_list			*head;
 
 	head = get_exec_list(exec);
 	exec_list = head;
-	while (exec_list)
+	if (!env->head)
+		env->head = create_list_from_tab(env->env);
+	if (exec_list->next == NULL && check_builtin(exec) == SUCCESS)
 	{
-		pipe(exec_list->pipe_fd);
-		dprintf(2, "Pipe create\n\033[33mpipe_fd[0] \033[0m= %d\n\033[33mpipe_fd[1] \033[0m= %d\n", exec_list->pipe_fd[0], exec_list->pipe_fd[1]);
-		exec_list->pid = fork();
-		if (exec_list->pid < 0)
-		{
-			perror("pid");
-			return ;
-		}
-		else if (!exec_list->pid)
-		{
-			dprintf(2, "in child :\n");
-			if (exec_list->prev)
-			{
-				dprintf(2, "DUP LAST FD : %d\n", exec_list->prev->pipe_fd[0]);
-				dup2(exec_list->prev->pipe_fd[0], STDIN_FILENO);
-			}
-			if (exec_list->next != NULL)
-				dup2(exec_list->pipe_fd[1], STDOUT_FILENO);
-			current = exec_list;
-			while (current)
-			{
-				ft_close(current->pipe_fd[0], NULL, 0);
-				ft_close(current->pipe_fd[1], NULL, 1);
-				current = current->prev;
-			}
-			check_redirection(&exec_list);
-			execute_cmd(exec_list, env, exec);
-		}
-		exec_list = exec_list->next;
+		dprintf(2, "single exec with builtins\n");
+		exec_builtin(exec, &(env->head));
 	}
-	exec_list = head;
-	while (exec_list)
+	else
 	{
-		dprintf(2, "wait for pid %d\n", exec_list->pid);
-		waitpid(exec_list->pid, &status, 0);
-		ft_close(exec_list->pipe_fd[0], NULL, 0);
-		ft_close(exec_list->pipe_fd[1], NULL, 1);
-		exec_list = exec_list->next;
+		while (exec_list)
+		{
+			child_process(&exec_list, &(env->head), exec);
+			exec_list = exec_list->next;
+		}
+		parent_process(&head);
 	}
 }

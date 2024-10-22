@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 17:54:22 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/21 16:09:38 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/22 16:28:15 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,10 @@ void	check_input(t_exec_list **exec, t_redirection *redirect)
 	}
 	else
 	{
-		ft_here_doc(redirect->payload);
+		if (ft_strcmp((char *)redirect->payload, "\"\"") == 0)//IF NULL intead of "\"\"" at least "\0"
+			ft_here_doc("\0");
+		else
+			ft_here_doc(redirect->payload);
 		if (access("heredoc.txt", F_OK) == 0)
 		{
 			(*exec)->fd_in = ft_open("heredoc.txt", 0, 0);
@@ -101,7 +104,5 @@ char	**get_args(t_exec *exec)
 		res[j] = exec->option[j - 1];
 	res[j] = NULL;
 	i = -1;
-	while (res[++i])
-		printf("%s\n", res[i]);
 	return (res);
 }

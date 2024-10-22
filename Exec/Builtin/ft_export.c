@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 23:46:53 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/14 15:43:51 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/22 17:42:59 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -91,13 +91,7 @@ void	add_to_env(char **params, t_env_list **env)
 			add_end(env, new_env(params[i], NULL, NULL));
 		else
 		{
-			printf("export : not an identifier : ");
-			while (*params[i] && *params[i] != '=')
-			{
-				printf("%c", *params[i]);
-				params[i]++;
-			}
-			printf("\n");
+			printf("export :'%s' not an valid identifier \n", params[i]);
 		}
 	}
 }
