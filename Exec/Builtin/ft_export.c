@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 23:46:53 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/22 17:42:59 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/22 22:55:26 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -108,7 +108,7 @@ void	ft_export(t_env_list	**env, char **args)
 		sort_list(copy);
 		while (copy)
 		{
-			if (ft_strcmp(copy->name, "_=") || ft_isalpha(copy->name[0]))
+			if (ft_isalpha(copy->name[0]) || ft_strcmp(copy->name, "_="))
 			{
 				if (!copy->val && ft_strchr_pos(copy->name, '=') == -1)
 					printf("declare -x %s\n", copy->name);

@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:33:23 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/21 18:42:37 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/23 13:42:01 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -46,11 +46,16 @@ int	ft_open(const char *filename, int trunc, int append)
 		fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
 	else
 		fd = open(filename, O_RDONLY);
+	if (fd == -1)
+	{
+		perror("open");
+		exit(EXIT_FAILURE);
+	}
 	if (fd == 0)
 		dprintf(2, "\033[31mWARNING STDIN CLOSED PREVIOUSLY\033[0m\n");
-	if (fd == 1)
+	else if (fd == 1)
 		dprintf(2, "\033[31mWARNING STDOUT CLOSED PREVIOUSLY\033[0m\n");
-	if (fd == 2)
+	else if (fd == 2)
 		dprintf(2, "\033[31mWARNING STDERR CLOSED PREVIOUSLY\033[0m\n");
 	dprintf(2, "\033[33mOpening %s \033[0m=> fd : %d\n", filename, fd);
 	return (fd);

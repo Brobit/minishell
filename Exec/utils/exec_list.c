@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 16:52:18 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/21 16:47:23 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/23 13:32:06 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -64,14 +64,17 @@ void	free_exec_node(t_exec_list **node)
 		free
 	free(*node);
 }
-
-void	free_exec_list(t_exec_list **head)
+*/
+void	free_ex_list(t_exec_list **head)
 {
 	t_exec_list	*current;
 
-	current = (*head);
 	while (head != NULL)
 	{
-		free((*head).)
+		current = (*head)->next;
+		if ((*head)->args)
+			ft_free_str_list((*head)->args);
+		free(*head);
+		head = &current;
 	}
-}*/
+}

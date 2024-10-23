@@ -27,6 +27,7 @@ EXEC_SOURCES = 	./Exec/Builtin/ft_cd.c\
 				./Exec/utils/linkedlist_utils2.c\
 				./Exec/utils/exec_list.c\
 				./Exec/here_doc.c\
+				./Exec/ft_free_exec.c\
 				./Exec/utils/debug.c\
 
 LEXER_SOURCES = 	./Parsing/Lexer/main.c\

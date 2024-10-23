@@ -6,17 +6,34 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 22:57:58 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/14 15:43:24 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/22 23:46:00 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/minishell.h"
 #include <stdio.h>
+#include <unistd.h>
+
+void	update_pwd(t_env_list **env)
+{
+	t_env_list	*current;
+	char		cwd[1024];
+
+	current = *env;
+	dprintf(2, "PWD should be %s\n", getcwd(cwd, sizeof(cwd)));
+	while (current)
+	{
+		if (!ft_strncmp(current->name, "OLDPWD", 6))
+			current->val = find_elmt(env, "PWD")->val;
+		if (!ft_strncmp(current->name, "PWD", 3))
+			current->val = ft_strdup(getcwd(cwd, sizeof(cwd)));
+		current = current->next;
+	}
+}
 
 void	ft_cd(char **path, t_env_list **env)
 {
 	int		param_nb;
-	char	cwd[1024];
 
 	(void)env;
 	param_nb = count_params(path);
@@ -36,8 +53,7 @@ void	ft_cd(char **path, t_env_list **env)
 			return ;
 		}
 	}
-	set_value(env, "OLDPWD", (find_elmt(env, "PWD"))->val);
-	set_value(env, "PWD", getcwd(cwd, sizeof(cwd)));
+	update_pwd(env);
 }
 
 void	ft_pwd(void)

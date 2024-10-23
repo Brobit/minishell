@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:31:26 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/23 22:22:02 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/23 22:30:23 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -15,6 +15,7 @@
 
 # include "../libft-complete/libft/libft.h"
 # include "../libft-complete/printf/ft_printf.h"
+# include "../libft-complete/get_next_line/gnl.h"
 # include <stdio.h>
 # include <stdlib.h>
 # include <readline/readline.h>

@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:25:51 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/17 11:04:55 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/23 14:31:48 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,27 +24,6 @@ int	list_size(t_env_list *mylist)
 		i++;
 	}
 	return (i);
-}
-
-void	free_elmt(t_env_list **elmt)
-{
-	free((*elmt)->name);
-	if ((*elmt)->val)
-		free((*elmt)->val);
-	free(*elmt);
-}
-
-void	free_list(t_env_list **list)
-{
-	t_env_list	*current;
-
-	current = *list;
-	while (current != NULL)
-	{
-		*list = (*list)->next;
-		free_elmt(&current);
-		current = *list;
-	}
 }
 
 t_env_list	*copy_list(t_env_list *env)
@@ -83,4 +62,25 @@ int	set_value(t_env_list **env, char *str, char *new_val)
 		printf("%s\n", (node)->val);
 	}
 	return (FAIL);
+}
+
+t_env_list	*create_list_from_tab(char **env)
+{
+	int			i;
+	t_env_list	*res;
+	t_env_list	*current;
+
+	i = 0;
+	if (env[i])
+	{
+		res = new_env(env[i], NULL, NULL);
+		current = res;
+		while (env[++i])
+		{
+			current->next = new_env(env[i], NULL, current);
+			current = current->next;
+		}
+		return (res);
+	}
+	return (NULL);
 }

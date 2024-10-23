@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:21:50 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/22 17:40:58 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/23 14:31:40 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,15 +20,14 @@ t_env_list	*new_env(char *name, char *value, t_env_list *prev)
 
 	if (!name)
 		return (NULL);
-	res = malloc(sizeof(t_env_list) * 1);
-	res->next = NULL;
+	res = ft_calloc(sizeof(t_env_list), 1);
 	res->prev = prev;
 	if (!value && ft_strchr_pos(name, '=') != -1)
 	{
 		value = ft_substr(name, ft_strchr_pos(name, '='), ft_strlen(name));
 		name = ft_substr(name, 0, ft_strchr_pos(name, '='));
 	}
-	res->name = name;
+	res->name = ft_substr(name, 0, ft_strlen(name));
 	res->val = value;
 	return (res);
 }
@@ -104,26 +103,5 @@ t_env_list	*find_elmt(t_env_list **env, char	*elmt)
 		current = current->next;
 	}
 	free(tmp_var);
-	return (NULL);
-}
-
-t_env_list	*create_list_from_tab(char **env)
-{
-	int			i;
-	t_env_list	*res;
-	t_env_list	*current;
-
-	i = 0;
-	if (env[i])
-	{
-		res = new_env(env[i], NULL, NULL);
-		current = res;
-		while (env[++i])
-		{
-			current->next = new_env(env[i], NULL, current);
-			current = current->next;
-		}
-		return (res);
-	}
 	return (NULL);
 }

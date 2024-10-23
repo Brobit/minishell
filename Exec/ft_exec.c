@@ -6,12 +6,13 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 17:42:14 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/22 17:18:46 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/23 22:00:55 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
 #include <stdio.h>
+#include <stdlib.h>
 #include <sys/types.h>
 #include <unistd.h>
 
@@ -61,14 +62,17 @@ void	execute_cmd(t_exec_list	*exec_list, t_env_list **env_list, t_exec *exec)
 	char				**env_str;
 
 	env_str = list_to_char(env_list);
+	dprintf(2, "Executing %s\n", exec_list->cmd);
 	if (env_list && check_builtin(exec) == SUCCESS)
-		exit(exec_builtin(exec, env_list));
+	{
+		exec_builtin(exec, env_list);
+		exit(EXIT_SUCCESS);
+	}
 	else
 	{
-		display_exec(exec_list);
-		execve(ft_get_path(exec_list->cmd, env_list), \
-			exec_list->args, env_str);
-		printf("\nfail\n");
+		execve(ft_get_path(exec_list->cmd, env_list), exec_list->args, env_str);
+		write(2, exec_list->cmd, ft_strlen(exec_list->cmd));
+		write(2, ERR_CMD_NOT_FOUND, ft_strlen(ERR_CMD_NOT_FOUND));
 		exit(EXIT_FAILURE);
 	}
 }

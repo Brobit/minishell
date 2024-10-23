@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 17:54:22 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/22 16:28:15 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/23 22:07:35 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,6 +40,7 @@ void	check_input(t_exec_list **exec, t_redirection *redirect)
 	}
 	else
 	{
+		dprintf (2, "HERE DOC DELIMITER|%s|\n", redirect->payload);
 		if (ft_strcmp((char *)redirect->payload, "\"\"") == 0)//IF NULL intead of "\"\"" at least "\0"
 			ft_here_doc("\0");
 		else
