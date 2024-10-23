@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:31:26 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/21 16:58:08 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/23 09:24:42 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -158,6 +158,7 @@ char						**split_input(char const *s, char c);
 
 void						is_a_quote(char c, int *state);
 void						trim_quotes(char **option, t_env *copy);
+void						trim_payload_quotes(char *option);
 
 /* free_exec_list.c */
 
