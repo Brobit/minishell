@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:31:26 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/21 18:54:30 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/23 22:13:38 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -237,6 +237,7 @@ t_exec_list					*get_exec_list(t_exec *exec);
 
 void						is_a_quote(char c, int *state);
 void						trim_quotes(char **option, t_env *copy);
+void						trim_payload_quotes(char *option);
 
 /* free_exec_list.c */
 

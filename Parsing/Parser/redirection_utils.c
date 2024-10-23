@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/24 14:30:09 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/21 15:01:00 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/23 09:25:41 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -28,6 +28,7 @@ int	fill_payload(t_redirection *tmp, char *instruction_line)
 		&& (instruction_line[j] != '<' && instruction_line[j] != '>'))
 		j++;
 	tmp->payload = ft_substr(instruction_line, i, (j - i));
+	trim_payload_quotes((char *)tmp->payload);
 	return (j);
 }
 

@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 16:29:14 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/22 13:18:26 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/23 22:14:15 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -72,8 +72,7 @@ int	check_payload(t_exec **exec)
 	nav = *exec;
 	while (nav)
 	{
-		if (nav->redirection_list && (!nav->redirection_list->payload
-				|| nav->redirection_list->payload[0] == '\0'))
+		if (nav->redirection_list && !nav->redirection_list->payload)
 			return (FAIL);
 		nav = nav->next;
 	}

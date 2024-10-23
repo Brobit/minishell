@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:19:31 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/22 10:42:21 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/23 10:17:20 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -94,7 +94,6 @@ char	**get_option(char *line, t_env *copy)
 		i++;
 	if (line[i] != '\0')
 		option = split_input(&line[i], ' ');
-	// ft_printf("%s\n", *option);
 	if (option)
 		trim_quotes(option, copy);
 	return (option);
