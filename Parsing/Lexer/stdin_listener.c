@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 21:29:54 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/23 22:13:59 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/23 22:22:26 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -22,7 +22,8 @@ void	stdin_listener(t_env *copy)
 	{
 		input = readline("\033[32mMinishell : \033[0m");
 		if (!input)
-			return (free_env(copy), free_readline(), exit(0));
+			return (free_env(copy), free_readline(), del_curr_heredoc(), \
+				exit(0));
 		else if (input && input[0] != '\0')
 		{
 			add_history(input);

@@ -6,12 +6,21 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:09:15 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/22 13:37:47 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/23 22:24:09 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
 #include <stdio.h>
+
+void	del_curr_heredoc(void)
+{
+	dprintf(2, "TRYING TO DELETE HEREDOC\n");
+	if (access("heredoc.txt", F_OK))
+	{
+		unlink("heredoc.txt");
+	}
+}
 
 void	ft_here_doc(const char *delimiter)
 {
@@ -20,7 +29,6 @@ void	ft_here_doc(const char *delimiter)
 	const char	*filename = "heredoc.txt";
 
 	fd = ft_open(filename, 1, 0);
-	dprintf(2, "heredoc Dlimiter = |%s|\n", delimiter);
 	if (fd == -1)
 	{
 		perror("open");

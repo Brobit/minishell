@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:31:26 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/23 22:13:38 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/23 22:22:02 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -202,6 +202,7 @@ void						ft_exit(char **exit_code);
 /* heredoc */
 
 void						ft_here_doc(const char *delimiter);
+void						del_curr_heredoc(void);
 
 /* exec_utils.c */
 
