@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 15:54:37 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/23 14:29:37 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/23 22:37:02 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	ft_exit(char	**exit_code)
 		res_signal = ft_check_atoll(exit_code[0], &err);
 		if (err == -1)
 		{
-			write(2, EXIT_NON_NUM_ERR, ft_strlen(EXIT_NON_NUM_ERR));
+			write(2, EXIT_NO_NUM_ERR, ft_strlen(EXIT_NO_NUM_ERR));
 			exit__with_code(2, TRUE);
 		}
 		exit__with_code(res_signal, TRUE);

@@ -27,7 +27,6 @@ void	display_exec(t_exec_list *exec)
 
 void	ft_close(int fd, const char *filename, int pipe_entry)
 {
-	dprintf(2, "fd = %d\n", fd);
 	if (fd > 2)
 		close(fd);
 	if (pipe_entry != -1)

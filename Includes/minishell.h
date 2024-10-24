@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:31:26 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/23 22:30:23 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/23 22:47:31 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -43,6 +43,10 @@
 # define ERR_ENV_COPY		"an error occur while malloc for env copy "
 # define ERR_ENV_DUP		"an error occur while copying the environment "
 
+# define EXIT_NO_NUM_ERR	"exit : numeric argument required\n"
+# define EXIT_ARGS_ERROR	"exit : too many arguments\n"
+# define ERR_CMD_NOT_FOUND	" : command no found\n"
+
 /* gobale variable */
 
 extern volatile int			g_exit_status;
@@ -76,6 +80,7 @@ typedef struct s_redirection
 {
 	t_redirection_type			type;
 	const char					*payload;
+	int							not_null;
 	struct s_redirection		*next;
 }				t_redirection;
 
@@ -248,6 +253,10 @@ void						free_exec_list(t_exec **exec);
 /* check_quotes.c */
 
 int							check_quotes(char *input);
+
+/* ft_free_exec.c */
+
+void						ft_free_str_list(char **str_list);
 
 /* DEBUG */
 void						display_exec(t_exec_list *exec);

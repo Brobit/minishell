@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:09:15 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/23 22:29:19 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/23 23:49:25 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,11 +16,11 @@
 
 void	del_curr_heredoc(void)
 {
-	dprintf(2, "TRYING TO DELETE HEREDOC\n");
-	if (access("heredoc.txt", F_OK))
+	if (access("heredoc.txt", F_OK) == 0)
 	{
 		unlink("heredoc.txt");
 	}
+	g_exit_status = 128;
 }
 
 void	ft_here_doc(const char *delimiter)
@@ -31,11 +31,6 @@ void	ft_here_doc(const char *delimiter)
 	const char	*filename = "heredoc.txt";
 
 	fd = ft_open(filename, 1, 0);
-	if (fd == -1)
-	{
-		perror("open");
-		exit(EXIT_FAILURE);
-	}
 	tmp_limit = ft_strjoin(delimiter, "\n");
 	while (1)
 	{
