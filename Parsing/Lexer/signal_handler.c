@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 18:42:51 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/08 14:15:09 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/24 09:37:58 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@ void	signal_handler(int signum)
 {
 	if (signum == SIGINT)
 	{
-		ft_printf("\n");
+		ft_printf("^C\n");
 		rl_on_new_line();
 		rl_replace_line("", 0);
 		rl_redisplay();
