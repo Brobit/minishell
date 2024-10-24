@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   lexer.c                                            :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
+/*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/11 14:38:17 by almarico          #+#    #+#             */
-/*   Updated: 2024/09/16 14:47:34 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/22 17:01:01 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,7 @@ static int	env_copy(t_env *copy, char **env)
 		if (!copy->env[i])
 			return (error(ERR_ENV_DUP), free_env(copy), FAIL);
 	}
+	copy->head = NULL;
 	return (SUCCESS);
 }
 
