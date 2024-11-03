@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:25:51 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/23 14:31:48 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/03 21:49:10 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -41,25 +41,23 @@ t_env_list	*copy_list(t_env_list *env)
 	return (res);
 }
 
-int	set_value(t_env_list **env, char *str, char *new_val)
+int	set_value(t_env_list **node, char *str)
 {
-	t_env_list	*node;
-	char		*val;
+	char	*val;
+	char	*tmp;
 
-	node = find_elmt(env, str);
-	if (new_val)
-	{
-		node->val = new_val;
-		return (SUCCESS);
-	}
-	else if (ft_strchr_pos(str, '='))
+	if (ft_strchr_pos(str, '='))
 	{
 		val = ft_substr(str, ft_strchr_pos(str, '='), ft_strlen(str));
-		printf("new val = %s\n", val);
-		if (node->val)
-			free(node->val);
-		(node)->val = val;
-		printf("%s\n", (node)->val);
+		if (ft_strchr_pos((*node)->name, '=') == -1)
+		{
+			tmp = ft_strjoin((*node)->name, "=");
+			free((*node)->name);
+			(*node)->name = tmp;
+		}
+		if ((*node)->val)
+			free((*node)->val);
+		(*node)->val = val;
 	}
 	return (FAIL);
 }
@@ -71,7 +69,8 @@ t_env_list	*create_list_from_tab(char **env)
 	t_env_list	*current;
 
 	i = 0;
-	if (env[i])
+	dprintf(2, "creating env_list\n");
+	if (env && env[i])
 	{
 		res = new_env(env[i], NULL, NULL);
 		current = res;

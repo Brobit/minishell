@@ -22,7 +22,6 @@ static int	env_copy(t_env *copy, char **env)
 	copy->env = malloc((i + 1) * sizeof(char *));
 	if (!copy->env)
 		return (error(ERR_ENV_COPY), free(copy->env), FAIL);
-	copy->env[i] = NULL;
 	i = -1;
 	while (env[++i] != NULL)
 	{
@@ -31,20 +30,17 @@ static int	env_copy(t_env *copy, char **env)
 			return (error(ERR_ENV_DUP), free_env(copy), FAIL);
 	}
 	copy->head = NULL;
+	copy->env[i] = NULL;
+	copy->last_status = 0;
 	return (SUCCESS);
 }
 
 int	lexer_entry(char **env)
 {
 	t_env				copy;
-	struct sigaction	signal;
 
 	if (env_copy(&copy, env) == FAIL)
 		return (FAIL);
-	if (init_signal(&signal, SIGINT) == FAIL)
-		return (free_env(&copy), FAIL);
-	if (init_signal(&signal, SIGQUIT) == FAIL)
-		return (free_env(&copy), FAIL);
 	stdin_listener(&copy);
 	return (SUCCESS);
 }

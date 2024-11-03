@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 23:46:53 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/22 22:55:26 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/03 22:27:56 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -78,48 +78,63 @@ int	find_and_set(t_env_list	**env, char *my_var, char	*new_val)
 void	add_to_env(char **params, t_env_list **env)
 {
 	int			i;
+	int			append;
 	t_env_list	*param;
 
-	i = -1;
+	i = 0;
 	while (params[++i])
 	{
-		param = find_elmt(env, params[i]);
-		if ((param))
-			set_value(env, params[i], NULL);
-		else if (((params[i][0] == '_' && params[i][1] != '=')
-			|| ft_isalpha(params[i][0])))
+		param = find_env(env, params[i], &append);
+		if (append > 0 && valid_name(params[i]))
+			append_val(&param, params[i], env);
+		else if ((param))
+			set_value(&param, params[i]);
+		else if ((params[i][0] == '_' || ft_isalpha(params[i][0]))
+				&& valid_name(params[i]))
 			add_end(env, new_env(params[i], NULL, NULL));
 		else
-		{
 			printf("export :'%s' not an valid identifier \n", params[i]);
-		}
 	}
+	update_env(env);
+}
+
+void	display_export(t_env_list *copy)
+{
+	ft_putstr_fd("declare -x ", 1);
+	ft_putstr_fd(copy->name, 1);
+	if (!copy->val && ft_strchr_pos(copy->name, '=') == -1)
+	{
+	}
+	else if (!copy->val || copy->val[0] == '\0')
+		ft_putstr_fd("\"\"", 1);
+	else
+	{
+		ft_putstr_fd("\"", 1);
+		ft_putstr_fd(copy->val, 1);
+		ft_putstr_fd("\"", 1);
+	}
+	ft_putchar_fd('\n', 1);
 }
 
 void	ft_export(t_env_list	**env, char **args)
 {
 	t_env_list	*copy;
+	t_env_list	*head;
 	int			i;
 
 	i = -1;
-	if (args == NULL)
+	if (count_params(args) == 1)
 	{
 		copy = copy_list(*env);
+		head = copy;
 		sort_list(copy);
 		while (copy)
 		{
 			if (ft_isalpha(copy->name[0]) || ft_strcmp(copy->name, "_="))
-			{
-				if (!copy->val && ft_strchr_pos(copy->name, '=') == -1)
-					printf("declare -x %s\n", copy->name);
-				else if (!copy->val)
-					printf("declare -x %s=\"\"\n", copy->name);
-				else
-					printf("declare -x %s\"%s\"\n", copy->name, copy->val);
-			}
+				display_export(copy);
 			copy = copy->next;
 		}
-		free_list(&copy);
+		free_list(head);
 	}
 	else
 		add_to_env(args, env);

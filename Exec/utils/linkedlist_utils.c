@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:21:50 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/23 14:31:40 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/31 19:09:04 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,24 +24,17 @@ t_env_list	*new_env(char *name, char *value, t_env_list *prev)
 	res->prev = prev;
 	if (!value && ft_strchr_pos(name, '=') != -1)
 	{
-		value = ft_substr(name, ft_strchr_pos(name, '='), ft_strlen(name));
-		name = ft_substr(name, 0, ft_strchr_pos(name, '='));
+		res->val = ft_substr(name, ft_strchr_pos(name, '='), ft_strlen(name));
+		res->name = ft_substr(name, 0, ft_strchr_pos(name, '='));
 	}
-	res->name = ft_substr(name, 0, ft_strlen(name));
-	res->val = value;
-	return (res);
-}
-
-t_env_list	*new_array(char	*str, t_env_list *prev)
-{
-	t_env_list	*res;
-
-	if (!str)
-		return (NULL);
-	res = malloc(sizeof(t_env_list) * 1);
-	res->next = NULL;
-	res->prev = prev;
-	res->name = str;
+	else if (!value)
+		res->name = ft_substr(name, 0, ft_strlen(name));
+	else
+	{
+		res->name = ft_strdup((const char *)name);
+		res->val = ft_strdup((const char *)value);
+	}
+	res->env = NULL;
 	return (res);
 }
 

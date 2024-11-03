@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 15:54:37 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/23 22:37:02 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/02 21:34:14 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -16,7 +16,7 @@
 
 int	ft_check_atoll(const char *string, int *err)
 {
-	unsigned long long	neg;
+	int					neg;
 	unsigned long long	res;
 	int					i;
 
@@ -27,51 +27,57 @@ int	ft_check_atoll(const char *string, int *err)
 		i++;
 	if (string[i] == '-' || string[i] == '+')
 	{
-		if (string[i] == '-')
+		if (string[i++] == '-')
 			neg *= -1;
-		i++;
 	}
-	while (string[i] >= '0' && string[i] <= '9')
+	while (string[i])
 	{
-		res *= 10;
-		res += (string[i] - '0');
-		if ((res > TLL_MAX || res < ((TLL_MAX * -1) - 1)) && string[i] != '\0')
+		if (ft_isdigit(string[i]))
+			res = (res * 10) + (string[i] - '0');
+		else
+			*err = -1;
+		if ((neg == 1 && res > TLL_MAX) || (neg == -1 && res > TLL_MAX + 1))
 			*err = -1;
 		i++;
 	}
-	return ((int)((res * neg) % 255));
+	return ((int)((res * (unsigned long long)neg) % 255));
 }
 
-void	exit__with_code(int exit_code, int exit_bool)
+void	exit__with_code(t_exec_list *exec, t_env_list *env, \
+				int exit_code, int exit_bool)
 {
 	g_exit_status = exit_code;
 	if (exit_bool)
-		exit(exit_code);
+	{
+		free_env(env->env);
+		free_exec_list(&(exec->exec));
+		free_all_exit(exec, env, exit_code);
+	}
 }
 
-void	ft_exit(char	**exit_code)
+void	ft_exit(t_exec_list *exec, t_env_list *env)
 {
 	int	err;
 	int	res_signal;
 	int	param_nb;
 
 	err = 0;
-	param_nb = count_params(exit_code);
-	if (param_nb == 1)
+	param_nb = count_params(exec->args);
+	if (param_nb == 2)
 	{
-		res_signal = ft_check_atoll(exit_code[0], &err);
+		res_signal = ft_check_atoll(exec->args[1], &err);
 		if (err == -1)
 		{
 			write(2, EXIT_NO_NUM_ERR, ft_strlen(EXIT_NO_NUM_ERR));
-			exit__with_code(2, TRUE);
+			exit__with_code(exec, env, 2, TRUE);
 		}
-		exit__with_code(res_signal, TRUE);
+		exit__with_code(exec, env, res_signal, TRUE);
 	}
-	else if (param_nb > 1)
+	else if (param_nb > 2)
 	{
 		write(2, EXIT_ARGS_ERROR, ft_strlen(EXIT_ARGS_ERROR));
-		exit__with_code(1, FALSE);
+		exit__with_code(exec, env, 1, FALSE);
 	}
 	else
-		exit__with_code(EXIT_SUCCESS, TRUE);
+		exit__with_code(exec, env, EXIT_SUCCESS, TRUE);
 }

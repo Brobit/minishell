@@ -6,12 +6,12 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 22:20:56 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/22 23:03:37 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/03 17:03:27 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/minishell.h"
-#include <stdio.h>
+#include <unistd.h>
 
 int	check_option_n(char *str)
 {
@@ -29,21 +29,25 @@ int	check_option_n(char *str)
 	return (0);
 }
 
-void	ft_echo(char **msg)
+void	ft_echo(t_exec_list *exec)
 {
 	int	i;
 	int	n;
 
-	if (!msg)
-		return ;
-	n = check_option_n(msg[0]);
-	i = n - 1;
-	while (msg[++i])
+	if (!exec->args[1])
 	{
-		if (i != n)
-			ft_putchar_fd(' ', 1);
-		ft_putstr_fd(msg[i], 1);
+		write(1, "\n", 1);
+		return ;
 	}
-	if (!check_option_n(msg[0]))
+	display_exec(exec);
+	n = check_option_n(exec->args[1]);
+	i = n;
+	while (exec->args[++i])
+	{
+		if (i - 1 != n)
+			ft_putchar_fd(' ', 1);
+		ft_putstr_fd(exec->args[i], 1);
+	}
+	if (!check_option_n(exec->args[0]))
 		ft_putchar_fd('\n', 1);
 }

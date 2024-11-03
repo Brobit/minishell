@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 17:54:22 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/23 22:54:45 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/03 18:27:46 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,9 +24,30 @@ void	check_output(t_exec_list **exec, t_redirection	*redirect)
 		(*exec)->fd_out = ft_open(redirect->payload, 0, 1);
 	(*exec)->outfile = redirect->payload;
 	if ((*exec)->fd_out == -1)
-	{
 		perror((*exec)->outfile);
+}
+
+void	set_heredoc(char *name, t_exec_list **exec, int cancel)
+{
+	t_exec_list	*current;
+
+	current = *exec;
+	dprintf(2, "access = %d, cancel = %d\n", access(name, F_OK), cancel);
+	if (cancel == 1)
+	{
+		while (current)
+		{
+			current->cancel = 1;
+			current = current->next;
+		}
+		del_curr_heredoc();
 	}
+	else if (access(name, F_OK) == 0)
+	{
+		(*exec)->fd_in = ft_open(name, 0, 0);
+		(*exec)->infile = name;
+	}
+	dprintf(2, "heredoc infile fd = %d\n", (*exec)->fd_in);
 }
 
 void	check_input(t_exec_list **exec, t_redirection *redirect)
@@ -40,19 +61,17 @@ void	check_input(t_exec_list **exec, t_redirection *redirect)
 	}
 	else
 	{
+		setup_signal(2);
 		if (redirect->payload == NULL && redirect->not_null)
 			ft_here_doc("\0");
 		else
-			ft_here_doc(redirect->payload);
-		if (access("heredoc.txt", F_OK) == 0)
-		{
-			(*exec)->fd_in = ft_open("heredoc.txt", 0, 0);
-			(*exec)->infile = "heredoc.txt";
-		}
+			set_heredoc("heredoc.txt", exec, ft_here_doc(redirect->payload));
+		setup_signal(1);
 	}
 	if ((*exec)->fd_in == -1)
 	{
-		perror("input opening");
+		(*exec)->args = add_str((*exec)->args, (char *)redirect->payload);
+		perror((*exec)->infile);
 	}
 }
 
@@ -70,37 +89,31 @@ int	check_redirection(t_exec_list **exec)
 			check_output(exec, current);
 		current = current->next;
 	}
-	if ((*exec)->fd_in > 2)
-	{
-		dup2((*exec)->fd_in, STDIN_FILENO);
-		ft_close((*exec)->fd_in, (*exec)->infile, -1);
-	}
-	if ((*exec)->fd_out > 0)
-	{
-		dup2((*exec)->fd_out, STDOUT_FILENO);
-		ft_close((*exec)->fd_out, (*exec)->outfile, -1);
-	}
 	return (SUCCESS);
 }
 
-char	**get_args(t_exec *exec)
+void	dup_in_out(t_exec_list *exec)
 {
-	char	**res;
-	int		j;
-	int		i;
-
-	i = 0;
-	if (exec->option)
+	if (exec->prev && exec->fd_in <= 2)
 	{
-		while (exec->option[i])
-			i++;
+		dup2(exec->prev->pipe_fd[0], STDIN_FILENO);
+		exec->fd_in = exec->prev->pipe_fd[0];
 	}
-	res = malloc (sizeof(char *) * (i + 2));
-	j = 0;
-	res[j] = exec->cmd;
-	while (++j < i + 1)
-		res[j] = exec->option[j - 1];
-	res[j] = NULL;
-	i = -1;
-	return (res);
+	if (exec->next != NULL && exec->fd_out <= 2)
+	{
+		dup2(exec->pipe_fd[1], STDOUT_FILENO);
+		exec->fd_out = exec->pipe_fd[1];
+	}
+	if (exec->fd_in > 2)
+	{
+		dup2(exec->fd_in, STDIN_FILENO);
+		ft_close(exec->fd_in, NULL, 0);
+	}
+	if (exec->fd_out > 2)
+	{
+		dup2(exec->fd_out, STDOUT_FILENO);
+		ft_close(exec->fd_out, NULL, 1);
+	}
+	ft_close(exec->pipe_fd[0], NULL, 0);
+	ft_close(exec->pipe_fd[1], NULL, 1);
 }

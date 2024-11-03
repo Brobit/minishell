@@ -6,12 +6,11 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 16:52:18 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/23 13:32:06 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/02 21:31:52 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/minishell.h"
-#include <stdio.h>
 
 t_exec_list	*new_exec_node(t_exec *exec)
 {
@@ -20,9 +19,13 @@ t_exec_list	*new_exec_node(t_exec *exec)
 	res = ft_calloc(sizeof(t_exec_list), 1);
 	if (!res)
 		return (NULL);
-	res->cmd = exec->cmd;
+	res->fd_in = STDIN_FILENO;
+	res->fd_out = STDOUT_FILENO;
+	res->cancel = 0;
+	res->cmd = ft_strdup(exec->cmd);
 	res->args = get_args(exec);
 	res->redirec_list = exec->redirection_list;
+	res->exec = NULL;
 	return (res);
 }
 

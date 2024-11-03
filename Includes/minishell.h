@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:31:26 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/23 22:47:31 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/03 22:21:02 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -59,11 +59,13 @@ typedef struct s_env_list
 	struct s_env_list	*prev;
 	char				*name;
 	char				*val;
+	struct s_env		*env;
 }				t_env_list;
 
 typedef struct s_env
 {
 	char					**env;
+	int						last_status;
 	struct s_env_list		*head;
 }				t_env;
 
@@ -94,6 +96,7 @@ typedef struct s_exec
 
 typedef struct s_exec_list
 {
+	struct s_exec		*exec;
 	struct s_exec_list	*next;
 	struct s_exec_list	*prev;
 	int					pipe_fd[2];
@@ -104,14 +107,9 @@ typedef struct s_exec_list
 	int					fd_out;
 	char				*cmd;
 	char				**args;
+	int					cancel;
 	t_redirection		*redirec_list;
 }				t_exec_list;
-
-typedef struct s_array
-{
-	char			*str;
-	struct s_array	*next;
-}				t_array;
 
 /* lexer.c */
 
@@ -128,7 +126,8 @@ void						error(char *msg);
 
 /* signal_handler.c */
 
-int							init_signal(struct sigaction *signal, int sigerror);
+//int							init_signal(struct sigaction *signal, int sigerror);
+void						setup_signal(int state);
 
 /* stdin_listener.c */
 
@@ -194,20 +193,26 @@ int							is_in_double_quotes(char *str, int i);
 char						**split_input(char const *s, char c);
 
 /* builtin */
-void						ft_echo(char **msg);
+void						ft_echo(t_exec_list *exec);
 void						ft_cd(char **path, t_env_list **env);
 void						ft_pwd(void);
 void						ft_export(t_env_list **env, char **args);
+/* env */
 void						ft_env(t_env_list *env);
+void						update_env(t_env_list **env);
+t_env_list					*find_env(t_env_list **head, char *name, int *plus);
+void						append_val(t_env_list **elmt, char	*app_val, t_env_list **head);
+int							valid_name(char *name);
+/* end env */
 void						ft_unset(t_env_list	**env, char **my_var);
 void						ft_exec(t_exec *exec, t_env *env);
-void						ft_exit(char **exit_code);
-
+void						ft_exit(t_exec_list *exec, t_env_list *env);
+/* end builtin */
 /* exec */
 
 /* heredoc */
 
-void						ft_here_doc(const char *delimiter);
+int							ft_here_doc(const char *delimiter);
 void						del_curr_heredoc(void);
 
 /* exec_utils.c */
@@ -219,10 +224,9 @@ int							count_params(char	**params);
 char						**list_to_char(t_env_list **env);
 
 int							check_redirection(t_exec_list **exec);
+void						dup_in_out(t_exec_list *exec);
 void						check_pipe(t_exec **exec, int in_parent, \
 											int fd_last_pipe, int *pipe_fd);
-char						**get_args(t_exec *exec);
-
 /* linkedlist_utils 1 & 2*/
 
 t_env_list					*new_env(char *name, char *value, t_env_list *prev);
@@ -231,10 +235,10 @@ void						rm_elmt(t_env_list **env, t_env_list *elmt);
 t_env_list					*find_elmt(t_env_list **env, char	*elmt);
 t_env_list					*create_list_from_tab(char **env);
 int							list_size(t_env_list *mylist);
-void						free_list(t_env_list **list);
+void						free_list(t_env_list *list);
 void						free_elmt(t_env_list **elmt);
 t_env_list					*copy_list(t_env_list *env);
-int							set_value(t_env_list **env, char *str, char *val);
+int							set_value(t_env_list **env, char *str);
 
 /* EXEC NODE LIST (DOUBLE LINKED LIST)*/
 
@@ -257,11 +261,20 @@ int							check_quotes(char *input);
 /* ft_free_exec.c */
 
 void						ft_free_str_list(char **str_list);
+void						free_all_exit(t_exec_list *exec, t_env_list *env, \
+								int exit_code);
+void						free_child(char	**str_tab, t_exec_list *exec_list, \
+								t_env_list *env_list, t_exec *exec);
 
 /* DEBUG */
+char						**add_str(char **tab, char *elmt);
 void						display_exec(t_exec_list *exec);
-void						ft_close(int fd, const char *filename, int pipe_entry);
+void						ft_close(int fd, const char *filename, \
+								int pipe_entry);
 int							ft_open(const char	*name, int trunc, int append);
+int							check_builtin(t_exec_list *exec);
+char						**get_args(t_exec *exec);
+
 //# define close(X) printf("CLOSE: %d\n", X); close(X)
 
 #endif // !MINISHELL_H

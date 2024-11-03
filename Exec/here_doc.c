@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:09:15 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/23 23:49:25 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/28 23:37:43 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,25 +20,26 @@ void	del_curr_heredoc(void)
 	{
 		unlink("heredoc.txt");
 	}
-	g_exit_status = 128;
 }
 
-void	ft_here_doc(const char *delimiter)
+void	write_here_doc(char *delimiter, int fd)
 {
-	int			fd;
-	char		*line;
-	char		*tmp_limit;
-	const char	*filename = "heredoc.txt";
+	char	*line;
+	char	*tmp_limit;
 
-	fd = ft_open(filename, 1, 0);
 	tmp_limit = ft_strjoin(delimiter, "\n");
 	while (1)
 	{
 		write(2, "> ", 2);
 		line = get_next_line(STDIN_FILENO);
+		if (!line && g_exit_status != 130)
+		{
+			printf("here-doc delimited by EOF (wanted '%s')\n", delimiter);
+			break ;
+		}
 		if (!line)
 			break ;
-		if (ft_strcmp(line, (char *)tmp_limit) == 0)
+		if (ft_strcmp(line, tmp_limit) == 0)
 		{
 			free(line);
 			break ;
@@ -46,5 +47,25 @@ void	ft_here_doc(const char *delimiter)
 		write(fd, line, strlen(line));
 		free(line);
 	}
-	close(fd);
+	free(tmp_limit);
+}
+
+int	ft_here_doc(const char *delimiter)
+{
+	int			fd;
+	const char	*filename = "heredoc.txt";
+
+	fd = ft_open(filename, 1, 0);
+	write_here_doc((char *)delimiter, fd);
+	ft_close(fd, "heredoc.txt", -1);
+	if (g_exit_status == 130)
+	{
+		//free_tout();
+		unlink("heredoc.txt");
+		if (g_exit_status == 130)
+			return (1);
+		//Go to end;
+	}
+	dprintf(2, "end setting ");
+	return (0);
 }

@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 23:48:01 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/22 22:16:53 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/10/31 19:47:04 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -17,22 +17,25 @@ char	*ft_get_path(char	*cmd, t_env_list **env)
 {
 	char	**paths;
 	char	*exec;
+	char	*path;
 	int		i;
 
 	i = -1;
 	paths = ft_split(find_elmt(env, "PATH")->val, ':');
 	while (paths[++i])
 	{
-		paths[i] = ft_strjoin(paths[i], "/");
-		exec = ft_strjoin(paths[i], cmd);
+		path = ft_strjoin(paths[i], "/");
+		exec = ft_strjoin(path, cmd);
 		if (access(exec, F_OK | X_OK) == 0)
 		{
-			free(paths);
+			free(path);
+			ft_free_str_list(paths);
 			return (exec);
 		}
+		free(path);
 		free (exec);
 	}
-	free(paths);
+	ft_free_str_list(paths);
 	return (cmd);
 }
 
@@ -87,14 +90,18 @@ char	**list_to_char(t_env_list **env)
 	t_env_list	*current;
 
 	len = list_size(*env);
-	res = malloc(sizeof(char *) * len);
+	res = ft_calloc(sizeof(char *), (len + 1));
 	current = *env;
 	i = -1;
 	while (++i < len)
 	{
 		res[i] = ft_strjoin(current->name, current->val);
+		if (!res[i])
+		{
+			ft_free_str_list(res);
+			return (NULL);
+		}
 		current = current->next;
 	}
-	res[len - 1] = NULL;
 	return (res);
 }
