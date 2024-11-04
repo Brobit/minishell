@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   redirection_list.c                                 :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
+/*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:38:28 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/21 12:00:59 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/25 17:37:42 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -21,6 +21,7 @@ t_redirection	*redirection_list_new_node(void)
 		return (NULL);
 	new->type = NONE;
 	new->payload = NULL;
+	new->not_null = 1;
 	new->next = NULL;
 	return (new);
 }
