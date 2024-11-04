@@ -12,38 +12,38 @@
 /* ************************************************************************** */
 
 #include "../../Includes/minishell.h"
-#include <stdio.h>
 
-void	print_chained_list(t_exec *exec)
-{
-	int	i;
-
-	if (exec == NULL)
-		ft_printf("error\n");
-	while (exec != NULL)
-	{
-		if (exec->redirection_list == NULL)
-			ft_printf("no redirection list\n");
-		while (exec->redirection_list != NULL)
-		{
-			ft_printf("redirection type : %d\tpayload : %s\n", exec->redirection_list->type, exec->redirection_list->payload);
-			exec->redirection_list = exec->redirection_list->next;
-		}
-		if (exec->cmd == NULL)
-			ft_printf("there is no command\n");
-		if (exec->cmd)
-			ft_printf("cmd : |%s|\n", exec->cmd);
-		if (exec->option == NULL)
-			ft_printf("there is no option\n");
-		else
-		{
-			i = 0;
-			while (exec->option[i] != NULL)
-				ft_printf("option : |%s|\n", exec->option[i++]);
-		}
-		exec = exec->next;
-	}
-}
+// void	print_chained_list(t_exec *exec)
+// {
+// 	int	i;
+//
+// 	if (exec == NULL)
+// 		ft_printf("error\n");
+// 	while (exec != NULL)
+// 	{
+// 		if (exec->redirection_list == NULL)
+// 			ft_printf("no redirection list\n");
+// 		while (exec->redirection_list != NULL)
+// 		{
+// 			ft_printf("redirection type : %d\tpayload : %s\n", \
+// 			exec->redirection_list->type, exec->redirection_list->payload);
+// 			exec->redirection_list = exec->redirection_list->next;
+// 		}
+// 		if (exec->cmd == NULL)
+// 			ft_printf("there is no command\n");
+// 		if (exec->cmd)
+// 			ft_printf("cmd : |%s|\n", exec->cmd);
+// 		if (exec->option == NULL)
+// 			ft_printf("there is no option\n");
+// 		else
+// 		{
+// 			i = 0;
+// 			while (exec->option[i] != NULL)
+// 				ft_printf("option : |%s|\n", exec->option[i++]);
+// 		}
+// 		exec = exec->next;
+// 	}
+// }
 
 static t_exec	*create_and_assign_node(t_exec **tmp, \
 				char *instruction, t_env *copy)
@@ -73,9 +73,9 @@ int	check_payload(t_exec **exec)
 	nav = *exec;
 	while (nav)
 	{
-		//if (nav->redirection_list && !nav->redirection_list->payload)
 		if (nav->redirection_list && (!nav->redirection_list->payload
-				|| (nav->redirection_list->payload[0] == '\0' && !nav->redirection_list->not_null)))
+				|| (nav->redirection_list->payload[0] == '\0'
+					&& !nav->redirection_list->not_null)))
 			return (FAIL);
 		nav = nav->next;
 	}
