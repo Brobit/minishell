@@ -25,8 +25,7 @@
 // 			ft_printf("no redirection list\n");
 // 		while (exec->redirection_list != NULL)
 // 		{
-// 			ft_printf("redirection type : %d\tpayload : %s\n", \
-// 			exec->redirection_list->type, exec->redirection_list->payload);
+// 			ft_printf("redirection type : %d\tpayload : %s\n", exec->redirection_list->type, exec->redirection_list->payload);
 // 			exec->redirection_list = exec->redirection_list->next;
 // 		}
 // 		if (exec->cmd == NULL)

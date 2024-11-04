@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_export.c                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 23:46:53 by hehuang           #+#    #+#             */
-/*   Updated: 2024/11/04 16:50:38 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/04 18:41:44 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -103,9 +103,7 @@ void	ft_export(t_env_list	**env, char **args)
 {
 	t_env_list	*copy;
 	t_env_list	*head;
-	int			i;
 
-	i = -1;
 	if (count_params(args) == 1)
 	{
 		copy = copy_list(*env);
