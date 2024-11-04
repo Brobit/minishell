@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/11/04 13:10:03 by almarico          #+#    #+#             */
-/*   Updated: 2024/11/04 14:45:00 by almarico         ###   ########.fr       */
+/*   Updated: 2024/11/04 18:35:22 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -24,8 +24,8 @@ char	*keep_intact(char **input, int *i)
 
 int	is_in_set_to_keep(char c)
 {
-	if (c == ' ' || c == '.' || c == '+' || c == '-'
-		|| c == '*' || c == '/' || c == '%' || c == '\0')
+	if (c == ' ' || c == '.' || c == '+' || c == '-' || c == '^' || c == ','
+		|| c == '*' || c == '/' || c == '%' || c == '=' || c == '\0')
 		return (TRUE);
 	return (FALSE);
 }
