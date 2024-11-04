@@ -3,14 +3,25 @@
 /*                                                        :::      ::::::::   */
 /*   env_variable.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
+/*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 10:43:44 by almarico          #+#    #+#             */
-/*   Updated: 2024/11/04 16:34:53 by almarico         ###   ########.fr       */
+/*   Updated: 2024/11/03 17:22:24 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/minishell.h"
+
+static char	*size_free_conflict(char *input, int i, int start)
+{
+	char	*tmp;
+	char	*res;
+
+	tmp = ft_substr(input, start, (i - start));
+	res = ft_strjoin(tmp, "=");
+	free(tmp);
+	return (res);
+}
 
 static char	*search_in_env(char *input, t_env *copy, int *i)
 {
@@ -23,11 +34,12 @@ static char	*search_in_env(char *input, t_env *copy, int *i)
 	start = *i;
 	while (ft_isalnum(input[*i]) != 0 || input[*i] == '_')
 		*i += 1;
-	string = ft_strjoin(ft_substr(input, start, (*i - start)), "=");
+	string = size_free_conflict(input, *i, start);
 	length = ft_strlen(string);
 	j = 0;
 	while (copy->env[j] && ft_strncmp(string, copy->env[j], length) != 0)
 		j++;
+	free(string);
 	if (copy->env[j])
 	{
 		start = length;
@@ -41,12 +53,13 @@ static char	*search_in_env(char *input, t_env *copy, int *i)
 	return (string);
 }
 
-static char	*replace_by_last_exit_status(int *i)
+static char	*replace_by_last_exit_status(int *i, t_env *copy)
 {
 	char	*value;
 
 	*i += 2;
-	value = ft_itoa(g_exit_status);
+	(void)copy;
+	value = ft_itoa(copy->last_status);
 	return (value);
 }
 

@@ -14,7 +14,22 @@ OTHER_FLAG = -lreadline
 
 INCLUDES = -I ./Includes/
 
-EXEC_SOURCES = 	./Exec/
+EXEC_SOURCES = 	./Exec/Builtin/ft_cd.c\
+				./Exec/Builtin/ft_echo.c\
+				./Exec/Builtin/ft_export.c\
+				./Exec/Builtin/ft_env.c\
+				./Exec/Builtin/ft_unset.c\
+				./Exec/Builtin/ft_exit.c\
+				./Exec/ft_exec.c\
+				./Exec/utils/exec_utils.c\
+				./Exec/utils/exec_utils2.c\
+				./Exec/utils/linkedlist_utils.c\
+				./Exec/utils/linkedlist_utils2.c\
+				./Exec/utils/exec_list.c\
+				./Exec/here_doc.c\
+				./Exec/ft_free_exec.c\
+				./Exec/utils/debug.c\
+				./Exec/free_exec2.c\
 
 LEXER_SOURCES = 	./Parsing/Lexer/main.c\
 					./Parsing/Lexer/lexer.c\
@@ -45,12 +60,15 @@ LEXER_OBJS = ${LEXER_SOURCES:.c=.o}
 
 PARSER_OBJS = ${PARSER_SOURCES:.c=.o}
 
+OBJS = ${LEXER_OBJS} ${PARSER_OBJS} ${EXEC_OBJS}
+
 all : ${NAME}
 
 ${NAME} : ${LEXER_OBJS} ${PARSER_OBJS} ${EXEC_OBJS} ${LIBFT_LIB}
-	${CC} ${FLAGS} \
+	${CC} ${FLAGS} -g \
 		${LEXER_OBJS} \
 		${PARSER_OBJS} \
+		${EXEC_OBJS}\
 		-L${LIBFT_DIR} -o $@ ${LIBFT_FLAG} ${OTHER_FLAG}
 
 ${LIBFT_LIB} :

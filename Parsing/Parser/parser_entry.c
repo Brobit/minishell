@@ -3,14 +3,16 @@
 /*                                                        :::      ::::::::   */
 /*   parser_entry.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
+/*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 16:29:14 by almarico          #+#    #+#             */
 /*   Updated: 2024/11/04 16:52:04 by almarico         ###   ########.fr       */
+/*   Updated: 2024/10/27 20:19:07 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/minishell.h"
+#include <stdio.h>
 
 void	print_chained_list(t_exec *exec)
 {
@@ -71,7 +73,9 @@ int	check_payload(t_exec **exec)
 	nav = *exec;
 	while (nav)
 	{
-		if (nav->redirection_list && !nav->redirection_list->payload)
+		//if (nav->redirection_list && !nav->redirection_list->payload)
+		if (nav->redirection_list && (!nav->redirection_list->payload
+				|| (nav->redirection_list->payload[0] == '\0' && !nav->redirection_list->not_null)))
 			return (FAIL);
 		nav = nav->next;
 	}
@@ -87,22 +91,21 @@ int	parser_entry(char *input, t_env *copy)
 
 	exec = NULL;
 	tmp = NULL;
-	i = 0;
+	i = -1;
 	if (check_syntax_error(input) == FAIL)
 		return (FAIL);
 	instructions = split_input(input, '|');
-	while (instructions[i])
+	while (instructions[++i])
 	{
 		if (!exec)
 			exec = create_and_assign_node(&tmp, instructions[i], copy);
 		else
 			create_and_assign_node(&tmp, instructions[i], copy);
-		i++;
 	}
 	free(instructions);
 	if (check_payload(&exec) == FAIL)
 		return (free_exec_list(&exec), FAIL);
+	ft_exec(exec, copy);
 	free_exec_list(&exec);
-	// print_chained_list(exec);
 	return (SUCCESS);
 }
