@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:19:31 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/23 10:17:20 by almarico         ###   ########.fr       */
+/*   Updated: 2024/11/04 11:46:20 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -30,6 +30,8 @@ t_redirection	*get_redirections(char *instruction_line)
 						redirection_list_new_node());
 				i += fill_redirection(redirection_list, &instruction_line[i]);
 			}
+			else
+				i++;
 		}
 		if (instruction_line[i] && instruction_line[i] != '<'
 			&& instruction_line[i] != '>')

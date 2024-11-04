@@ -258,6 +258,12 @@ void						free_exec_list(t_exec **exec);
 
 int							check_quotes(char *input);
 
+
+/* env_variable_utils.c */
+
+char						*keep_intact(char **input, int *i);
+int							is_in_set_to_keep(char c);
+
 /* ft_free_exec.c */
 
 void						ft_free_str_list(char **str_list);
