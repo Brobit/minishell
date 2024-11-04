@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:31:26 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/23 09:24:42 by almarico         ###   ########.fr       */
+/*   Updated: 2024/11/04 13:12:58 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -167,5 +167,10 @@ void						free_exec_list(t_exec **exec);
 /* check_quotes.c */
 
 int							check_quotes(char *input);
+
+/* env_variable_utils.c */
+
+char						*keep_intact(char **input, int *i);
+int							is_in_set_to_keep(char c);
 
 #endif // !MINISHELL_H

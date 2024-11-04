@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 10:43:44 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/21 14:54:24 by almarico         ###   ########.fr       */
+/*   Updated: 2024/11/04 16:34:53 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,6 +36,8 @@ static char	*search_in_env(char *input, t_env *copy, int *i)
 	}
 	else
 		string = ft_strdup("");
+	if (string[0] == '\0')
+		*i = start + length - 1;
 	return (string);
 }
 
@@ -61,6 +63,8 @@ void	transform_string(char **input, t_env *copy, int *i)
 	before_variable = ft_substr((*input), 0, *i);
 	if ((*input)[*i + 1] == '?')
 		variable_expension = replace_by_last_exit_status(i);
+	else if (is_in_set_to_keep((*input)[*i + 1]) == TRUE)
+		variable_expension = keep_intact(input, i);
 	else
 		variable_expension = search_in_env((*input), copy, i);
 	rest_of_string = ft_substr((*input), *i, (ft_strlen((*input)) - *i));
