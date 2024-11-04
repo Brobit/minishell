@@ -6,13 +6,11 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 00:08:24 by hehuang           #+#    #+#             */
-/*   Updated: 2024/11/03 18:18:35 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/04 15:48:46 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
-#include <stdio.h>
-#include <stdlib.h>
 
 void	ft_free_str_list(char **str_list)
 {
@@ -38,7 +36,6 @@ void	free_list(t_env_list *list)
 {
 	t_env_list	*current;
 
-	dprintf(2, "freeing list \n");
 	while (list != NULL)
 	{
 		current = list;
@@ -50,7 +47,6 @@ void	free_list(t_env_list *list)
 void	free_exec(t_exec_list *exec)
 {
 	t_exec_list	*current;
-
 
 	while (exec->prev)
 		exec = exec->prev;

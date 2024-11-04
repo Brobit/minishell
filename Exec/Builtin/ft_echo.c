@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 22:20:56 by hehuang           #+#    #+#             */
-/*   Updated: 2024/11/03 17:03:27 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/04 16:30:17 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -39,7 +39,6 @@ void	ft_echo(t_exec_list *exec)
 		write(1, "\n", 1);
 		return ;
 	}
-	display_exec(exec);
 	n = check_option_n(exec->args[1]);
 	i = n;
 	while (exec->args[++i])
@@ -50,4 +49,50 @@ void	ft_echo(t_exec_list *exec)
 	}
 	if (!check_option_n(exec->args[0]))
 		ft_putchar_fd('\n', 1);
+}
+
+int	find_and_set(t_env_list	**env, char *my_var, char	*new_val)
+{
+	t_env_list	*current;
+	int			len;
+
+	current = *env;
+	len = ft_strlen(my_var);
+	while (current != NULL)
+	{
+		if (!ft_strncmp(current->name, my_var, len)
+			&& (!my_var[len]
+				|| (current->name[len] == '=' && current->name[len + 1])))
+		{
+			current->val = new_val;
+			return (SUCCESS);
+		}
+		current = current->next;
+	}
+	return (FAIL);
+}
+
+int	valid_name(char *name)
+{
+	int	len;
+	int	i;
+
+	len = ft_strlen(name);
+	i = -1;
+	while (++i < len)
+	{
+		if (name[i] == '\\')
+			return (0);
+		if (name[i] == '+' && ((i + 1 < len) && name[i + 1] != '='))
+			return (0);
+		if (name[i] == '-')
+			return (0);
+		if (name[i] == '*')
+			return (0);
+		if (name[i] == '%')
+			return (0);
+		if (name[i] == '.')
+			return (0);
+	}
+	return (1);
 }

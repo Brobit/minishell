@@ -6,13 +6,11 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 11:09:15 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/28 23:37:43 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/04 15:53:22 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
-#include <stdio.h>
-#include <unistd.h>
 
 void	del_curr_heredoc(void)
 {
@@ -60,12 +58,9 @@ int	ft_here_doc(const char *delimiter)
 	ft_close(fd, "heredoc.txt", -1);
 	if (g_exit_status == 130)
 	{
-		//free_tout();
 		unlink("heredoc.txt");
 		if (g_exit_status == 130)
 			return (1);
-		//Go to end;
 	}
-	dprintf(2, "end setting ");
 	return (0);
 }

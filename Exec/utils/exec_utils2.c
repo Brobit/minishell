@@ -32,7 +32,6 @@ void	set_heredoc(char *name, t_exec_list **exec, int cancel)
 	t_exec_list	*current;
 
 	current = *exec;
-	dprintf(2, "access = %d, cancel = %d\n", access(name, F_OK), cancel);
 	if (cancel == 1)
 	{
 		while (current)
@@ -47,7 +46,6 @@ void	set_heredoc(char *name, t_exec_list **exec, int cancel)
 		(*exec)->fd_in = ft_open(name, 0, 0);
 		(*exec)->infile = name;
 	}
-	dprintf(2, "heredoc infile fd = %d\n", (*exec)->fd_in);
 }
 
 void	check_input(t_exec_list **exec, t_redirection *redirect)
@@ -82,7 +80,6 @@ int	check_redirection(t_exec_list **exec)
 	current = (*exec)->redirec_list;
 	while (current)
 	{
-		ft_printf("type : %d\tpayload : %s\n", current->type, current->payload);
 		if (current->type == INPUT || current->type == HERE_DOC)
 			check_input(exec, current);
 		else

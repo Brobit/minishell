@@ -6,15 +6,11 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 17:42:14 by hehuang           #+#    #+#             */
-/*   Updated: 2024/11/03 18:47:19 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/04 16:35:38 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
-#include <stdio.h>
-#include <stdlib.h>
-#include <sys/types.h>
-#include <unistd.h>
 
 int	exec_builtin(t_exec_list *exec, t_env_list **env, int in_child)
 {
@@ -45,11 +41,9 @@ void	execute_cmd(t_exec_list	*exec_list, t_env_list **env_list, t_exec *exec)
 	char				*path;
 
 	env_str = list_to_char(env_list);
-	//display_exec(exec_list);
 	if (exec_list->cmd[0] == '\0')
 		exec_list->cancel = 1;
-	dprintf(2, "executing |%s|\n", exec_list->cmd);
-	if (env_list && check_builtin(exec_list) == SUCCESS)
+	if (env_list && check_builtin(exec_list) == SUCCESS && g_exit_status != 130)
 	{
 		exec_builtin(exec_list, env_list, 1);
 		return (free_child(env_str, exec_list, *env_list, exec));
@@ -57,7 +51,6 @@ void	execute_cmd(t_exec_list	*exec_list, t_env_list **env_list, t_exec *exec)
 	else if (!exec_list->cancel && g_exit_status != 130 && g_exit_status != 131)
 	{
 		path = ft_get_path(exec_list->cmd, env_list);
-		dprintf(2, "path = %s\n", path);
 		execve(path, exec_list->args, env_str);
 		write(2, exec_list->cmd, ft_strlen(exec_list->cmd));
 		write(2, ERR_CMD_NOT_FOUND, ft_strlen(ERR_CMD_NOT_FOUND));
@@ -139,4 +132,3 @@ void	ft_exec(t_exec *exec, t_env *env)
 	g_exit_status = 0;
 	free_all_exit(head, NULL, -1);
 }
-//STILL NEED TO UPDATE ENV

@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 23:46:53 by hehuang           #+#    #+#             */
-/*   Updated: 2024/11/03 22:27:56 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/04 16:50:38 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,27 +54,6 @@ void	sort_list(t_env_list *head)
 	}
 }
 
-int	find_and_set(t_env_list	**env, char *my_var, char	*new_val)
-{
-	t_env_list	*current;
-	int			len;
-
-	current = *env;
-	len = ft_strlen(my_var);
-	while (current != NULL)
-	{
-		if (!ft_strncmp(current->name, my_var, len)
-			&& (!my_var[len]
-				|| (current->name[len] == '=' && current->name[len + 1])))
-		{
-			current->val = new_val;
-			return (SUCCESS);
-		}
-		current = current->next;
-	}
-	return (FAIL);
-}
-
 void	add_to_env(char **params, t_env_list **env)
 {
 	int			i;
@@ -93,7 +72,11 @@ void	add_to_env(char **params, t_env_list **env)
 				&& valid_name(params[i]))
 			add_end(env, new_env(params[i], NULL, NULL));
 		else
-			printf("export :'%s' not an valid identifier \n", params[i]);
+		{
+			ft_putstr_fd("export : ", 2);
+			ft_putstr_fd(params[i], 2);
+			ft_putstr_fd(" : not an valid identifier\n", 2);
+		}
 	}
 	update_env(env);
 }

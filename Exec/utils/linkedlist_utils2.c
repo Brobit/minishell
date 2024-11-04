@@ -69,7 +69,6 @@ t_env_list	*create_list_from_tab(char **env)
 	t_env_list	*current;
 
 	i = 0;
-	dprintf(2, "creating env_list\n");
 	if (env && env[i])
 	{
 		res = new_env(env[i], NULL, NULL);

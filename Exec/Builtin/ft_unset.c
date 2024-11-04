@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 23:46:49 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/14 15:31:11 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/04 15:59:11 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -40,7 +40,6 @@ void	ft_unset(t_env_list	**env, char **params)
 
 	i = -1;
 	while (params[++i])
-	{
 		find_and_rm(env, params[i]);
-	}
+	update_env(env);
 }

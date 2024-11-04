@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:31:26 by almarico          #+#    #+#             */
-/*   Updated: 2024/11/03 22:21:02 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/04 16:27:32 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -45,7 +45,7 @@
 
 # define EXIT_NO_NUM_ERR	"exit : numeric argument required\n"
 # define EXIT_ARGS_ERROR	"exit : too many arguments\n"
-# define ERR_CMD_NOT_FOUND	" : command no found\n"
+# define ERR_CMD_NOT_FOUND	" : command not found\n"
 
 /* gobale variable */
 

@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/14 15:34:15 by hehuang           #+#    #+#             */
-/*   Updated: 2024/11/03 22:37:52 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/04 16:30:07 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -36,33 +36,6 @@ void	update_env(t_env_list **env)
 	new_env_list = list_to_char(env);
 	ft_free_str_list((*env)->env->env);
 	(*env)->env->env = new_env_list;
-}
-
-int	valid_name(char *name)
-{
-	int	len;
-	int	i;
-
-	len = ft_strlen(name);
-	i = -1;
-	while (++i < len)
-	{
-		dprintf(2, "%d : %c\n", i, name[i]);
-		if (name[i] == '\\')
-			return (0);
-		if (name[i] == '+' && ((i + 1 < len) && name[i + 1] != '='))
-			return (0);
-		if (name[i] == '-')
-			return (0);
-		if (name[i] == '*')
-			return (0);
-		if (name[i] == '%')
-			return (0);
-		if (name[i] == '.')
-			return (0);
-	}
-	dprintf(2, "correct\n");
-	return (1);
 }
 
 void	append_val(t_env_list **elmt, char	*app_val, t_env_list **env)
@@ -106,14 +79,11 @@ char	*get_correct_val(char *name, int *plus, int *equal)
 		res = ft_substr(name, 0, (*equal) - 1);
 	else
 		res = ft_strdup(name);
-	dprintf(2, "correctval = %s | equal = %d | plus = %d\n", res, *equal, *plus);
 	if (!valid_name(res) || (*equal == -1 && *plus != (int)ft_strlen(name)))
 	{
-		dprintf(2, "wrong\n");
 		free(res);
 		return (NULL);
 	}
-	dprintf(2, "correct\n");
 	return (res);
 }
 
@@ -127,7 +97,7 @@ t_env_list	*find_env(t_env_list **head, char	*name, int *plus)
 	current = *head;
 	tmp = get_correct_val(name, plus, &equal);
 	if (!tmp)
-		return (NULL);	
+		return (NULL);
 	tmp2 = ft_strjoin(tmp, "=");
 	while (current)
 	{
@@ -135,13 +105,11 @@ t_env_list	*find_env(t_env_list **head, char	*name, int *plus)
 		{
 			free(tmp2);
 			free(tmp);
-			dprintf(2, "found\n");
 			return (current);
 		}
 		current = current->next;
 	}
 	free(tmp);
 	free(tmp2);
-	dprintf(2, "Not found\n");
 	return (NULL);
 }

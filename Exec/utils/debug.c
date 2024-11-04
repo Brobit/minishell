@@ -6,13 +6,13 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:33:23 by hehuang           #+#    #+#             */
-/*   Updated: 2024/11/03 18:48:10 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/04 15:56:16 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/minishell.h"
 #include <stdio.h>
-
+/*
 void	display_exec(t_exec_list *exec)
 {
 	int	i;
@@ -32,10 +32,11 @@ void	ft_close(int fd, const char *filename, int pipe_entry)
 		close(fd);
 	(void)filename;
 	(void)pipe_entry;
-	/*if (pipe_entry != -1)
-		dprintf(2, "\033[34mClosing pipe_fd[%d] \033[0m=> fd : %d\n", pipe_entry, fd);
+	if (pipe_entry != -1)
+		dprintf(2, "\033[34mClosing pipe_fd[%d] \033[0m=> \
+		fd : %d\n", pipe_entry, fd);
 	else
-		dprintf(2, "\033[34mClosing %s \033[0m=> fd : %d\n", filename, fd);*/
+		dprintf(2, "\033[34mClosing %s \033[0m=> fd : %d\n", filename, fd);
 }
 
 int	ft_open(const char *filename, int trunc, int append)
@@ -58,15 +59,30 @@ int	ft_open(const char *filename, int trunc, int append)
 		dprintf(2, "\033[31mWARNING STDERR CLOSED PREVIOUSLY\033[0m\n");
 	dprintf(2, "\033[33mOpening %s \033[0m=> fd : %d\n", filename, fd);
 	return (fd);
-}
-/*
+}*/
+
 void	ft_close(int fd, const char *filename, int pipe_entry)
 {
 	(void)filename;
 	(void)pipe_entry;
 	if (fd > 2)
 		close(fd);
-}*/
+}
+
+int	ft_open(const char *filename, int trunc, int append)
+{
+	int	fd;
+
+	if (trunc)
+		fd = open(filename, O_WRONLY | O_CREAT | O_TRUNC, 0644);
+	else if (append)
+		fd = open(filename, O_WRONLY | O_CREAT | O_APPEND, 0644);
+	else
+		fd = open(filename, O_RDONLY);
+	if (fd == -1)
+		return (fd);
+	return (fd);
+}
 
 char	**get_args(t_exec *exec)
 {
