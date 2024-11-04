@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:31:26 by almarico          #+#    #+#             */
-/*   Updated: 2024/11/04 16:27:32 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/04 18:52:19 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -126,7 +126,6 @@ void						error(char *msg);
 
 /* signal_handler.c */
 
-//int							init_signal(struct sigaction *signal, int sigerror);
 void						setup_signal(int state);
 
 /* stdin_listener.c */
@@ -201,7 +200,8 @@ void						ft_export(t_env_list **env, char **args);
 void						ft_env(t_env_list *env);
 void						update_env(t_env_list **env);
 t_env_list					*find_env(t_env_list **head, char *name, int *plus);
-void						append_val(t_env_list **elmt, char	*app_val, t_env_list **head);
+void						append_val(t_env_list **elmt, char	*app_val, \
+							t_env_list **head);
 int							valid_name(char *name);
 /* end env */
 void						ft_unset(t_env_list	**env, char **my_var);
@@ -257,7 +257,6 @@ void						free_exec_list(t_exec **exec);
 /* check_quotes.c */
 
 int							check_quotes(char *input);
-
 
 /* env_variable_utils.c */
 

@@ -13,37 +13,6 @@
 
 #include "../../Includes/minishell.h"
 
-// void	print_chained_list(t_exec *exec)
-// {
-// 	int	i;
-//
-// 	if (exec == NULL)
-// 		ft_printf("error\n");
-// 	while (exec != NULL)
-// 	{
-// 		if (exec->redirection_list == NULL)
-// 			ft_printf("no redirection list\n");
-// 		while (exec->redirection_list != NULL)
-// 		{
-// 			ft_printf("redirection type : %d\tpayload : %s\n", exec->redirection_list->type, exec->redirection_list->payload);
-// 			exec->redirection_list = exec->redirection_list->next;
-// 		}
-// 		if (exec->cmd == NULL)
-// 			ft_printf("there is no command\n");
-// 		if (exec->cmd)
-// 			ft_printf("cmd : |%s|\n", exec->cmd);
-// 		if (exec->option == NULL)
-// 			ft_printf("there is no option\n");
-// 		else
-// 		{
-// 			i = 0;
-// 			while (exec->option[i] != NULL)
-// 				ft_printf("option : |%s|\n", exec->option[i++]);
-// 		}
-// 		exec = exec->next;
-// 	}
-// }
-
 static t_exec	*create_and_assign_node(t_exec **tmp, \
 				char *instruction, t_env *copy)
 {
