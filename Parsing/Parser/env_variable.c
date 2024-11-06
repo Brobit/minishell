@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 10:43:44 by almarico          #+#    #+#             */
-/*   Updated: 2024/11/04 17:58:56 by almarico         ###   ########.fr       */
+/*   Updated: 2024/11/06 16:24:31 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -74,9 +74,7 @@ void	transform_string(char **input, t_env *copy, int *i)
 	before_variable = ft_substr((*input), 0, *i);
 	if ((*input)[*i + 1] == '?')
 		variable_expension = replace_by_last_exit_status(i, copy);
-	else if (is_in_set_to_keep((*input)[*i + 1]) == TRUE)
-		variable_expension = keep_intact(input, i);
-	else
+	else if (is_in_set_to_keep((*input)[*i + 1]) == FALSE)
 		variable_expension = search_in_env((*input), copy, i);
 	rest_of_string = ft_substr((*input), *i, (ft_strlen((*input)) - *i));
 	first_join = ft_strjoin(before_variable, variable_expension);
