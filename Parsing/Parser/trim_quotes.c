@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 21:08:27 by almarico          #+#    #+#             */
-/*   Updated: 2024/11/06 16:24:20 by almarico         ###   ########.fr       */
+/*   Updated: 2024/11/11 18:31:48 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -53,14 +53,12 @@ void	trim_quotes(char **option, t_env *copy)
 			is_a_quote(option[i][j], &state);
 			if ((option[i][j] == '\"' && state != 1)
 				|| (option[i][j] == '\'' && state != 2))
-			{
-				shift_str((option[i] + j), 1);
-				j--;
-			}
+				shift_str((option[i] + j--), 1);
 			if (option[i][j] == '$' && state != 1)
 				transform_string(&option[i], copy, &j);
-			if (j < (int)ft_strlen(option[i]))
-				j++;
+			if (j >= (int)ft_strlen(option[i]))
+				j = -1;
+			j++;
 		}
 		i++;
 	}
