@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 17:42:14 by hehuang           #+#    #+#             */
-/*   Updated: 2024/11/04 16:35:38 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/13 22:10:58 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -54,6 +54,7 @@ void	execute_cmd(t_exec_list	*exec_list, t_env_list **env_list, t_exec *exec)
 		execve(path, exec_list->args, env_str);
 		write(2, exec_list->cmd, ft_strlen(exec_list->cmd));
 		write(2, ERR_CMD_NOT_FOUND, ft_strlen(ERR_CMD_NOT_FOUND));
+		g_exit_status = 127;
 		return (free_child(env_str, exec_list, *env_list, exec));
 	}
 	else

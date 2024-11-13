@@ -19,5 +19,5 @@ void	free_child(char	**str_tab, t_exec_list *exec_list, \
 	if (env_list->env)
 		free_env(env_list->env);
 	free_exec_list(&exec);
-	free_all_exit(exec_list, env_list, EXIT_FAILURE);
+	free_all_exit(exec_list, env_list, g_exit_status);
 }
