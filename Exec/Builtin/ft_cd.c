@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 22:57:58 by hehuang           #+#    #+#             */
-/*   Updated: 2024/11/03 18:25:27 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/13 22:37:11 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -23,9 +23,15 @@ void	update_pwd(t_env_list **env)
 	while (current)
 	{
 		if (!ft_strncmp(current->name, "OLDPWD", 6))
-			current->val = find_elmt(env, "PWD")->val;
+		{
+			free(current->val);
+			current->val = ft_strdup(find_elmt(env, "PWD")->val);
+		}
 		if (!ft_strncmp(current->name, "PWD", 3))
+		{
+			free(current->val);
 			current->val = ft_strdup(getcwd(cwd, sizeof(cwd)));
+		}
 		current = current->next;
 	}
 }
