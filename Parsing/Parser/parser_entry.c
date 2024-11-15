@@ -29,7 +29,7 @@ static t_exec	*create_and_assign_node(t_exec **tmp, \
 	(*tmp)->redirection_list = get_redirections(instruction);
 	if ((*tmp)->redirection_list)
 		trim_redirections(&instruction);
-	(*tmp)->cmd = get_command(instruction);
+	(*tmp)->cmd = get_command(instruction, copy);
 	(*tmp)->option = get_option(instruction, copy);
 	free(instruction);
 	return (*tmp);
