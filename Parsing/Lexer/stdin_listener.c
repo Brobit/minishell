@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/15 21:29:54 by almarico          #+#    #+#             */
-/*   Updated: 2024/11/04 17:57:07 by almarico         ###   ########.fr       */
+/*   Updated: 2024/11/14 10:57:13 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -35,6 +35,6 @@ void	stdin_listener(t_env *copy)
 				rl_redisplay();
 			}
 		}
-		free(input);
 	}
+	free(input);
 }

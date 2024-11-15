@@ -64,6 +64,7 @@ int	parser_entry(char *input, t_env *copy)
 	if (check_syntax_error(input) == FAIL)
 		return (FAIL);
 	instructions = split_input(input, '|');
+	free(input);
 	while (instructions[++i])
 	{
 		if (!exec)
