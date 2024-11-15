@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/19 11:19:31 by almarico          #+#    #+#             */
-/*   Updated: 2024/11/04 11:46:20 by almarico         ###   ########.fr       */
+/*   Updated: 2024/11/15 15:48:44 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -62,7 +62,7 @@ void	trim_redirections(char **line)
 	}
 }
 
-char	*get_command(char *line)
+char	*get_command(char *line, t_env *copy)
 {
 	char	*cmd;
 	char	*tmp;
@@ -79,6 +79,9 @@ char	*get_command(char *line)
 		j++;
 	tmp = ft_substr(line, i, j);
 	cmd = ft_strtrim(tmp, " ");
+	i = 0;
+	if (cmd[0] == '$')
+		transform_string(&cmd, copy, &i);
 	free(tmp);
 	return (cmd);
 }

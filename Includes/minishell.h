@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:31:26 by almarico          #+#    #+#             */
-/*   Updated: 2024/11/04 18:52:19 by almarico         ###   ########.fr       */
+/*   Updated: 2024/11/15 15:42:07 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -146,7 +146,7 @@ void						list_add_back(t_exec **exec, t_exec *neww);
 
 t_redirection				*get_redirections(char *instruction_line);
 void						trim_redirections(char **line);
-char						*get_command(char *instruction_line);
+char						*get_command(char *instruction_line, t_env *copy);
 char						**get_option(char *instruction_line, t_env *copy);
 
 /* redirection_lis.c */
