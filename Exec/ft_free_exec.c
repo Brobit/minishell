@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 00:08:24 by hehuang           #+#    #+#             */
-/*   Updated: 2024/11/13 16:32:08 by almarico         ###   ########.fr       */
+/*   Updated: 2024/11/15 11:23:40 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -73,8 +73,4 @@ void	free_all_exit(t_exec_list *exec, t_env_list *env, int exit_code)
 		exit(exit_code);
 	if (access("heredoc.txt", F_OK) == 0)
 		unlink("heredoc.txt");
-	free_readline();
-	// clear_history();
-	// rl_clear_history();
-	// rl_clear_signals();
 }
