@@ -6,12 +6,11 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 23:46:53 by hehuang           #+#    #+#             */
-/*   Updated: 2024/11/04 18:41:44 by almarico         ###   ########.fr       */
+/*   Updated: 2024/11/13 22:41:27 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/minishell.h"
-#include <stdio.h>
 
 static void	swap_var(t_env_list *a, t_env_list *b)
 {
@@ -76,6 +75,7 @@ void	add_to_env(char **params, t_env_list **env)
 			ft_putstr_fd("export : ", 2);
 			ft_putstr_fd(params[i], 2);
 			ft_putstr_fd(" : not an valid identifier\n", 2);
+			g_exit_status = EXIT_FAILURE;
 		}
 	}
 	update_env(env);
