@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 21:08:27 by almarico          #+#    #+#             */
-/*   Updated: 2024/11/11 18:31:48 by almarico         ###   ########.fr       */
+/*   Updated: 2024/11/15 19:50:53 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,6 +60,27 @@ void	trim_quotes(char **option, t_env *copy)
 				j = -1;
 			j++;
 		}
+		i++;
+	}
+}
+
+void	trim_command_quotes(char *cmd, t_env *copy)
+{
+	int	i;
+	int	state;
+
+	state = 0;
+	i = 0;
+	while (cmd[i])
+	{
+		is_a_quote(cmd[i], &state);
+		if ((cmd[i] == '\"' && state != 1)
+			|| (cmd[i] == '\'' && state != 2))
+			shift_str((&cmd[i]), 1);
+		if (cmd[i] == '$' && state != 1)
+			transform_string(&cmd, copy, &i);
+		if (i >= (int)ft_strlen(cmd))
+			i = -1;
 		i++;
 	}
 }

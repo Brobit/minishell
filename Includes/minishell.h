@@ -248,6 +248,7 @@ t_exec_list					*get_exec_list(t_exec *exec);
 
 void						is_a_quote(char c, int *state);
 void						trim_quotes(char **option, t_env *copy);
+void						trim_command_quotes(char *cmd, t_env *copy);
 void						trim_payload_quotes(char *option);
 
 /* free_exec_list.c */
