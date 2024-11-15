@@ -6,43 +6,12 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 16:29:14 by almarico          #+#    #+#             */
+/*   Updated: 2024/11/04 16:52:04 by almarico         ###   ########.fr       */
 /*   Updated: 2024/10/27 20:19:07 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/minishell.h"
-#include <stdio.h>
-
-void	print_chained_list(t_exec *exec)
-{
-	int	i;
-
-	if (exec == NULL)
-		ft_printf("error\n");
-	while (exec != NULL)
-	{
-		if (exec->redirection_list == NULL)
-			ft_printf("no redirection list\n");
-		while (exec->redirection_list != NULL)
-		{
-			ft_printf("redirection type : %d\tpayload : %s\n", exec->redirection_list->type, exec->redirection_list->payload);
-			exec->redirection_list = exec->redirection_list->next;
-		}
-		if (exec->cmd == NULL)
-			ft_printf("there is no command\n");
-		if (exec->cmd)
-			ft_printf("cmd : |%s|\n", exec->cmd);
-		if (exec->option == NULL)
-			ft_printf("there is no option\n");
-		else
-		{
-			i = 0;
-			while (exec->option[i] != NULL)
-				ft_printf("option : |%s|\n", exec->option[i++]);
-		}
-		exec = exec->next;
-	}
-}
 
 static t_exec	*create_and_assign_node(t_exec **tmp, \
 				char *instruction, t_env *copy)
@@ -58,7 +27,8 @@ static t_exec	*create_and_assign_node(t_exec **tmp, \
 	else
 		*tmp = new_node;
 	(*tmp)->redirection_list = get_redirections(instruction);
-	trim_redirections(&instruction);
+	if ((*tmp)->redirection_list)
+		trim_redirections(&instruction);
 	(*tmp)->cmd = get_command(instruction);
 	(*tmp)->option = get_option(instruction, copy);
 	free(instruction);
@@ -72,9 +42,9 @@ int	check_payload(t_exec **exec)
 	nav = *exec;
 	while (nav)
 	{
-		//if (nav->redirection_list && !nav->redirection_list->payload)
 		if (nav->redirection_list && (!nav->redirection_list->payload
-				|| (nav->redirection_list->payload[0] == '\0' && !nav->redirection_list->not_null)))
+				|| (nav->redirection_list->payload[0] == '\0'
+					&& !nav->redirection_list->not_null)))
 			return (FAIL);
 		nav = nav->next;
 	}
@@ -94,6 +64,7 @@ int	parser_entry(char *input, t_env *copy)
 	if (check_syntax_error(input) == FAIL)
 		return (FAIL);
 	instructions = split_input(input, '|');
+	free(input);
 	while (instructions[++i])
 	{
 		if (!exec)

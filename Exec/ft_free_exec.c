@@ -3,14 +3,15 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 00:08:24 by hehuang           #+#    #+#             */
-/*   Updated: 2024/11/04 15:48:46 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/13 16:32:08 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
+#include <readline/readline.h>
 
 void	ft_free_str_list(char **str_list)
 {
@@ -72,4 +73,8 @@ void	free_all_exit(t_exec_list *exec, t_env_list *env, int exit_code)
 		exit(exit_code);
 	if (access("heredoc.txt", F_OK) == 0)
 		unlink("heredoc.txt");
+	free_readline();
+	// clear_history();
+	// rl_clear_history();
+	// rl_clear_signals();
 }

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 22:20:56 by hehuang           #+#    #+#             */
-/*   Updated: 2024/11/04 16:30:17 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/13 11:33:54 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -47,7 +47,7 @@ void	ft_echo(t_exec_list *exec)
 			ft_putchar_fd(' ', 1);
 		ft_putstr_fd(exec->args[i], 1);
 	}
-	if (!check_option_n(exec->args[0]))
+	if (!check_option_n(exec->args[n]))
 		ft_putchar_fd('\n', 1);
 }
 

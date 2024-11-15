@@ -1,35 +1,32 @@
 /* ************************************************************************** */
 /*                                                                            */
 /*                                                        :::      ::::::::   */
-/*   lexer_free.c                                       :+:      :+:    :+:   */
+/*   env_variable_utils.c                               :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
-/*   Created: 2024/09/11 14:57:13 by almarico          #+#    #+#             */
-/*   Updated: 2024/11/13 17:46:12 by almarico         ###   ########.fr       */
+/*   Created: 2024/11/04 13:10:03 by almarico          #+#    #+#             */
+/*   Updated: 2024/11/05 12:35:59 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/minishell.h"
-#include <readline/history.h>
-#include <readline/readline.h>
 
-void	free_env(t_env *copy)
+char	*keep_intact(char **input, int *i)
 {
-	int	i;
+	int	beginning;
 
-	i = 0;
-	while (copy->env[i])
-		free(copy->env[i++]);
-	free(copy->env);
+	beginning = *i;
+	while (!ft_isspace((*input)[*i]) && (*input)[*i] != '\"')
+		*i += 1;
+	return (ft_substr(*input, beginning, *i - beginning));
 }
 
-void	free_readline(void)
+int	is_in_set_to_keep(char c)
 {
-	clear_history();
-	rl_clear_pending_input();
-	rl_clear_signals();
-	rl_clear_history();
-	rl_free_line_state();
-	rl_deprep_terminal();
+	if (c == ' ' || c == '.' || c == '+' || c == '-' || c == '^' || c == ','
+		|| c == '*' || c == '/' || c == '%' || c == '=' || c == '\"'
+		|| c == '\0')
+		return (TRUE);
+	return (FALSE);
 }

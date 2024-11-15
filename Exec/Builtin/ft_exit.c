@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 15:54:37 by hehuang           #+#    #+#             */
-/*   Updated: 2024/11/02 21:34:14 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/13 15:16:28 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -49,6 +49,7 @@ void	exit__with_code(t_exec_list *exec, t_env_list *env, \
 	g_exit_status = exit_code;
 	if (exit_bool)
 	{
+		free_readline();
 		free_env(env->env);
 		free_exec_list(&(exec->exec));
 		free_all_exit(exec, env, exit_code);

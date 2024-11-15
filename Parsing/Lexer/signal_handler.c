@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   signal_handler.c                                   :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
+/*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/14 18:42:51 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/26 17:57:18 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/13 13:25:52 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -52,17 +52,7 @@ void	signal_handler_here_doc(int signum)
 		g_exit_status = signum + 128;
 	}
 }
-/*
-int	init_signal(struct sigaction *signal, int sigerr)
-{
-	signal->sa_handler = signal_handler;
-	signal->sa_flags = SA_RESTART;
-	sigemptyset(&signal->sa_mask);
-	if (sigaction(sigerr, signal, NULL))
-		return (FAIL);
-	return (SUCCESS);
-}
-*/
+
 void	setup_signal(int state)
 {
 	struct sigaction	s_action_int;
