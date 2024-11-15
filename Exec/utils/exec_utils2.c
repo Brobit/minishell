@@ -6,13 +6,11 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/16 17:54:22 by hehuang           #+#    #+#             */
-/*   Updated: 2024/11/03 18:27:46 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/15 18:27:41 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/minishell.h"
-#include <stdio.h>
-#include <unistd.h>
 
 void	check_output(t_exec_list **exec, t_redirection	*redirect)
 {
@@ -73,44 +71,44 @@ void	check_input(t_exec_list **exec, t_redirection *redirect)
 	}
 }
 
-int	check_redirection(t_exec_list **exec)
+void	open_all_heredoc(t_exec_list **exec)
 {
+	t_exec_list		*curr_exec;
 	t_redirection	*current;
 
-	current = (*exec)->redirec_list;
-	while (current)
+	curr_exec = *exec;
+	while (curr_exec)
 	{
-		if (current->type == INPUT || current->type == HERE_DOC)
-			check_input(exec, current);
-		else
-			check_output(exec, current);
-		current = current->next;
+		current = curr_exec->redirec_list;
+		while (current)
+		{
+			if (current->type == HERE_DOC)
+				check_input(&curr_exec, current);
+			current = current->next;
+		}
+		curr_exec = curr_exec->next;
 	}
-	return (SUCCESS);
 }
 
-void	dup_in_out(t_exec_list *exec)
+int	check_redirection(t_exec_list **exec)
 {
-	if (exec->prev && exec->fd_in <= 2)
+	t_exec_list		*curr_exec;
+	t_redirection	*current;
+
+	curr_exec = *exec;
+	open_all_heredoc(exec);
+	while (curr_exec)
 	{
-		dup2(exec->prev->pipe_fd[0], STDIN_FILENO);
-		exec->fd_in = exec->prev->pipe_fd[0];
+		current = curr_exec->redirec_list;
+		while (current)
+		{
+			if (current->type == INPUT)
+				check_input(&curr_exec, current);
+			else if (current->type == OUTPUT || current->type == APPEND)
+				check_output(&curr_exec, current);
+			current = current->next;
+		}
+		curr_exec = curr_exec->next;
 	}
-	if (exec->next != NULL && exec->fd_out <= 2)
-	{
-		dup2(exec->pipe_fd[1], STDOUT_FILENO);
-		exec->fd_out = exec->pipe_fd[1];
-	}
-	if (exec->fd_in > 2)
-	{
-		dup2(exec->fd_in, STDIN_FILENO);
-		ft_close(exec->fd_in, NULL, 0);
-	}
-	if (exec->fd_out > 2)
-	{
-		dup2(exec->fd_out, STDOUT_FILENO);
-		ft_close(exec->fd_out, NULL, 1);
-	}
-	ft_close(exec->pipe_fd[0], NULL, 0);
-	ft_close(exec->pipe_fd[1], NULL, 1);
+	return (SUCCESS);
 }

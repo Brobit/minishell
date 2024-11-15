@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 19:58:45 by hehuang           #+#    #+#             */
-/*   Updated: 2024/10/31 21:12:33 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/15 18:09:40 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,5 +19,43 @@ void	free_child(char	**str_tab, t_exec_list *exec_list, \
 	if (env_list->env)
 		free_env(env_list->env);
 	free_exec_list(&exec);
+	clear_history();
+	rl_clear_history();
+	rl_clear_signals();
 	free_all_exit(exec_list, env_list, g_exit_status);
+}
+
+void	dup_in_out(t_exec_list *exec)
+{
+	if (exec->prev && exec->fd_in <= 2)
+	{
+		dup2(exec->prev->pipe_fd[0], STDIN_FILENO);
+		exec->fd_in = exec->prev->pipe_fd[0];
+	}
+	if (exec->next != NULL && exec->fd_out <= 2)
+	{
+		dup2(exec->pipe_fd[1], STDOUT_FILENO);
+		exec->fd_out = exec->pipe_fd[1];
+	}
+	if (exec->fd_in > 2)
+		dup2(exec->fd_in, STDIN_FILENO);
+	if (exec->fd_out > 2)
+		dup2(exec->fd_out, STDOUT_FILENO);
+	ft_close(exec->pipe_fd[0], NULL, 0);
+	ft_close(exec->pipe_fd[1], NULL, 1);
+}
+
+void	close_all_fd(t_exec_list	**exec)
+{
+	t_exec_list	*current;
+
+	current = *exec;
+	while (current)
+	{
+		if (current->fd_in > 2)
+			ft_close(current->fd_in, current->infile, -1);
+		if (current->fd_out > 2)
+			ft_close(current->fd_out, current->outfile, -1);
+		current = current->next;
+	}
 }

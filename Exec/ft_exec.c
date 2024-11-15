@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exec.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
+/*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 17:42:14 by hehuang           #+#    #+#             */
-/*   Updated: 2024/11/13 22:10:58 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/15 18:28:09 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,7 +80,7 @@ void	parent_process(t_exec_list **exec_list)
 }
 
 void	child_process(t_exec_list **exec_list, \
-			t_env_list **env_list, t_exec *exec)
+			t_env_list **env_list, t_exec *exec, t_exec_list **head)
 {
 	t_exec_list	*current;
 
@@ -95,6 +95,7 @@ void	child_process(t_exec_list **exec_list, \
 	{
 		current = (*exec_list)->prev;
 		dup_in_out(*exec_list);
+		close_all_fd(head);
 		while (current)
 		{
 			ft_close(current->pipe_fd[0], NULL, 0);
@@ -117,19 +118,19 @@ void	ft_exec(t_exec *exec, t_env *env)
 	if (!env->head)
 		env->head = create_list_from_tab(env->env);
 	env->head->env = env;
+	check_redirection(&exec_list);
 	if (exec_list->next == NULL && check_builtin(exec_list) == SUCCESS)
 		exec_builtin(exec_list, &(env->head), 0);
 	else
 	{
 		while (exec_list)
 		{
-			check_redirection(&exec_list);
-			child_process(&exec_list, &(env->head), exec);
+			child_process(&exec_list, &(env->head), exec, &head);
 			exec_list = exec_list->next;
 		}
 		parent_process(&head);
 	}
 	env->last_status = g_exit_status;
 	g_exit_status = 0;
-	free_all_exit(head, NULL, -1);
+	return (close_all_fd(&head), free_all_exit(head, NULL, -1));
 }

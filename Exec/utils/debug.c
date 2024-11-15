@@ -6,12 +6,11 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/15 20:33:23 by hehuang           #+#    #+#             */
-/*   Updated: 2024/11/04 15:56:16 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/15 18:26:22 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/minishell.h"
-#include <stdio.h>
 /*
 void	display_exec(t_exec_list *exec)
 {

@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_free_exec.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
+/*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 00:08:24 by hehuang           #+#    #+#             */
-/*   Updated: 2024/11/15 11:23:40 by almarico         ###   ########.fr       */
+/*   Updated: 2024/11/15 18:28:19 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
-#include <readline/readline.h>
 
 void	ft_free_str_list(char **str_list)
 {

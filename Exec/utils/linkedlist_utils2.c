@@ -6,12 +6,11 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:25:51 by hehuang           #+#    #+#             */
-/*   Updated: 2024/11/03 21:49:10 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/15 18:27:56 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/minishell.h"
-#include <stdio.h>
 
 int	list_size(t_env_list *mylist)
 {

@@ -6,12 +6,11 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/17 23:46:49 by hehuang           #+#    #+#             */
-/*   Updated: 2024/11/04 15:59:11 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/15 18:27:18 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/minishell.h"
-#include <stdio.h>
 
 int	find_and_rm(t_env_list	**env, char *my_var)
 {

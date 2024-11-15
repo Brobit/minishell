@@ -6,13 +6,11 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/09 19:21:50 by hehuang           #+#    #+#             */
-/*   Updated: 2024/11/04 16:19:21 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/15 18:27:49 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/minishell.h"
-#include <stdio.h>
-#include <stdlib.h>
 
 t_env_list	*new_env(char *name, char *value, t_env_list *prev)
 {

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   minishell.h                                        :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
+/*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:31:26 by almarico          #+#    #+#             */
-/*   Updated: 2024/11/04 18:52:19 by almarico         ###   ########.fr       */
+/*   Updated: 2024/11/15 17:38:59 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -270,6 +270,7 @@ void						free_all_exit(t_exec_list *exec, t_env_list *env, \
 								int exit_code);
 void						free_child(char	**str_tab, t_exec_list *exec_list, \
 								t_env_list *env_list, t_exec *exec);
+void						close_all_fd(t_exec_list	**exec);
 
 /* DEBUG */
 char						**add_str(char **tab, char *elmt);

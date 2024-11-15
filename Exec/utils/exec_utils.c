@@ -6,12 +6,11 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 23:48:01 by hehuang           #+#    #+#             */
-/*   Updated: 2024/11/04 16:23:59 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/15 18:27:33 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/minishell.h"
-#include <stdio.h>
 
 char	*ft_get_path(char	*cmd, t_env_list **env)
 {

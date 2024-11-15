@@ -6,13 +6,11 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 22:57:58 by hehuang           #+#    #+#             */
-/*   Updated: 2024/11/13 22:37:11 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/15 18:26:40 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/minishell.h"
-#include <stdio.h>
-#include <unistd.h>
 
 void	update_pwd(t_env_list **env)
 {

@@ -3,15 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_echo.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
+/*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 22:20:56 by hehuang           #+#    #+#             */
-/*   Updated: 2024/11/13 11:33:54 by almarico         ###   ########.fr       */
+/*   Updated: 2024/11/15 18:26:47 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/minishell.h"
-#include <unistd.h>
 
 int	check_option_n(char *str)
 {

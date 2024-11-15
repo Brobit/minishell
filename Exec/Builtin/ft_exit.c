@@ -3,16 +3,14 @@
 /*                                                        :::      ::::::::   */
 /*   ft_exit.c                                          :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
+/*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 15:54:37 by hehuang           #+#    #+#             */
-/*   Updated: 2024/11/13 15:16:28 by almarico         ###   ########.fr       */
+/*   Updated: 2024/11/15 18:27:08 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../../Includes/minishell.h"
-#include <stdio.h>
-#include <stdlib.h>
 
 int	ft_check_atoll(const char *string, int *err)
 {
