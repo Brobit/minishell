@@ -6,11 +6,12 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 19:58:45 by hehuang           #+#    #+#             */
-/*   Updated: 2024/11/15 18:09:40 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/22 18:11:05 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
+#include <unistd.h>
 
 void	free_child(char	**str_tab, t_exec_list *exec_list, \
 				t_env_list *env_list, t_exec *exec)
@@ -58,4 +59,19 @@ void	close_all_fd(t_exec_list	**exec)
 			ft_close(current->fd_out, current->outfile, -1);
 		current = current->next;
 	}
+}
+
+void	solo_builtins(t_exec_list *exec, t_env_list **env)
+{
+	int	save_stdout;
+	int	save_stdin;
+
+	save_stdout = dup(STDOUT_FILENO);
+	save_stdin = dup(STDIN_FILENO);
+	check_redirection(&exec);
+	exec_builtin(exec, env, 1);
+	dup2(save_stdin, STDIN_FILENO);
+	dup2(save_stdout, STDOUT_FILENO);
+	close(save_stdin);
+	close(save_stdout);
 }

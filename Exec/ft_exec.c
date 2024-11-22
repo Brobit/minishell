@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 17:42:14 by hehuang           #+#    #+#             */
-/*   Updated: 2024/11/15 18:28:09 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/22 18:13:07 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,6 @@
 
 int	exec_builtin(t_exec_list *exec, t_env_list **env, int in_child)
 {
-	check_redirection(&exec);
 	dup_in_out(exec);
 	if (!ft_strcmp(exec->cmd, "echo"))
 		ft_echo(exec);
@@ -118,11 +117,11 @@ void	ft_exec(t_exec *exec, t_env *env)
 	if (!env->head)
 		env->head = create_list_from_tab(env->env);
 	env->head->env = env;
-	check_redirection(&exec_list);
 	if (exec_list->next == NULL && check_builtin(exec_list) == SUCCESS)
-		exec_builtin(exec_list, &(env->head), 0);
+		solo_builtins(exec_list, &(env->head));
 	else
 	{
+		check_redirection(&exec_list);
 		while (exec_list)
 		{
 			child_process(&exec_list, &(env->head), exec, &head);

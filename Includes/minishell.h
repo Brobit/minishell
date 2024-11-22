@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:31:26 by almarico          #+#    #+#             */
-/*   Updated: 2024/11/15 18:32:36 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/22 18:11:29 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -272,6 +272,9 @@ void						free_all_exit(t_exec_list *exec, t_env_list *env, \
 void						free_child(char	**str_tab, t_exec_list *exec_list, \
 								t_env_list *env_list, t_exec *exec);
 void						close_all_fd(t_exec_list	**exec);
+int							exec_builtin(t_exec_list *exec, t_env_list **env, \
+								int in_child);
+void						solo_builtins(t_exec_list *exec, t_env_list **env);
 
 /* DEBUG */
 char						**add_str(char **tab, char *elmt);
