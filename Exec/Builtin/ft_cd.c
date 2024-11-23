@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 22:57:58 by hehuang           #+#    #+#             */
-/*   Updated: 2024/11/15 18:26:40 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/23 17:27:13 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -37,24 +37,27 @@ void	update_pwd(t_env_list **env)
 void	ft_cd(char **path, t_env_list **env)
 {
 	int		param_nb;
+	char	*home_path;
+	int		err;
 
-	(void)env;
 	param_nb = count_params(path);
 	if (param_nb == 2)
 	{
-		if (chdir(path[1]) != 0)
+		if (path[1][0] == '~')
 		{
-			perror("cd");
-			return ;
+			home_path = ft_strjoin(find_elmt(env, "HOME")->val, path[1] + 1);
+			err = chdir(home_path);
+			free(home_path);
 		}
+		else
+			err = chdir(path[1]);
 	}
 	else if (param_nb == 1)
+		err = chdir((find_elmt(env, "HOME"))->val);
+	if (err != 0)
 	{
-		if (chdir((find_elmt(env, "HOME"))->val) != 0)
-		{
-			perror("cd");
-			return ;
-		}
+		perror("cd");
+		return ;
 	}
 	update_pwd(env);
 }
