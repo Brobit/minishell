@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 15:54:37 by hehuang           #+#    #+#             */
-/*   Updated: 2024/11/15 18:27:08 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/23 17:07:38 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -38,7 +38,7 @@ int	ft_check_atoll(const char *string, int *err)
 			*err = -1;
 		i++;
 	}
-	return ((int)((res * (unsigned long long)neg) % 255));
+	return ((int)((res * (unsigned long long)neg) % 256));
 }
 
 void	exit__with_code(t_exec_list *exec, t_env_list *env, \
