@@ -6,7 +6,7 @@
 /*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/23 11:25:44 by almarico          #+#    #+#             */
-/*   Updated: 2024/10/21 16:58:35 by almarico         ###   ########.fr       */
+/*   Updated: 2024/11/23 17:25:40 by almarico         ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -19,6 +19,8 @@ int	check_pipes_and_ampersand(char *input)
 	i = 0;
 	while (input[i] && ft_isspace(input[i]) == 0)
 		i++;
+	if (input[i] == '\0')
+		return (FAIL);
 	if (input[i] && input[i] == '|' && is_in_quotes(input, i) == FALSE
 		&& is_in_double_quotes(input, i) == FALSE)
 		return (FAIL);
