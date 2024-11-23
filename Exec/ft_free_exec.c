@@ -6,11 +6,12 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/23 00:08:24 by hehuang           #+#    #+#             */
-/*   Updated: 2024/11/15 18:28:19 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/23 16:04:00 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
 #include "../Includes/minishell.h"
+#include <stdio.h>
 
 void	ft_free_str_list(char **str_list)
 {
@@ -68,8 +69,8 @@ void	free_all_exit(t_exec_list *exec, t_env_list *env, int exit_code)
 		free_exec(exec);
 	if (env)
 		free_list(env);
-	if (exit_code >= 0)
-		exit(exit_code);
 	if (access("heredoc.txt", F_OK) == 0)
 		unlink("heredoc.txt");
+	if (exit_code >= 0)
+		exit(exit_code);
 }
