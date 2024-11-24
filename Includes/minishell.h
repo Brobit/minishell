@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/10 16:31:26 by almarico          #+#    #+#             */
-/*   Updated: 2024/11/22 18:11:29 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/24 15:19:58 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -284,6 +284,8 @@ void						ft_close(int fd, const char *filename, \
 int							ft_open(const char	*name, int trunc, int append);
 int							check_builtin(t_exec_list *exec);
 char						**get_args(t_exec *exec);
+void						replace_abs_path(char	**str, t_env_list **env);
+t_exec_list					*verif_exec(t_exec_list	*exec, t_env_list **env);
 
 //# define close(X) printf("CLOSE: %d\n", X); close(X)
 

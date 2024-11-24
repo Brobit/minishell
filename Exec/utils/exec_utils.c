@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 23:48:01 by hehuang           #+#    #+#             */
-/*   Updated: 2024/11/15 18:27:33 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/24 15:45:20 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -20,6 +20,8 @@ char	*ft_get_path(char	*cmd, t_env_list **env)
 	t_env_list	*node;
 	int			i;
 
+	if (ft_strchr_pos(cmd, '/') >= 0)
+		return (cmd);
 	i = -1;
 	node = find_elmt(env, "PATH");
 	if (!node)
@@ -30,11 +32,7 @@ char	*ft_get_path(char	*cmd, t_env_list **env)
 		path = ft_strjoin(paths[i], "/");
 		exec = ft_strjoin(path, cmd);
 		if (access(exec, F_OK | X_OK) == 0)
-		{
-			free(path);
-			ft_free_str_list(paths);
-			return (exec);
-		}
+			return (free(path), ft_free_str_list(paths), exec);
 		free(path);
 		free (exec);
 	}

@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/16 22:57:58 by hehuang           #+#    #+#             */
-/*   Updated: 2024/11/23 17:27:13 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/24 15:47:39 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -60,7 +60,7 @@ void	ft_cd(char **path, t_env_list **env)
 		perror("cd");
 		return ;
 	}
-	update_pwd(env);
+	return (update_pwd(env), update_env(env));
 }
 
 void	ft_pwd(void)

@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/31 19:58:45 by hehuang           #+#    #+#             */
-/*   Updated: 2024/11/23 16:05:20 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/24 15:28:43 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -79,4 +79,20 @@ void	solo_builtins(t_exec_list *exec, t_env_list **env)
 	dup2(save_stdout, STDOUT_FILENO);
 	close(save_stdin);
 	close(save_stdout);
+}
+
+void	replace_abs_path(char	**str, t_env_list **env)
+{
+	char	*new_val;
+
+	new_val = NULL;
+/*	if (*str && *str[0] == '.')
+		new_val = ft_strjoin(find_elmt(env, "PWD")->val, *str + 1);
+	else */if (*str && *str[0] == '~')
+		new_val = ft_strjoin(find_elmt(env, "HOME")->val, *str + 1);
+	if (new_val)
+	{
+		free(*str);
+		*str = new_val;
+	}
 }

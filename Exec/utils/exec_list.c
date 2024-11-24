@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/20 16:52:18 by hehuang           #+#    #+#             */
-/*   Updated: 2024/11/02 21:31:52 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/24 15:19:38 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -80,4 +80,24 @@ void	free_ex_list(t_exec_list **head)
 		free(*head);
 		head = &current;
 	}
+}
+
+t_exec_list	*verif_exec(t_exec_list	*exec, t_env_list **env)
+{
+	t_exec_list	*current;
+	int			i;
+
+	current = exec;
+	while (current)
+	{
+		replace_abs_path(&(current->cmd), env);
+		i = 0;
+		while (current->args[i])
+		{
+			replace_abs_path(&(current->args[i]), env);
+			i++;
+		}
+		current = current -> next;
+	}
+	return (exec);
 }

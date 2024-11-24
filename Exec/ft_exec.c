@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 17:42:14 by hehuang           #+#    #+#             */
-/*   Updated: 2024/11/24 12:56:03 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/24 15:45:10 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,7 +14,7 @@
 
 int	exec_builtin(t_exec_list *exec, t_env_list **env, int in_child)
 {
-	if (g_exit_status == 130 && in_child)
+	if (g_exit_status == 130 && exec->cancel)
 		return (SUCCESS);
 	dup_in_out(exec);
 	if (!ft_strcmp(exec->cmd, "echo"))
@@ -113,12 +113,12 @@ void	ft_exec(t_exec *exec, t_env *env)
 	t_exec_list			*head;
 
 	setup_signal(1);
-	head = get_exec_list(exec);
-	head->exec = exec;
-	exec_list = head;
 	if (!env->head)
 		env->head = create_list_from_tab(env->env);
 	env->head->env = env;
+	head = verif_exec(get_exec_list(exec), &(env->head));
+	head->exec = exec;
+	exec_list = head;
 	if (exec_list->next == NULL && check_builtin(exec_list) == SUCCESS)
 		solo_builtins(exec_list, &(env->head));
 	else
