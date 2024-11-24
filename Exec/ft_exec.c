@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 17:42:14 by hehuang           #+#    #+#             */
-/*   Updated: 2024/11/22 18:13:07 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/24 11:00:54 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -14,6 +14,8 @@
 
 int	exec_builtin(t_exec_list *exec, t_env_list **env, int in_child)
 {
+	if (g_exit_status == 130 && in_child)
+		return (SUCCESS);
 	dup_in_out(exec);
 	if (!ft_strcmp(exec->cmd, "echo"))
 		ft_echo(exec);

@@ -3,10 +3,10 @@
 /*                                                        :::      ::::::::   */
 /*   env_variable.c                                     :+:      :+:    :+:   */
 /*                                                    +:+ +:+         +:+     */
-/*   By: almarico <almarico@student.42lehavre.fr>   +#+  +:+       +#+        */
+/*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/09/27 10:43:44 by almarico          #+#    #+#             */
-/*   Updated: 2024/11/06 16:24:31 by almarico         ###   ########.fr       */
+/*   Updated: 2024/11/24 11:10:08 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -57,7 +57,13 @@ static char	*replace_by_last_exit_status(int *i, t_env *copy)
 
 	*i += 2;
 	(void)copy;
-	value = ft_itoa(copy->last_status);
+	if (g_exit_status > 0)
+	{
+		value = ft_itoa(g_exit_status);
+		g_exit_status = 0;
+	}
+	else
+		value = ft_itoa(copy->last_status);
 	return (value);
 }
 

@@ -41,6 +41,7 @@ void	ft_cd(char **path, t_env_list **env)
 	int		err;
 
 	param_nb = count_params(path);
+	err = 0;
 	if (param_nb == 2)
 	{
 		if (path[1][0] == '~')
