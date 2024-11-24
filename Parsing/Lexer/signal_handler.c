@@ -44,7 +44,9 @@ void	signal_handler_here_doc(int signum)
 {
 	if (signum == SIGINT)
 	{
+		ft_printf("\n");
 		g_exit_status = signum + 128;
+		rl_on_new_line();
 	}
 	if (signum == SIGQUIT)
 	{

@@ -6,7 +6,7 @@
 /*   By: hehuang <hehuang@student.42lehavre.fr>     +#+  +:+       +#+        */
 /*                                                +#+#+#+#+#+   +#+           */
 /*   Created: 2024/10/08 17:42:14 by hehuang           #+#    #+#             */
-/*   Updated: 2024/11/24 11:00:54 by hehuang          ###   ########.fr       */
+/*   Updated: 2024/11/24 12:56:03 by hehuang          ###   ########.fr       */
 /*                                                                            */
 /* ************************************************************************** */
 
@@ -67,6 +67,9 @@ void	parent_process(t_exec_list **exec_list)
 	t_exec_list	*current;
 
 	current = *exec_list;
+	while (current->next)
+		current = current->next;
+	ft_close (current->pipe_fd[0], NULL, 0);
 	while (current)
 	{
 		waitpid(current->pid, (int *)&g_exit_status, 0);
@@ -74,18 +77,18 @@ void	parent_process(t_exec_list **exec_list)
 			g_exit_status = 128 + WTERMSIG(g_exit_status);
 		else if (WIFEXITED(g_exit_status))
 			g_exit_status = WEXITSTATUS(g_exit_status);
-		ft_close(current->pipe_fd[0], NULL, 0);
-		ft_close(current->pipe_fd[1], NULL, 1);
-		current = current->next;
+		current = current->prev;
 	}
 }
 
 void	child_process(t_exec_list **exec_list, \
-			t_env_list **env_list, t_exec *exec, t_exec_list **head)
+			t_env_list **env_list, t_exec *exec)
 {
-	t_exec_list	*current;
-
-	pipe((*exec_list)->pipe_fd);
+	if (pipe((*exec_list)->pipe_fd) == -1)
+	{
+		perror("pipe");
+		free_all_exit(*exec_list, *env_list, EXIT_FAILURE);
+	}
 	(*exec_list)->pid = fork();
 	if ((*exec_list)->pid < -1)
 	{
@@ -94,17 +97,14 @@ void	child_process(t_exec_list **exec_list, \
 	}
 	else if (!(*exec_list)->pid)
 	{
-		current = (*exec_list)->prev;
 		dup_in_out(*exec_list);
-		close_all_fd(head);
-		while (current)
-		{
-			ft_close(current->pipe_fd[0], NULL, 0);
-			ft_close(current->pipe_fd[1], NULL, 1);
-			current = current->prev;
-		}
+		close_all_fd(exec_list);
+		ft_close((*exec_list)->pipe_fd[0], NULL, 0);
 		execute_cmd(*exec_list, env_list, exec);
 	}
+	if ((*exec_list)->prev)
+		ft_close((*exec_list)->prev->pipe_fd[0], NULL, 0);
+	ft_close((*exec_list)->pipe_fd[1], NULL, 1);
 }
 
 void	ft_exec(t_exec *exec, t_env *env)
@@ -126,7 +126,7 @@ void	ft_exec(t_exec *exec, t_env *env)
 		check_redirection(&exec_list);
 		while (exec_list)
 		{
-			child_process(&exec_list, &(env->head), exec, &head);
+			child_process(&exec_list, &(env->head), exec);
 			exec_list = exec_list->next;
 		}
 		parent_process(&head);
